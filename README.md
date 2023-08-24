@@ -1,46 +1,27 @@
-# Getting Started with Create React App
+#### Câu 1: So sánh Single Page App (SPA) và Multiple Page App (MPA)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+| Single Page App (SPA)                                                                |                 Multiple Page App (MPA)                 |
+| :----------------------------------------------------------------------------------- | :----------------------------------------------------- |
+| - Không yêu cầu tải lại trang trong quá trình sử dụng                                |     - Yêu cầu tải lại trang trong quá trình sử dụng     |
+| - Phần lớn tài nguyên được tải trong lần đầu, trang chỉ tải thêm dữ liệu mới khi cần | - Luôn tải lại toàn bộ trang khi truy cập và điều hướng |
+| - Có phần front-end riêng biệt                                  | -	Có phần front-end và back-end phụ thuộc nhau nhiều hơn, được đặt trong 1 dự án |
+| -	Không thân thiện với SEO                                                            | -	Thân thiện với SEO                           |
 
-## Available Scripts
 
-In the project directory, you can run:
+#### Câu 2: So sánh Client-Side-Rendering và Server-Side-Rendering
 
-### `npm start`
+| Syntax      | Client-Side-Rendering | Server-Side-Rendering   |
+| :---        |    :----   |          :--- |
+| Khái niệm      | -	Việc render HTML, CSS, JS được thực hiện ở Client       | -	Các logic xử lý trang web sẽ được xử lý ở phía server   |
+| Ưu điểm   | -	Trang sẽ được load 1 lần duy nhất, server sẽ trả về data cho client xử lý bằng Virtual DOM, giảm tải cho server | -	Server sẽ xử lý và trả về html, css, js cho client hiển thị nên mỗi lần chuyển hướng sẽ load lại trang      |
+| Nhược điểm | -	File HTML chỉ có 1 element có id là root nên không tối ưu cho SEO | -	File HTML sẽ chứa toàn bộ thành phần hoàn chỉnh của 1 page nên tối ưu cho SEO |
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+#### Câu 3: Các cách import, export trong Javascript module:
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+| Export                                                             |                 Import                |
+| :----------------------------------------------------------------------------------- | :----------------------------------------------------- |
+| -	export default variable | -	import variable from ‘./folder’ |
+| -	export const/let variable | -	import { variable } from ‘./folder’ |
+| -	export { variable1, variable2 } | -	import { variable1, variable2 } from ‘./folder’ |
+| - Export bằng alias: export { function1 as newFunc1, function2 as newFunc2 } | -	import { newFunc1, newFunc2 } from ‘./folder’ |
+|  | -	import * as allData from ‘./folder’ (import tất cả những thứ được export trong file bất kỳ) |
