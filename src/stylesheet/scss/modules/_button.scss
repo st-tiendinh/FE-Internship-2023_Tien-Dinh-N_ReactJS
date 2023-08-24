@@ -1,0 +1,117 @@
+.btn {
+  display: inline-block;
+  color: map-get($color, dark);
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 20px;
+  cursor: pointer;
+  transition: all 0.15s linear;
+  text-align: center;
+
+  &.btn-advertisement {
+    padding: 14px 20px;
+    border-radius: 33px;
+    background-color: map-get($color, secondary);
+
+    &:hover {
+      box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.25);
+      transform: scale(0.9);
+    }
+  }
+
+  &.btn-outline {
+    padding: 14px 30px;
+    border-radius: 33px;
+    background-color: map-get($color, secondary);
+    border: 1px solid map-get($color, btn-border);
+
+    &:hover {
+      box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.25);
+      transform: scale(0.9);
+    }
+  }
+
+  &.btn-outline-primary {
+    padding: 14px 30px;
+    border-radius: 10px;
+    background-color: map-get($color, secondary);
+    border: 1px solid map-get($color, primary);
+
+    &:hover {
+      background-color: map-get($color, primary);
+      color: map-get($color, secondary);
+    }
+  }
+
+  &.btn-step-outline {
+    padding: 3px 12px;
+    background-color: map-get($color, secondary);
+    border: 1px solid map-get($color, btn-border);
+
+    &:hover {
+      background-color: map-get($color, gray);
+    }
+  }
+
+  &.btn-delete-outline {
+    padding: 4px 16px;
+    border-radius: 5px;
+    background-color: map-get($color, secondary);
+
+    &:hover {
+      background-color: map-get($color, gray);
+    }
+  }
+
+  &.btn-primary {
+    background-color: map-get($color, primary);
+    padding: 14px 50px;
+    border-radius: 56px;
+
+    &:hover {
+      box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.25);
+      transform: scale(0.9);
+    }
+
+    &:disabled {
+      background-color: map-get($color, gray);
+      color: map-get($color, text);
+      box-shadow: none;
+    }
+  }
+
+  &.btn-checkout-primary {
+    background-color: map-get($color, primary);
+    padding: 14px 60px;
+    border-radius: 5px;
+    display: block;
+    width: 100%;
+    font-size: 18px;
+    opacity: 0.8;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+}
+
+@media (max-width: 736px) {
+  .btn {
+    font-size: 10px;
+    line-height: 15px;
+
+    &.btn-sm-advertisement {
+      padding: 4px 10px;
+    }
+
+    &.btn-sm-outline {
+      padding: 0 4px 0 0;
+      border: none;
+    }
+
+    &.btn-sm-primary {
+      font-size: 13px;
+      padding: 6px 22px;
+    }
+  }
+}
