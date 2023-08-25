@@ -1,5 +1,5 @@
 import { ProductProps, ProductStatus } from '../app/core/models/product';
-class Product implements ProductProps {
+class ProductEntity implements ProductProps {
   id: number;
   name: string;
   discount: number;
@@ -22,4 +22,4 @@ class Product implements ProductProps {
   };
 }
 
-export default Product;
+export default ProductEntity;

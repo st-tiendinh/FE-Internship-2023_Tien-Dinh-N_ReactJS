@@ -1,5 +1,3 @@
-// import logo from '../../assets/images/shop-logo.svg'
-// import mobileLogo from '../assets/images/mobile-shop-logo.svg'
 import logo from '../../assets/images/shop-logo.svg'
 import mobileLogo from '../../assets/images/mobile-shop-logo.svg'
 

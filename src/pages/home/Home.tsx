@@ -13,19 +13,22 @@ const Home = () => {
           <Advertisement />
 
           {/* <!-- Products section --> */}
-          <Product />
+          <Product>
+            <div className='section-product-header'>
+              <h3 className='section-title'>Selected just for you</h3>
+              <a href='/#' className='btn btn-outline btn-sm-outline'>
+                SHOW MORE
+              </a>
+            </div>
+          </Product>
 
           {/* <!-- Service detail --> */}
           <Service />
 
           {/* <!-- Product in today --> */}
-          <section className='section section-product'>
-            <div className='container'>
-              <h3 className='section-title'>Products in today</h3>
-              {/* <!-- Product list --> */}
-              <div className='product-wrapper'></div>
-            </div>
-          </section>
+          <Product>
+            <h3 className='section-title'>Products in today</h3>
+          </Product>
 
           {/* <!-- Newsletter --> */}
           <Newsletter />
