@@ -1,9 +1,15 @@
-import logo from '../../assets/images/shop-logo.svg'
-import mobileLogo from '../../assets/images/mobile-shop-logo.svg'
+import { Link } from 'react-router-dom';
+
+import logo from '../../assets/images/shop-logo.svg';
+import mobileLogo from '../../assets/images/mobile-shop-logo.svg';
+import { CartEntity, CartItem } from '../../services/CartService';
+import { StorageKey, getFromLocalStorage } from '../../services/localStorageService';
 
 export const Header = () => {
+  const cartEntity = new CartEntity(getFromLocalStorage<CartItem[]>(StorageKey.Product, []));
+
   return (
-    <header className='header'>
+    <header className='header bg-dark mt-0'>
       <div className='container'>
         <div className='header-inner'>
           <h1 className='header-logo'>
@@ -40,10 +46,12 @@ export const Header = () => {
               </a>
             </li>
             <li className='header-action-item'>
-              <a href='cart.html' className='header-action-link'>
-                <span className='header-action-quantity'></span>
+              <Link to='/cart' className='header-action-link'>
+                <span className='header-action-quantity' style={{ display: 'flex' }}>
+                  {cartEntity.calcCartAllQuantity()}
+                </span>
                 <i className='ic ic-cart'></i>
-              </a>
+              </Link>
             </li>
             <li className='header-action-item'>
               <a href='/#' className='header-action-link'>
@@ -59,10 +67,12 @@ export const Header = () => {
               </a>
             </li>
             <li className='header-mobile-action-item'>
-              <a href='cart.html' className='header-action-link'>
-                <span className='header-action-quantity'></span>
+              <Link to='/cart' className='header-action-link'>
+                <span className='header-action-quantity' style={{ display: 'flex' }}>
+                  {cartEntity.calcCartAllQuantity()}
+                </span>
                 <i className='ic ic-sm-cart'></i>
-              </a>
+              </Link>
             </li>
             <li className='header-mobile-action-item'>
               <a href='/#' className='header-action-link'>

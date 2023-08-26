@@ -27,7 +27,7 @@ export class CartItem implements CartItemProps {
   };
 }
 
-export class Cart implements CartProps {
+export class CartEntity implements CartProps {
   cartItems: CartItemProps[];
 
   constructor(cartItems: CartItemProps[]) {
