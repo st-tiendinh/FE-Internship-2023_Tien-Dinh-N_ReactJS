@@ -1,17 +1,23 @@
-import { CartItem } from '../../services/CartService';
+import { CartItemEntity } from '../../services/CartService';
 import { CartEntity } from '../../services/CartService';
 import cartEmptyImg from '../../assets/images/cart-empty.png';
-import { StepEnum } from '../../app/core/models/cart';
+import { CartItemProps, StepEnum } from '../../app/core/models/cart';
 import { Link } from 'react-router-dom';
 
-const Cart = ({ cartItems, changeQuantity, deleteProduct }: any) => {
-  const cartEntity = new CartEntity(cartItems);
+interface CartPropsInterface {
+  cartItems: CartItemProps[];
+  changeQuantity: (id: number, step: StepEnum) => void;
+  deleteProduct: (id: number) => void;
+}
+
+const Cart = ({ cartItems, changeQuantity, deleteProduct }: CartPropsInterface) => {
+  const shoppingCart = new CartEntity(cartItems);
 
   return (
     <div className='cart-page'>
       <div className='container'>
         <section className='section section-cart'>
-          {cartEntity.cartItems?.length ? (
+          {shoppingCart.cartItems?.length ? (
             <div className='row'>
               <div className='col col-9'>
                 <div className='section-cart-header row'>
@@ -20,8 +26,8 @@ const Cart = ({ cartItems, changeQuantity, deleteProduct }: any) => {
                   <h4 className='section-cart-header-title col col-3'>Price</h4>
                 </div>
                 <ul className='product-cart-list'>
-                  {cartItems.map((item: any) => {
-                    const cartItemEntity = new CartItem(item);
+                  {cartItems.map((item: CartItemProps) => {
+                    const cartItemEntity = new CartItemEntity(item);
                     const { id, name, imageUrl, discount, price, quantity } = item;
                     return (
                       <li className='product-cart-item' key={id}>
@@ -81,7 +87,7 @@ const Cart = ({ cartItems, changeQuantity, deleteProduct }: any) => {
                   <div className='cart-checkout'>
                     <div className='cart-checkout-info'>
                       <h4 className='cart-checkout-total-title'>Total</h4>
-                      <span className='cart-checkout-total-price'>{cartEntity.calcProductAllTotalPrice()}</span>
+                      <span className='cart-checkout-total-price'>${shoppingCart.calcProductAllTotalPrice()}</span>
                     </div>
                     <span className='btn btn-checkout-primary'>Buy now</span>
                   </div>

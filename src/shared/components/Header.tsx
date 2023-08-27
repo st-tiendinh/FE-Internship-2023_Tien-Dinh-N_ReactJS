@@ -3,8 +3,13 @@ import { Link } from 'react-router-dom';
 import { CartEntity } from '../../services/CartService';
 import logo from '../../assets/images/shop-logo.svg';
 import mobileLogo from '../../assets/images/mobile-shop-logo.svg';
+import { CartItemProps } from '../../app/core/models/cart';
 
-export const Header = ({ cartItems }: any) => {
+interface HeaderPropsInterface {
+  cartItems: CartItemProps[];
+}
+
+export const Header = ({ cartItems }: HeaderPropsInterface) => {
   const cartEntity = new CartEntity(cartItems);
 
   return (

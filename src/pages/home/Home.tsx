@@ -1,59 +1,63 @@
+import { ProductProps } from '../../app/core/models/product';
 import { Banner, Advertisement, Newsletter, Service, Product } from '../../shared/components';
 
-const Home = ({ productData, addToCart }: any) => {
+interface HomePropsInterface {
+  productData: ProductProps[];
+  addToCart: (id: number, productData: ProductProps) => void;
+}
+
+const Home = ({ productData, addToCart }: HomePropsInterface) => {
   return (
-    <main className='main'>
-      <div className='home-page'>
-        {/* <!-- Banner section --> */}
-        <Banner />
+    <div className='home-page'>
+      {/* <!-- Banner section --> */}
+      <Banner />
 
-        {/* <!-- Advertisement section --> */}
-        <Advertisement />
+      {/* <!-- Advertisement section --> */}
+      <Advertisement />
 
-        {/* <!-- Products section --> */}
-        <section className='section section-product'>
-          <div className='container'>
-            <div className='section-product-header'>
-              <h3 className='section-title'>Selected just for you</h3>
-              <a href='/#' className='btn btn-outline btn-sm-outline'>
-                SHOW MORE
-              </a>
-            </div>
-            {/* Product list */}
-            <div className='product-wrapper'>
-              <ul className='product-list row'>
-                {/* Product Item */}
-                {productData.map((product: any, index: number) => {
-                  return <Product key={index} product={product} myKey={product.id} addToCart={addToCart} />;
-                })}
-              </ul>
-            </div>
+      {/* <!-- Products section --> */}
+      <section className='section section-product'>
+        <div className='container'>
+          <div className='section-product-header'>
+            <h3 className='section-title'>Selected just for you</h3>
+            <a href='/#' className='btn btn-outline btn-sm-outline'>
+              SHOW MORE
+            </a>
           </div>
-        </section>
-
-        {/* <!-- Service detail --> */}
-        <Service />
-
-        {/* <!-- Product in today --> */}
-        <section className='section section-product'>
-          <div className='container'>
-            <h3 className='section-title'>Products in today</h3>
-            {/* Product list */}
-            <div className='product-wrapper'>
-              <ul className='product-list row'>
-                {/* Product Item */}
-                {productData.map((product: any, index: number) => {
-                  return <Product key={index} product={product} myKey={product.id} addToCart={addToCart} />;
-                })}
-              </ul>
-            </div>
+          {/* Product list */}
+          <div className='product-wrapper'>
+            <ul className='product-list row'>
+              {/* Product Item */}
+              {productData.map((product: ProductProps, index: number) => {
+                return <Product key={index} product={product} myKey={product.id} addToCart={addToCart} />;
+              })}
+            </ul>
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* <!-- Newsletter --> */}
-        <Newsletter />
-      </div>
-    </main>
+      {/* <!-- Service detail --> */}
+      <Service />
+
+      {/* <!-- Product in today --> */}
+      <section className='section section-product'>
+        <div className='container'>
+          <h3 className='section-title'>Products in today</h3>
+          {/* Product list */}
+          <div className='product-wrapper'>
+            <ul className='product-list row'>
+              {/* Product Item */}
+              {productData.map((product: ProductProps, index: number) => {
+                return <Product key={index} product={product} myKey={product.id} addToCart={addToCart} />;
+              })}
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      {/* <!-- Newsletter --> */}
+      <Newsletter />
+    </div>
   );
 };
 

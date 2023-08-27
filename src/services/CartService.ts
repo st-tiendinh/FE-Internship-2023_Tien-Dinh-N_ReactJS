@@ -1,6 +1,6 @@
 import { CartItemProps, CartProps } from '../app/core/models/cart';
 
-export class CartItem implements CartItemProps {
+export class CartItemEntity implements CartItemProps {
   id: number;
   name: string;
   discount: number;

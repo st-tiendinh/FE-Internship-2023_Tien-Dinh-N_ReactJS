@@ -1,9 +1,10 @@
+import { ProductProps } from '../../app/core/models/product';
 import ProductEntity from '../../services/ProductService';
 
 interface Props {
   myKey: number;
-  product: any;
-  addToCart?: any;
+  product: ProductProps;
+  addToCart: (id: number, productEntity: ProductProps) => void;
 }
 
 export const Product = ({ myKey, product, addToCart }: Props) => {
@@ -24,6 +25,7 @@ export const Product = ({ myKey, product, addToCart }: Props) => {
               e.preventDefault();
               addToCart(id, productEntity);
             }}
+            disabled={status ? false : true}
           >
             Add to cart
           </button>
@@ -31,7 +33,7 @@ export const Product = ({ myKey, product, addToCart }: Props) => {
           <div className='product-description'>
             <h4 className='product-name'>{name}</h4>
             <div className='product-prices'>
-              {/* <span className={discount ? 'sale-price active' : 'sale-price'}>{productEntity.calcDiscountPrice()}</span> */}
+              <span className={discount ? 'sale-price active' : 'sale-price'}>{productEntity.calcDiscountPrice()}</span>
               <span className='original-price'>{discount ? '$' + price : ''}</span>
             </div>
           </div>
