@@ -1,9 +1,9 @@
 .cart-page {
   .section {
     &-cart {
+      padding: 80px 0;
       &-header {
         display: flex;
-        // padding-bottom: 20px;
         padding: 20px 0;
 
         &-title {
@@ -168,14 +168,9 @@
           display: flex;
           flex-direction: column;
           align-items: center;
-          position: relative;
-          top: 120px;
-          left: 50%;
-          transform: translateX(-50%);
 
-          .btn.btn-outline-primary {
-            position: absolute;
-            bottom: 10px;
+          &-img {
+            margin-bottom: 20px;
           }
         }
       }

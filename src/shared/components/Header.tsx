@@ -1,22 +1,21 @@
 import { Link } from 'react-router-dom';
 
+import { CartEntity } from '../../services/CartService';
 import logo from '../../assets/images/shop-logo.svg';
 import mobileLogo from '../../assets/images/mobile-shop-logo.svg';
-import { CartEntity, CartItem } from '../../services/CartService';
-import { StorageKey, getFromLocalStorage } from '../../services/localStorageService';
 
-export const Header = () => {
-  const cartEntity = new CartEntity(getFromLocalStorage<CartItem[]>(StorageKey.Product, []));
+export const Header = ({ cartItems }: any) => {
+  const cartEntity = new CartEntity(cartItems);
 
   return (
     <header className='header bg-dark mt-0'>
       <div className='container'>
         <div className='header-inner'>
           <h1 className='header-logo'>
-            <a href='/#' className='header-logo-link'>
+            <Link to='/' className='header-logo-link'>
               <img src={logo} alt='E-Shop' className='logo-img' />
               <img src={mobileLogo} alt='E-Shop' className='mobile-logo-img' />
-            </a>
+            </Link>
           </h1>
 
           <nav className='nav'>
