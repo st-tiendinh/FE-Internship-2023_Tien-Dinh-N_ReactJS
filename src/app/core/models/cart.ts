@@ -1,11 +1,6 @@
-import { ProductProps } from './product';
+import { ProductInterface } from './product';
 
-export enum StepEnum {
-  INCREASE = 1,
-  DECREASE = -1,
-}
-
-export interface CartItemProps extends Omit<ProductProps, 'status'> {
+export interface CartItemProps extends Omit<ProductInterface, 'status'> {
   quantity: number;
   calcProductTotalPrice(): number;
 }

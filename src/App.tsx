@@ -1,18 +1,21 @@
 import { Routes, Route } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
-import Cart from './pages/cart/Cart';
 import Home from './pages/home/Home';
-import { Header, Footer } from './shared/components';
-import { StorageKey, getFromLocalStorage, saveToLocalStorage } from './shared/utlis/localStorage';
+import Cart from './pages/cart/Cart';
+
 import './stylesheet/style.scss';
+import { Header, Footer } from './shared/components';
 import product1 from './assets/images/product-1.png';
 import product2 from './assets/images/product-2.png';
 import product3 from './assets/images/product-3.png';
 import product4 from './assets/images/product-4.png';
-import { ProductStatus, ProductProps } from './app/core/models/product';
+import { StorageKey, getFromLocalStorage, saveToLocalStorage } from './shared/utlis/localStorage';
+import { ProductStatus, ProductInterface } from './app/core/models/product';
 import ProductEntity from './services/ProductService';
-import { CartItemProps, StepEnum } from './app/core/models/cart';
+import { CartItemProps } from './app/core/models/cart';
+import { CartEntity } from './services/CartService';
+import { appRoutes } from './app.route';
 
 const data = [
   {
@@ -53,10 +56,9 @@ const productData = data.map((item: any) => new ProductEntity(item));
 
 function App() {
   const [cartItems, setCartItems] = useState(getFromLocalStorage<any[]>(StorageKey.Product, []));
+  const cartEntity = new CartEntity(cartItems);
 
-  useEffect(() => saveToLocalStorage<CartItemProps[]>(StorageKey.Product, cartItems), [cartItems]);
-
-  const handleAddToCart = (id: number, productData: ProductProps) => {
+  const handleAddToCart = (id: number, productData: ProductInterface) => {
     if (productData.status !== ProductStatus.OUT_OF_STOCK) {
       const existedProduct = cartItems.find((item: CartItemProps) => {
         return id === item.id;
@@ -65,7 +67,7 @@ function App() {
       if (existedProduct) {
         setCartItems(
           cartItems.map((item: CartItemProps) => {
-            return existedProduct.id === item.id ? { ...item, quantity: (item.quantity += 1) } : item;
+            return existedProduct.id === item.id ? { ...item, quantity: item.quantity + 1 } : item;
           })
         );
       } else {
@@ -74,7 +76,9 @@ function App() {
     }
   };
 
-  const handleClickChangeQuantity = (id: number, step: StepEnum) => {
+  useEffect(() => saveToLocalStorage<CartItemProps[]>(StorageKey.Product, cartItems), [cartItems]);
+
+  const handleClickChangeQuantity = (id: number, step: number) => {
     const findProduct = cartItems.find((product: CartItemProps) => {
       return product.id === id;
     });
@@ -108,20 +112,28 @@ function App() {
 
   return (
     <div className='App'>
-      <Header cartItems={cartItems} />
+      <Header quantity={cartEntity.calcCartAllQuantity()} />
       <main className='main'>
         <Routes>
-          <Route
-            path='/cart'
-            element={
-              <Cart
-                cartItems={cartItems}
-                changeQuantity={handleClickChangeQuantity}
-                deleteProduct={handleDeleteProduct}
+          {appRoutes.map(({ path, element }) => {
+            const Page = element;
+            return (
+              <Route
+                key={Date.now()}
+                path={path}
+                element={
+                  (Page === Cart && (
+                    <Page
+                      cartItems={cartItems}
+                      changeQuantity={handleClickChangeQuantity}
+                      deleteProduct={handleDeleteProduct}
+                    />
+                  )) ||
+                  (Page === Home && <Page productData={productData} addToCart={handleAddToCart} />)
+                }
               />
-            }
-          />
-          <Route path='/' element={<Home productData={productData} addToCart={handleAddToCart} />} />
+            );
+          })}
         </Routes>
       </main>
       <Footer />

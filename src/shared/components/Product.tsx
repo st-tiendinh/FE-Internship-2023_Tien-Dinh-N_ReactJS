@@ -1,13 +1,13 @@
-import { ProductProps } from '../../app/core/models/product';
+import { ProductInterface } from '../../app/core/models/product';
 import ProductEntity from '../../services/ProductService';
 
 interface Props {
   myKey: number;
-  product: ProductProps;
-  addToCart: (id: number, productEntity: ProductProps) => void;
+  product: ProductInterface;
+  addToCart: (id: number, productEntity: ProductInterface) => void;
 }
 
-export const Product = ({ myKey, product, addToCart }: Props) => {
+export const ProductItem = ({ myKey, product, addToCart }: Props) => {
   const productEntity = new ProductEntity(product);
   const { id, name, discount, imageUrl, price, status } = productEntity;
 

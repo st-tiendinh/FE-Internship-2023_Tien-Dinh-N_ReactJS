@@ -1,5 +1,5 @@
-import { ProductProps, ProductStatus } from '../app/core/models/product';
-class ProductEntity implements ProductProps {
+import { ProductInterface, ProductStatus } from '../app/core/models/product';
+class ProductEntity implements ProductInterface {
   id: number;
   name: string;
   discount: number;
@@ -7,7 +7,7 @@ class ProductEntity implements ProductProps {
   imageUrl: string;
   status: ProductStatus;
 
-  constructor(props: ProductProps) {
+  constructor(props: ProductInterface) {
     const { id, name, discount, price, imageUrl, status } = props;
     this.id = id;
     this.name = name;

@@ -1,12 +1,12 @@
 import { CartItemEntity } from '../../services/CartService';
 import { CartEntity } from '../../services/CartService';
 import cartEmptyImg from '../../assets/images/cart-empty.png';
-import { CartItemProps, StepEnum } from '../../app/core/models/cart';
+import { CartItemProps } from '../../app/core/models/cart';
 import { Link } from 'react-router-dom';
 
 interface CartPropsInterface {
   cartItems: CartItemProps[];
-  changeQuantity: (id: number, step: StepEnum) => void;
+  changeQuantity: (id: number, step: number) => void;
   deleteProduct: (id: number) => void;
 }
 
@@ -47,10 +47,7 @@ const Cart = ({ cartItems, changeQuantity, deleteProduct }: CartPropsInterface) 
                           </div>
                           <div className='product-cart-action col col-3'>
                             <div className='product-cart-quantity-wrapper'>
-                              <button
-                                className='decrease btn btn-step-outline'
-                                onClick={() => changeQuantity(id, StepEnum.DECREASE)}
-                              >
+                              <button className='decrease btn btn-step-outline' onClick={() => changeQuantity(id, -1)}>
                                 -
                               </button>
                               <input
@@ -61,10 +58,7 @@ const Cart = ({ cartItems, changeQuantity, deleteProduct }: CartPropsInterface) 
                                 value={quantity}
                                 onChange={() => {}}
                               />
-                              <button
-                                className='increase btn btn-step-outline'
-                                onClick={() => changeQuantity(id, StepEnum.INCREASE)}
-                              >
+                              <button className='increase btn btn-step-outline' onClick={() => changeQuantity(id, 1)}>
                                 +
                               </button>
                             </div>

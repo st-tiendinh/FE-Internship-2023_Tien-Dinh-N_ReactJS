@@ -1,17 +1,13 @@
 import { Link } from 'react-router-dom';
 
-import { CartEntity } from '../../services/CartService';
 import logo from '../../assets/images/shop-logo.svg';
 import mobileLogo from '../../assets/images/mobile-shop-logo.svg';
-import { CartItemProps } from '../../app/core/models/cart';
 
 interface HeaderPropsInterface {
-  cartItems: CartItemProps[];
+  quantity: number;
 }
 
-export const Header = ({ cartItems }: HeaderPropsInterface) => {
-  const cartEntity = new CartEntity(cartItems);
-
+export const Header = ({ quantity }: HeaderPropsInterface) => {
   return (
     <header className='header bg-dark mt-0'>
       <div className='container'>
@@ -52,7 +48,7 @@ export const Header = ({ cartItems }: HeaderPropsInterface) => {
             <li className='header-action-item'>
               <Link to='/cart' className='header-action-link'>
                 <span className='header-action-quantity' style={{ display: 'flex' }}>
-                  {cartEntity.calcCartAllQuantity()}
+                  {quantity}
                 </span>
                 <i className='ic ic-cart'></i>
               </Link>
@@ -73,7 +69,7 @@ export const Header = ({ cartItems }: HeaderPropsInterface) => {
             <li className='header-mobile-action-item'>
               <Link to='/cart' className='header-action-link'>
                 <span className='header-action-quantity' style={{ display: 'flex' }}>
-                  {cartEntity.calcCartAllQuantity()}
+                  {quantity}
                 </span>
                 <i className='ic ic-sm-cart'></i>
               </Link>

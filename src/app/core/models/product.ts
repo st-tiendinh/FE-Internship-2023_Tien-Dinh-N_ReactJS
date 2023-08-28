@@ -3,7 +3,7 @@ export enum ProductStatus {
   AVAILABLE,
 }
 
-export interface ProductProps {
+export interface ProductInterface {
   id: number;
   name: string;
   discount: number;

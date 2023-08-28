@@ -1,9 +1,9 @@
-import { ProductProps } from '../../app/core/models/product';
-import { Banner, Advertisement, Newsletter, Service, Product } from '../../shared/components';
+import { ProductInterface } from '../../app/core/models/product';
+import { Banner, Advertisement, Newsletter, Service, ProductItem } from '../../shared/components';
 
 interface HomePropsInterface {
-  productData: ProductProps[];
-  addToCart: (id: number, productData: ProductProps) => void;
+  productData: ProductInterface[];
+  addToCart: (id: number, productData: ProductInterface) => void;
 }
 
 const Home = ({ productData, addToCart }: HomePropsInterface) => {
@@ -28,8 +28,8 @@ const Home = ({ productData, addToCart }: HomePropsInterface) => {
           <div className='product-wrapper'>
             <ul className='product-list row'>
               {/* Product Item */}
-              {productData.map((product: ProductProps, index: number) => {
-                return <Product key={index} product={product} myKey={product.id} addToCart={addToCart} />;
+              {productData.map((product: ProductInterface, index: number) => {
+                return <ProductItem key={index} product={product} myKey={product.id} addToCart={addToCart} />;
               })}
             </ul>
           </div>
@@ -47,8 +47,8 @@ const Home = ({ productData, addToCart }: HomePropsInterface) => {
           <div className='product-wrapper'>
             <ul className='product-list row'>
               {/* Product Item */}
-              {productData.map((product: ProductProps, index: number) => {
-                return <Product key={index} product={product} myKey={product.id} addToCart={addToCart} />;
+              {productData.map((product: ProductInterface, index: number) => {
+                return <ProductItem key={index} product={product} myKey={product.id} addToCart={addToCart} />;
               })}
             </ul>
           </div>
