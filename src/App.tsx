@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import Cart from './pages/cart/Cart';
 import Home from './pages/home/Home';
 import { Header, Footer } from './shared/components';
-import { StorageKey, getFromLocalStorage, saveToLocalStorage } from './services/localStorageService';
+import { StorageKey, getFromLocalStorage, saveToLocalStorage } from './shared/utlis/localStorage';
 import './stylesheet/style.scss';
 import product1 from './assets/images/product-1.png';
 import product2 from './assets/images/product-2.png';
