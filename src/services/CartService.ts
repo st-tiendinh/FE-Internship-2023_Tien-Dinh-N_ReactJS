@@ -1,6 +1,6 @@
-import { CartItemProps, CartProps } from '../app/core/models/cart';
+import { CartItemInterface, CartInterface } from '../app/core/models/cart';
 
-export class CartItemEntity implements CartItemProps {
+export class CartItemEntity implements CartItemInterface {
   id: number;
   name: string;
   discount: number;
@@ -8,7 +8,7 @@ export class CartItemEntity implements CartItemProps {
   imageUrl: string;
   quantity: number;
 
-  constructor(props: CartItemProps) {
+  constructor(props: CartItemInterface) {
     const { id, name, discount, price, imageUrl, quantity } = props;
     this.id = id;
     this.name = name;
@@ -27,15 +27,15 @@ export class CartItemEntity implements CartItemProps {
   };
 }
 
-export class CartEntity implements CartProps {
-  cartItems: CartItemProps[];
+export class CartEntity implements CartInterface {
+  cartItems: CartItemInterface[];
 
-  constructor(cartItems: CartItemProps[]) {
+  constructor(cartItems: CartItemInterface[]) {
     this.cartItems = cartItems;
   }
 
   calcCartAllQuantity = (): number => {
-    return this.cartItems.reduce((sum: number, item: CartItemProps) => {
+    return this.cartItems.reduce((sum: number, item: CartItemInterface) => {
       return sum + item.quantity;
     }, 0);
   };
@@ -43,7 +43,7 @@ export class CartEntity implements CartProps {
   calcProductAllTotalPrice = (): number => {
     return parseFloat(
       this.cartItems
-        .reduce((sum: number, item: CartItemProps) => {
+        .reduce((sum: number, item: CartItemInterface) => {
           return sum + item.quantity * item.price * (1 - item.discount / 100);
         }, 0)
         .toFixed(2)

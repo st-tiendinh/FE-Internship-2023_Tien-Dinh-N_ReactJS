@@ -1,5 +1,6 @@
 import { ProductInterface, ProductStatus } from '../app/core/models/product';
-class ProductEntity implements ProductInterface {
+
+export class ProductEntity implements ProductInterface {
   id: number;
   name: string;
   discount: number;
@@ -21,5 +22,3 @@ class ProductEntity implements ProductInterface {
     return parseFloat((this.price * (1 - this.discount / 100)).toFixed(2));
   };
 }
-
-export default ProductEntity;

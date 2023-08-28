@@ -1,17 +1,19 @@
-import { CartItemEntity } from '../../services/CartService';
-import { CartEntity } from '../../services/CartService';
-import cartEmptyImg from '../../assets/images/cart-empty.png';
-import { CartItemProps } from '../../app/core/models/cart';
 import { Link } from 'react-router-dom';
 
-interface CartPropsInterface {
-  cartItems: CartItemProps[];
-  changeQuantity: (id: number, step: number) => void;
-  deleteProduct: (id: number) => void;
+import cartEmptyImg from '../../assets/images/cart-empty.png';
+
+import { CartEntity } from '../../services/CartService';
+import { CartItemEntity } from '../../services/CartService';
+import { CartItemInterface } from '../../app/core/models/cart';
+
+interface CartPropTypes {
+  cartItemsData: CartItemInterface[];
+  onClickChangeQuantity: (id: number, step: number) => void;
+  onClickDeleteProduct: (id: number) => void;
 }
 
-const Cart = ({ cartItems, changeQuantity, deleteProduct }: CartPropsInterface) => {
-  const shoppingCart = new CartEntity(cartItems);
+const Cart = ({ cartItemsData, onClickChangeQuantity, onClickDeleteProduct }: CartPropTypes) => {
+  const shoppingCart = new CartEntity(cartItemsData);
 
   return (
     <div className='cart-page'>
@@ -26,7 +28,7 @@ const Cart = ({ cartItems, changeQuantity, deleteProduct }: CartPropsInterface) 
                   <h4 className='section-cart-header-title col col-3'>Price</h4>
                 </div>
                 <ul className='product-cart-list'>
-                  {cartItems.map((item: CartItemProps) => {
+                  {cartItemsData.map((item: CartItemInterface) => {
                     const cartItemEntity = new CartItemEntity(item);
                     const { id, name, imageUrl, discount, price, quantity } = item;
                     return (
@@ -47,7 +49,10 @@ const Cart = ({ cartItems, changeQuantity, deleteProduct }: CartPropsInterface) 
                           </div>
                           <div className='product-cart-action col col-3'>
                             <div className='product-cart-quantity-wrapper'>
-                              <button className='decrease btn btn-step-outline' onClick={() => changeQuantity(id, -1)}>
+                              <button
+                                className='decrease btn btn-step-outline'
+                                onClick={() => onClickChangeQuantity(id, -1)}
+                              >
                                 -
                               </button>
                               <input
@@ -58,11 +63,14 @@ const Cart = ({ cartItems, changeQuantity, deleteProduct }: CartPropsInterface) 
                                 value={quantity}
                                 onChange={() => {}}
                               />
-                              <button className='increase btn btn-step-outline' onClick={() => changeQuantity(id, 1)}>
+                              <button
+                                className='increase btn btn-step-outline'
+                                onClick={() => onClickChangeQuantity(id, 1)}
+                              >
                                 +
                               </button>
                             </div>
-                            <span className='btn btn-delete-outline' onClick={() => deleteProduct(id)}>
+                            <span className='btn btn-delete-outline' onClick={() => onClickDeleteProduct(id)}>
                               Delete
                             </span>
                           </div>

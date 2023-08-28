@@ -3,11 +3,11 @@ import { Link } from 'react-router-dom';
 import logo from '../../assets/images/shop-logo.svg';
 import mobileLogo from '../../assets/images/mobile-shop-logo.svg';
 
-interface HeaderPropsInterface {
-  quantity: number;
+interface HeaderPropTypes {
+  cartTotalQuantity: number;
 }
 
-export const Header = ({ quantity }: HeaderPropsInterface) => {
+export const Header = ({ cartTotalQuantity }: HeaderPropTypes) => {
   return (
     <header className='header bg-dark mt-0'>
       <div className='container'>
@@ -48,7 +48,7 @@ export const Header = ({ quantity }: HeaderPropsInterface) => {
             <li className='header-action-item'>
               <Link to='/cart' className='header-action-link'>
                 <span className='header-action-quantity' style={{ display: 'flex' }}>
-                  {quantity}
+                  {cartTotalQuantity}
                 </span>
                 <i className='ic ic-cart'></i>
               </Link>
@@ -69,7 +69,7 @@ export const Header = ({ quantity }: HeaderPropsInterface) => {
             <li className='header-mobile-action-item'>
               <Link to='/cart' className='header-action-link'>
                 <span className='header-action-quantity' style={{ display: 'flex' }}>
-                  {quantity}
+                  {cartTotalQuantity}
                 </span>
                 <i className='ic ic-sm-cart'></i>
               </Link>
