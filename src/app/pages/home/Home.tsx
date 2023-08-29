@@ -1,15 +1,15 @@
-import { Banner, Advertisement, Newsletter, Service, Product } from '../../shared/components';
-import { ProductInterface } from '../../app/core/models/product';
+import { ProductInterface } from '../../../app/core/models/product';
+import { Advertisement, Banner, Newsletter, Product } from './containers';
+import { Service } from './containers/Service/Service';
 
 interface HomePropTypes {
   productData: ProductInterface[];
-  // onClickAddToCart: (id: number, productData: ProductInterface) => void;
   setCartItems: (shoppingCart: any) => void;
 }
 
 const Home = ({ productData, setCartItems }: HomePropTypes) => {
   return (
-    <div className='home-page'>
+    <div className="home-page">
       {/* <!-- Banner section --> */}
       <Banner />
 
@@ -18,9 +18,9 @@ const Home = ({ productData, setCartItems }: HomePropTypes) => {
 
       {/* <!-- Products section --> */}
       <Product productData={productData} setCartItems={setCartItems}>
-        <div className='section-product-header'>
-          <h3 className='section-title'>Selected just for you</h3>
-          <a href='/#' className='btn btn-outline btn-sm-outline'>
+        <div className="section-product-header">
+          <h3 className="section-title">Selected just for you</h3>
+          <a href="/#" className="btn btn-outline btn-sm-outline">
             SHOW MORE
           </a>
         </div>
@@ -31,7 +31,7 @@ const Home = ({ productData, setCartItems }: HomePropTypes) => {
 
       {/* <!-- Product in today --> */}
       <Product productData={productData} setCartItems={setCartItems}>
-        <h3 className='section-title'>Products in today</h3>
+        <h3 className="section-title">Products in today</h3>
       </Product>
 
       {/* <!-- Newsletter --> */}

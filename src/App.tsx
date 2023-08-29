@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
 
-import Home from './pages/home/Home';
-import Cart from './pages/cart/Cart';
+import Home from './app/pages/home/Home';
+import Cart from './app/pages/cart/Cart';
 import { Header, Footer } from './shared/components';
+import { CartProvider } from './app/core/contexts/CartContext';
 
 import './stylesheet/style.scss';
 import product1 from './assets/images/product-1.png';
@@ -14,8 +15,8 @@ import { StorageKey, getFromLocalStorage, saveToLocalStorage } from './shared/ut
 import { appRoutes } from './app.route';
 
 import { CartItemInterface } from './app/core/models/cart';
-import { ProductEntity } from './services/ProductService';
-import { CartEntity } from './services/CartService';
+import { ProductService } from './services/ProductService';
+import { CartService } from './services/CartService';
 
 const data = [
   {
@@ -52,7 +53,7 @@ const data = [
   },
 ];
 
-const productData = data.map((item: any) => new ProductEntity(item));
+const productData = data.map((item: any) => new ProductService(item));
 
 function App() {
   const [cartItems, setCartItems] = useState(getFromLocalStorage<CartItemInterface[]>(StorageKey.Product, []));
@@ -60,9 +61,11 @@ function App() {
   useEffect(() => saveToLocalStorage<CartItemInterface[]>(StorageKey.Product, cartItems), [cartItems]);
 
   return (
-    <div className='App'>
-      <Header cartTotalQuantity={new CartEntity(cartItems).calcCartAllQuantity()} />
-      <main className='main'>
+    <div className="App">
+      <CartProvider>
+        <Header cartTotalQuantity={new CartService(cartItems).calcCartAllQuantity()} />
+      </CartProvider>
+      <main className="main">
         <Routes>
           {appRoutes.map(({ path, element }) => {
             const Page = element;

@@ -1,6 +1,6 @@
 import { ProductInterface, ProductStatus } from '../app/core/models/product';
 
-export class ProductEntity implements ProductInterface {
+export class ProductService implements ProductInterface {
   id: number;
   name: string;
   discount: number;
@@ -10,12 +10,12 @@ export class ProductEntity implements ProductInterface {
 
   constructor(props: ProductInterface) {
     const { id, name, discount, price, imageUrl, status } = props;
-    this.id = id;
-    this.name = name;
-    this.discount = discount;
-    this.price = price;
-    this.imageUrl = imageUrl;
-    this.status = status;
+    this.id = id || 0;
+    this.name = name || '';
+    this.discount = discount || 0;
+    this.price = price || 0;
+    this.imageUrl = imageUrl || '';
+    this.status = status || ProductStatus.AVAILABLE;
   }
 
   calcDiscountPrice = (): number => {

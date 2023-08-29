@@ -10,6 +10,4 @@ export interface ProductInterface {
   price: number;
   imageUrl: string;
   status: ProductStatus;
-
-  calcDiscountPrice: (originalPrice: number, discount: number) => number;
 }
