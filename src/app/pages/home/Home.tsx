@@ -1,6 +1,5 @@
 import { ProductModel } from '../../../app/core/models/product';
-import { Advertisement, Banner, Newsletter, Product } from './containers';
-import { Service } from './containers/Service/Service';
+import { Advertisement, Banner, Newsletter, Product, ServiceDetail } from './containers';
 
 interface HomePropTypes {
   productData: ProductModel[];
@@ -27,7 +26,7 @@ const Home = ({ productData, setCartItems }: HomePropTypes) => {
       </Product>
 
       {/* <!-- Service detail --> */}
-      <Service />
+      <ServiceDetail />
 
       {/* <!-- Product in today --> */}
       <Product productData={productData} setCartItems={setCartItems}>

@@ -12,6 +12,7 @@ import product3 from './assets/images/product-3.png';
 import product4 from './assets/images/product-4.png';
 import { StorageKey, getFromLocalStorage, saveToLocalStorage } from './shared/utils/localStorage';
 import { appRoutes } from './app.route';
+import { CartProvider } from './app/core/contexts/CartContext';
 
 import { CartItemModel } from './app/core/models/cart';
 import { ProductService } from './services/ProductService';
@@ -62,7 +63,9 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
-        <Header cartTotalQuantity={new CartService(cartItems).calcCartAllQuantity()} />
+        <CartProvider>
+          <Header cartTotalQuantity={new CartService(cartItems).calcCartAllQuantity()} />
+        </CartProvider>
         <main className="main">
           <Routes>
             {appRoutes.map(({ path, element }) => {

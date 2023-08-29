@@ -14,7 +14,13 @@ export const CartList = ({ cartData, setCartItems, shoppingCart }: CartListPropT
       {cartData.map((item: CartItemModel) => {
         const cartItemEntity = new CartItemService(item);
         return (
-          <CartItem {...item} cartItemEntity={cartItemEntity} setCartItems={setCartItems} shoppingCart={shoppingCart} />
+          <CartItem
+            key={item.id}
+            {...item}
+            cartItemEntity={cartItemEntity}
+            setCartItems={setCartItems}
+            shoppingCart={shoppingCart}
+          />
         );
       })}
     </ul>

@@ -1,4 +1,4 @@
-export const Service = () => {
+export const ServiceDetail = () => {
   return (
     <section className="section section-services">
       <div className="container">

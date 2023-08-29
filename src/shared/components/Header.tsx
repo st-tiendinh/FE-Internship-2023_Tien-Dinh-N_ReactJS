@@ -1,13 +1,21 @@
+import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 
 import logo from '../../assets/images/shop-logo.svg';
 import mobileLogo from '../../assets/images/mobile-shop-logo.svg';
+import { CartContext } from '../../app/core/contexts/CartContext';
+import { CartService } from '../../services/CartService';
 
 interface HeaderPropTypes {
   cartTotalQuantity: number;
 }
 
 export const Header = ({ cartTotalQuantity }: HeaderPropTypes) => {
+  const context = useContext(CartContext);
+  // const { cartItems, setCartItems } = context;
+  // console.log(cartItems);
+  // console.log(context);
+  // const cartTotalQuantity = new CartService(context.cartItems);
   return (
     <header className="header bg-dark mt-0">
       <div className="container">
