@@ -1,9 +1,9 @@
-import { ProductInterface } from '../../../app/core/models/product';
+import { ProductModel } from '../../../app/core/models/product';
 import { Advertisement, Banner, Newsletter, Product } from './containers';
 import { Service } from './containers/Service/Service';
 
 interface HomePropTypes {
-  productData: ProductInterface[];
+  productData: ProductModel[];
   setCartItems: (shoppingCart: any) => void;
 }
 

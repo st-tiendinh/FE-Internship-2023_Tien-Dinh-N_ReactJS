@@ -1,6 +1,6 @@
-import { ProductInterface, ProductStatus } from '../app/core/models/product';
+import { ProductModel, ProductStatus } from '../app/core/models/product';
 
-export class ProductService implements ProductInterface {
+export class ProductService implements ProductModel {
   id: number;
   name: string;
   discount: number;
@@ -8,14 +8,14 @@ export class ProductService implements ProductInterface {
   imageUrl: string;
   status: ProductStatus;
 
-  constructor(props: ProductInterface) {
+  constructor(props: ProductModel) {
     const { id, name, discount, price, imageUrl, status } = props;
     this.id = id || 0;
     this.name = name || '';
     this.discount = discount || 0;
     this.price = price || 0;
     this.imageUrl = imageUrl || '';
-    this.status = status || ProductStatus.AVAILABLE;
+    this.status = status || ProductStatus.OUT_OF_STOCK;
   }
 
   calcDiscountPrice = (): number => {

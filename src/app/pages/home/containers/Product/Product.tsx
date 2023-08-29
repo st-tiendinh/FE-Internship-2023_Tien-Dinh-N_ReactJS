@@ -1,9 +1,9 @@
 import { ReactElement } from 'react';
-import { ProductInterface } from '../../../../core/models/product';
+import { ProductModel } from '../../../../core/models/product';
 import { ProductList } from '../../../../../shared/components';
 
 interface ProductPropTypes {
-  productData: ProductInterface[];
+  productData: ProductModel[];
   setCartItems: (shoppingCart: any) => void;
   children: ReactElement;
 }

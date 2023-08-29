@@ -1,9 +1,9 @@
-import { ProductInterface } from './product';
+import { ProductModel } from './product';
 
-export interface CartItemInterface extends Omit<ProductInterface, 'status'> {
+export interface CartItemModel extends Omit<ProductModel, 'status'> {
   quantity: number;
 }
 
-export interface CartInterface {
-  cartItems: CartItemInterface[];
+export interface CartModel {
+  cartItems: CartItemModel[];
 }

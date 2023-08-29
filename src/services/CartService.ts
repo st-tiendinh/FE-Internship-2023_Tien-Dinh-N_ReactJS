@@ -1,7 +1,7 @@
-import { CartItemInterface, CartInterface } from '../app/core/models/cart';
-import { ProductInterface, ProductStatus } from '../app/core/models/product';
+import { CartItemModel, CartModel } from '../app/core/models/cart';
+import { ProductModel, ProductStatus } from '../app/core/models/product';
 
-export class CartItemService implements CartItemInterface {
+export class CartItemService implements CartItemModel {
   id: number;
   name: string;
   discount: number;
@@ -9,7 +9,7 @@ export class CartItemService implements CartItemInterface {
   imageUrl: string;
   quantity: number;
 
-  constructor(props: CartItemInterface) {
+  constructor(props: CartItemModel) {
     const { id, name, discount, price, imageUrl, quantity } = props;
     this.id = id || 0;
     this.name = name || '';
@@ -28,15 +28,15 @@ export class CartItemService implements CartItemInterface {
   };
 }
 
-export class CartService implements CartInterface {
-  cartItems: CartItemInterface[];
+export class CartService implements CartModel {
+  cartItems: CartItemModel[];
 
-  constructor(cartItems: CartItemInterface[]) {
+  constructor(cartItems: CartItemModel[]) {
     this.cartItems = cartItems;
   }
 
   calcCartAllQuantity = (): number => {
-    return this.cartItems.reduce((sum: number, item: CartItemInterface) => {
+    return this.cartItems.reduce((sum, item) => {
       return sum + item.quantity;
     }, 0);
   };
@@ -44,23 +44,21 @@ export class CartService implements CartInterface {
   calcProductAllTotalPrice = (): number => {
     return parseFloat(
       this.cartItems
-        .reduce((sum: number, item: CartItemInterface) => {
+        .reduce((sum, item) => {
           return sum + item.quantity * item.price * (1 - item.discount / 100);
         }, 0)
         .toFixed(2)
     );
   };
 
-  handleClickChangeQuantity = (id: number, step: number) => {
-    const findProduct = this.cartItems.find((item: CartItemInterface) => item.id === id);
+  handleClickChangeQuantity = (id: number, newQuantity: number) => {
+    const findProduct = this.cartItems.find((item) => item.id === id);
 
     if (findProduct) {
-      let countQuantity = findProduct.quantity;
-      countQuantity += step;
-      if (countQuantity < 1) {
+      if (newQuantity < 1) {
         return this.handleDeleteProduct(findProduct.id);
       } else {
-        return this.cartItems.map((item) => (findProduct.id === item.id ? { ...item, quantity: countQuantity } : item));
+        return this.cartItems.map((item) => (findProduct.id === item.id ? { ...item, quantity: newQuantity } : item));
       }
     }
   };
@@ -69,18 +67,18 @@ export class CartService implements CartInterface {
     // eslint-disable-next-line no-restricted-globals
     const isAcceptDelete = confirm('Do you want to delete this product?!!');
     if (isAcceptDelete) {
-      return this.cartItems.filter((item: CartItemInterface) => item.id !== id);
+      return this.cartItems.filter((item) => item.id !== id);
     } else {
       return this.cartItems;
     }
   };
 
-  handleAddToCart = (id: number, productData: ProductInterface) => {
+  handleAddToCart = (id: number, productData: ProductModel) => {
     if (productData.status !== ProductStatus.OUT_OF_STOCK) {
-      const existedProduct = this.cartItems.find((item: CartItemInterface) => id === item.id);
+      const existedProduct = this.cartItems.find((item) => id === item.id);
 
       if (existedProduct) {
-        return this.cartItems.map((item: CartItemInterface) =>
+        return this.cartItems.map((item) =>
           existedProduct.id === item.id ? { ...item, quantity: item.quantity + 1 } : item
         );
       } else {

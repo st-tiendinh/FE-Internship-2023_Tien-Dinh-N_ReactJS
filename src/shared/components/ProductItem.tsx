@@ -1,12 +1,12 @@
-import { CartItemInterface } from '../../app/core/models/cart';
-import { ProductInterface } from '../../app/core/models/product';
+import { CartItemModel } from '../../app/core/models/cart';
+import { ProductModel } from '../../app/core/models/product';
 import { CartService } from '../../services/CartService';
 import { ProductService } from '../../services/ProductService';
-import { StorageKey, getFromLocalStorage } from '../utlis/localStorage';
+import { StorageKey, getFromLocalStorage } from '../utils/localStorage';
 
 interface ProductItemPropTypes {
   myKey: number;
-  product: ProductInterface;
+  product: ProductModel;
   setCartItems: (shoppingCart: any) => void;
 }
 
@@ -27,7 +27,7 @@ export const ProductItem = ({ myKey, product, setCartItems }: ProductItemPropTyp
             onClick={(e) => {
               e.preventDefault();
               setCartItems(
-                new CartService(getFromLocalStorage<CartItemInterface[]>(StorageKey.Product, [])).handleAddToCart(
+                new CartService(getFromLocalStorage<CartItemModel[]>(StorageKey.Product, [])).handleAddToCart(
                   id,
                   productEntity
                 )

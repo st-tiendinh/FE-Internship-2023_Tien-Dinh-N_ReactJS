@@ -1,20 +1,19 @@
 import { useEffect, useState } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, BrowserRouter } from 'react-router-dom';
 
 import Home from './app/pages/home/Home';
 import Cart from './app/pages/cart/Cart';
 import { Header, Footer } from './shared/components';
-import { CartProvider } from './app/core/contexts/CartContext';
 
 import './stylesheet/style.scss';
 import product1 from './assets/images/product-1.png';
 import product2 from './assets/images/product-2.png';
 import product3 from './assets/images/product-3.png';
 import product4 from './assets/images/product-4.png';
-import { StorageKey, getFromLocalStorage, saveToLocalStorage } from './shared/utlis/localStorage';
+import { StorageKey, getFromLocalStorage, saveToLocalStorage } from './shared/utils/localStorage';
 import { appRoutes } from './app.route';
 
-import { CartItemInterface } from './app/core/models/cart';
+import { CartItemModel } from './app/core/models/cart';
 import { ProductService } from './services/ProductService';
 import { CartService } from './services/CartService';
 
@@ -56,33 +55,33 @@ const data = [
 const productData = data.map((item: any) => new ProductService(item));
 
 function App() {
-  const [cartItems, setCartItems] = useState(getFromLocalStorage<CartItemInterface[]>(StorageKey.Product, []));
+  const [cartItems, setCartItems] = useState(getFromLocalStorage<CartItemModel[]>(StorageKey.Product, []));
 
-  useEffect(() => saveToLocalStorage<CartItemInterface[]>(StorageKey.Product, cartItems), [cartItems]);
+  useEffect(() => saveToLocalStorage<CartItemModel[]>(StorageKey.Product, cartItems), [cartItems]);
 
   return (
     <div className="App">
-      <CartProvider>
+      <BrowserRouter>
         <Header cartTotalQuantity={new CartService(cartItems).calcCartAllQuantity()} />
-      </CartProvider>
-      <main className="main">
-        <Routes>
-          {appRoutes.map(({ path, element }) => {
-            const Page = element;
-            return (
-              <Route
-                key={Date.now()}
-                path={path}
-                element={
-                  (Page === Cart && <Page cartItemsData={cartItems} setCartItems={setCartItems} />) ||
-                  (Page === Home && <Page productData={productData} setCartItems={setCartItems} />)
-                }
-              />
-            );
-          })}
-        </Routes>
-      </main>
-      <Footer />
+        <main className="main">
+          <Routes>
+            {appRoutes.map(({ path, element }) => {
+              const Page = element;
+              return (
+                <Route
+                  key={Date.now()}
+                  path={path}
+                  element={
+                    (Page === Cart && <Page cartData={cartItems} setCartItems={setCartItems} />) ||
+                    (Page === Home && <Page productData={productData} setCartItems={setCartItems} />)
+                  }
+                />
+              );
+            })}
+          </Routes>
+        </main>
+        <Footer />
+      </BrowserRouter>
     </div>
   );
 }

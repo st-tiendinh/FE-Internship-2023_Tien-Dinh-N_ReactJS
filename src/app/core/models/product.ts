@@ -3,7 +3,7 @@ export enum ProductStatus {
   AVAILABLE,
 }
 
-export interface ProductInterface {
+export interface ProductModel {
   id: number;
   name: string;
   discount: number;
