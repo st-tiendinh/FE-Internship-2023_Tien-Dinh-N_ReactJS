@@ -4,11 +4,11 @@ import { ProductItem } from './ProductItem';
 
 interface ProductPropTypes {
   productData: ProductInterface[];
-  onClickAddToCart: (id: number, productData: ProductInterface) => void;
+  setCartItems: (shoppingCart: any) => void;
   children: ReactElement;
 }
 
-export const Product = ({ productData, onClickAddToCart, children }: ProductPropTypes) => {
+export const Product = ({ productData, setCartItems, children }: ProductPropTypes) => {
   return (
     <section className='section section-product'>
       <div className='container'>
@@ -17,7 +17,7 @@ export const Product = ({ productData, onClickAddToCart, children }: ProductProp
         <ul className='product-list row'>
           {/* Product Item */}
           {productData.map((product: ProductInterface, index: number) => {
-            return <ProductItem key={index} product={product} myKey={product.id} onClickAddToCart={onClickAddToCart} />;
+            return <ProductItem key={index} product={product} myKey={product.id} setCartItems={setCartItems} />;
           })}
         </ul>
       </div>

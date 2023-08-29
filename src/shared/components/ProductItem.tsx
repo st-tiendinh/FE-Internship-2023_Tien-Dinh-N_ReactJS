@@ -1,13 +1,16 @@
+import { CartItemInterface } from '../../app/core/models/cart';
 import { ProductInterface } from '../../app/core/models/product';
+import { CartEntity } from '../../services/CartService';
 import { ProductEntity } from '../../services/ProductService';
+import { StorageKey, getFromLocalStorage } from '../utlis/localStorage';
 
 interface ProductItemPropTypes {
   myKey: number;
   product: ProductInterface;
-  onClickAddToCart: (id: number, productEntity: ProductInterface) => void;
+  setCartItems: (shoppingCart: any) => void;
 }
 
-export const ProductItem = ({ myKey, product, onClickAddToCart }: ProductItemPropTypes) => {
+export const ProductItem = ({ myKey, product, setCartItems }: ProductItemPropTypes) => {
   const productEntity = new ProductEntity(product);
   const { id, name, discount, imageUrl, price, status } = productEntity;
 
@@ -23,7 +26,12 @@ export const ProductItem = ({ myKey, product, onClickAddToCart }: ProductItemPro
             className='btn btn-primary'
             onClick={(e) => {
               e.preventDefault();
-              onClickAddToCart(id, productEntity);
+              setCartItems(
+                new CartEntity(getFromLocalStorage<CartItemInterface[]>(StorageKey.Product, [])).handleAddToCart(
+                  id,
+                  productEntity
+                )
+              );
             }}
             disabled={status ? false : true}
           >

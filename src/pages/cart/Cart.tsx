@@ -8,11 +8,10 @@ import { CartItemInterface } from '../../app/core/models/cart';
 
 interface CartPropTypes {
   cartItemsData: CartItemInterface[];
-  onClickChangeQuantity: (id: number, step: number) => void;
-  onClickDeleteProduct: (id: number) => void;
+  setCartItems: (shoppingCart: any) => void;
 }
 
-const Cart = ({ cartItemsData, onClickChangeQuantity, onClickDeleteProduct }: CartPropTypes) => {
+const Cart = ({ cartItemsData, setCartItems }: CartPropTypes) => {
   const shoppingCart = new CartEntity(cartItemsData);
 
   return (
@@ -51,7 +50,7 @@ const Cart = ({ cartItemsData, onClickChangeQuantity, onClickDeleteProduct }: Ca
                             <div className='product-cart-quantity-wrapper'>
                               <button
                                 className='decrease btn btn-step-outline'
-                                onClick={() => onClickChangeQuantity(id, -1)}
+                                onClick={() => setCartItems(shoppingCart.handleClickChangeQuantity(id, -1))}
                               >
                                 -
                               </button>
@@ -65,12 +64,15 @@ const Cart = ({ cartItemsData, onClickChangeQuantity, onClickDeleteProduct }: Ca
                               />
                               <button
                                 className='increase btn btn-step-outline'
-                                onClick={() => onClickChangeQuantity(id, 1)}
+                                onClick={() => setCartItems(shoppingCart.handleClickChangeQuantity(id, 1))}
                               >
                                 +
                               </button>
                             </div>
-                            <span className='btn btn-delete-outline' onClick={() => onClickDeleteProduct(id)}>
+                            <span
+                              className='btn btn-delete-outline'
+                              onClick={() => setCartItems(shoppingCart.handleDeleteProduct(id))}
+                            >
                               Delete
                             </span>
                           </div>

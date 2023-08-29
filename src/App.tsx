@@ -13,7 +13,6 @@ import product4 from './assets/images/product-4.png';
 import { StorageKey, getFromLocalStorage, saveToLocalStorage } from './shared/utlis/localStorage';
 import { appRoutes } from './app.route';
 
-import { ProductInterface, ProductStatus } from './app/core/models/product';
 import { CartItemInterface } from './app/core/models/cart';
 import { ProductEntity } from './services/ProductService';
 import { CartEntity } from './services/CartService';
@@ -56,57 +55,7 @@ const data = [
 const productData = data.map((item: any) => new ProductEntity(item));
 
 function App() {
-  const [cartItems, setCartItems] = useState(getFromLocalStorage<any[]>(StorageKey.Product, []));
-
-  const handleAddToCart = (id: number, productData: ProductInterface) => {
-    if (productData.status !== ProductStatus.OUT_OF_STOCK) {
-      const existedProduct = cartItems.find((item: CartItemInterface) => {
-        return id === item.id;
-      });
-
-      if (existedProduct) {
-        setCartItems(
-          cartItems.map((item: CartItemInterface) => {
-            return existedProduct.id === item.id ? { ...item, quantity: item.quantity + 1 } : item;
-          })
-        );
-      } else {
-        setCartItems([...cartItems, { ...productData, quantity: 1 }]);
-      }
-    }
-  };
-
-  const handleClickChangeQuantity = (id: number, step: number) => {
-    const findProduct = cartItems.find((item: CartItemInterface) => {
-      return item.id === id;
-    });
-
-    if (findProduct) {
-      let countQuantity = findProduct.quantity;
-      countQuantity += step;
-      if (countQuantity < 1) {
-        handleDeleteProduct(findProduct.id);
-      } else {
-        setCartItems(
-          cartItems.map((item: CartItemInterface) => {
-            return findProduct.id === item.id ? { ...item, quantity: countQuantity } : item;
-          })
-        );
-      }
-    }
-  };
-
-  const handleDeleteProduct = (id: number) => {
-    // eslint-disable-next-line no-restricted-globals
-    const isAcceptDelete = confirm('Do you want to delete this product?!!');
-    if (isAcceptDelete) {
-      setCartItems(
-        cartItems.filter((item: CartItemInterface) => {
-          return item.id !== id;
-        })
-      );
-    }
-  };
+  const [cartItems, setCartItems] = useState(getFromLocalStorage<CartItemInterface[]>(StorageKey.Product, []));
 
   useEffect(() => saveToLocalStorage<CartItemInterface[]>(StorageKey.Product, cartItems), [cartItems]);
 
@@ -122,14 +71,8 @@ function App() {
                 key={Date.now()}
                 path={path}
                 element={
-                  (Page === Cart && (
-                    <Page
-                      cartItemsData={cartItems}
-                      onClickChangeQuantity={handleClickChangeQuantity}
-                      onClickDeleteProduct={handleDeleteProduct}
-                    />
-                  )) ||
-                  (Page === Home && <Page productData={productData} onClickAddToCart={handleAddToCart} />)
+                  (Page === Cart && <Page cartItemsData={cartItems} setCartItems={setCartItems} />) ||
+                  (Page === Home && <Page productData={productData} setCartItems={setCartItems} />)
                 }
               />
             );
