@@ -1,18 +1,28 @@
+import { useContext } from 'react';
 import { CartItemModel } from '../../app/core/models/cart';
 import { ProductModel } from '../../app/core/models/product';
 import { CartService } from '../../services/CartService';
 import { ProductService } from '../../services/ProductService';
 import { StorageKey, getFromLocalStorage } from '../utils/localStorage';
+import { CartContext } from '../../app/core/contexts/CartContext';
 
 interface ProductItemPropTypes {
   myKey: number;
   product: ProductModel;
-  setCartItems: (shoppingCart: any) => void;
 }
 
-export const ProductItem = ({ myKey, product, setCartItems }: ProductItemPropTypes) => {
+export const ProductItem = ({ myKey, product }: ProductItemPropTypes) => {
   const productEntity = new ProductService(product);
   const { id, name, discount, imageUrl, price, status } = productEntity;
+
+  const context = useContext(CartContext);
+
+  const handleClickAddToCart = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    context.setCartItems(
+      new CartService(getFromLocalStorage<CartItemModel[]>(StorageKey.Product, [])).handleAddToCart(id, productEntity)
+    );
+  };
 
   return (
     <li key={myKey} className="product-item col col-3 col-md-6 col-sm-6">
@@ -22,19 +32,7 @@ export const ProductItem = ({ myKey, product, setCartItems }: ProductItemPropTyp
           <div className="product-status">
             <span className="badge badge-outline-primary">{status ? 'Available' : 'Out of Stock'}</span>
           </div>
-          <button
-            className="btn btn-primary"
-            onClick={(e) => {
-              e.preventDefault();
-              setCartItems(
-                new CartService(getFromLocalStorage<CartItemModel[]>(StorageKey.Product, [])).handleAddToCart(
-                  id,
-                  productEntity
-                )
-              );
-            }}
-            disabled={status ? false : true}
-          >
+          <button className="btn btn-primary" onClick={handleClickAddToCart} disabled={status ? false : true}>
             Add to cart
           </button>
           {discount ? <span className="badge badge-danger">{discount}%</span> : null}

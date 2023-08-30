@@ -1,12 +1,6 @@
-import { ProductModel } from '../../../app/core/models/product';
 import { Advertisement, Banner, Newsletter, Product, ServiceDetail } from './containers';
 
-interface HomePropTypes {
-  productData: ProductModel[];
-  setCartItems: (shoppingCart: any) => void;
-}
-
-const Home = ({ productData, setCartItems }: HomePropTypes) => {
+const Home = () => {
   return (
     <div className="home-page">
       {/* <!-- Banner section --> */}
@@ -16,7 +10,7 @@ const Home = ({ productData, setCartItems }: HomePropTypes) => {
       <Advertisement />
 
       {/* <!-- Products section --> */}
-      <Product productData={productData} setCartItems={setCartItems}>
+      <Product>
         <div className="section-product-header">
           <h3 className="section-title">Selected just for you</h3>
           <a href="/#" className="btn btn-outline btn-sm-outline">
@@ -29,7 +23,7 @@ const Home = ({ productData, setCartItems }: HomePropTypes) => {
       <ServiceDetail />
 
       {/* <!-- Product in today --> */}
-      <Product productData={productData} setCartItems={setCartItems}>
+      <Product>
         <h3 className="section-title">Products in today</h3>
       </Product>
 

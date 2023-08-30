@@ -1,4 +1,6 @@
+import { useContext } from 'react';
 import { CartItemService, CartService } from '../../../../../services/CartService';
+import { CartContext } from '../../../../core/contexts/CartContext';
 
 interface CartItemPropTypes {
   id: number;
@@ -9,7 +11,6 @@ interface CartItemPropTypes {
   quantity: number;
   cartItemEntity: CartItemService;
   shoppingCart: CartService;
-  setCartItems: (shoppingCart: any) => void;
 }
 
 export const CartItem = ({
@@ -21,8 +22,8 @@ export const CartItem = ({
   quantity,
   cartItemEntity,
   shoppingCart,
-  setCartItems,
 }: CartItemPropTypes) => {
+  const context = useContext(CartContext);
   return (
     <li className="product-cart-item" key={id}>
       <div className="product-cart row">
@@ -43,7 +44,7 @@ export const CartItem = ({
           <div className="product-cart-quantity-wrapper">
             <button
               className="decrease btn btn-step-outline"
-              onClick={() => setCartItems(shoppingCart.handleClickChangeQuantity(id, quantity - 1))}
+              onClick={() => context.setCartItems(shoppingCart.handleClickChangeQuantity(id, quantity - 1))}
             >
               -
             </button>
@@ -57,12 +58,15 @@ export const CartItem = ({
             />
             <button
               className="increase btn btn-step-outline"
-              onClick={() => setCartItems(shoppingCart.handleClickChangeQuantity(id, quantity + 1))}
+              onClick={() => context.setCartItems(shoppingCart.handleClickChangeQuantity(id, quantity + 1))}
             >
               +
             </button>
           </div>
-          <span className="btn btn-delete-outline" onClick={() => setCartItems(shoppingCart.handleDeleteProduct(id))}>
+          <span
+            className="btn btn-delete-outline"
+            onClick={() => context.setCartItems(shoppingCart.handleDeleteProduct(id))}
+          >
             Delete
           </span>
         </div>

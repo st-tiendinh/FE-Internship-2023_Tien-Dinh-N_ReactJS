@@ -3,16 +3,13 @@ import { Link } from 'react-router-dom';
 import cartEmptyImg from '../../../assets/images/cart-empty.png';
 
 import { CartService } from '../../../services/CartService';
-import { CartItemModel } from '../../../app/core/models/cart';
 import { CartList } from './containers/CartList/CartList';
+import { useContext } from 'react';
+import { CartContext } from '../../core/contexts/CartContext';
 
-interface CartPropTypes {
-  cartData: CartItemModel[];
-  setCartItems: (shoppingCart: any) => void;
-}
-
-const Cart = ({ cartData, setCartItems }: CartPropTypes) => {
-  const shoppingCart = new CartService(cartData);
+const Cart = () => {
+  const context = useContext(CartContext);
+  const shoppingCart = new CartService(context.cartItems);
 
   return (
     <div className="cart-page">
@@ -26,7 +23,7 @@ const Cart = ({ cartData, setCartItems }: CartPropTypes) => {
                   <h4 className="section-cart-header-title col col-3">Quantity</h4>
                   <h4 className="section-cart-header-title col col-3">Price</h4>
                 </div>
-                <CartList cartData={cartData} setCartItems={setCartItems} shoppingCart={shoppingCart} />
+                <CartList shoppingCart={shoppingCart} />
               </div>
               <div className="col col-3">
                 <div className="cart">

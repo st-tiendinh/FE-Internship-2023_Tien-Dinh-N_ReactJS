@@ -2,12 +2,13 @@ import { Link } from 'react-router-dom';
 
 import logo from '../../assets/images/shop-logo.svg';
 import mobileLogo from '../../assets/images/mobile-shop-logo.svg';
+import { useContext } from 'react';
+import { CartContext } from '../../app/core/contexts/CartContext';
+import { CartService } from '../../services/CartService';
 
-interface HeaderPropTypes {
-  cartTotalQuantity: number;
-}
-
-export const Header = ({ cartTotalQuantity }: HeaderPropTypes) => {
+export const Header = () => {
+  const context = useContext(CartContext);
+  console.log(context.cartItems);
   return (
     <header className="header bg-dark mt-0">
       <div className="container">
@@ -48,7 +49,7 @@ export const Header = ({ cartTotalQuantity }: HeaderPropTypes) => {
             <li className="header-action-item">
               <Link to="/cart" className="header-action-link">
                 <span className="header-action-quantity" style={{ display: 'flex' }}>
-                  {cartTotalQuantity}
+                  {new CartService(context.cartItems).calcCartAllQuantity()}
                 </span>
                 <i className="ic ic-cart"></i>
               </Link>
@@ -69,7 +70,7 @@ export const Header = ({ cartTotalQuantity }: HeaderPropTypes) => {
             <li className="header-mobile-action-item">
               <Link to="/cart" className="header-action-link">
                 <span className="header-action-quantity" style={{ display: 'flex' }}>
-                  {cartTotalQuantity}
+                  {new CartService(context.cartItems).calcCartAllQuantity()}
                 </span>
                 <i className="ic ic-sm-cart"></i>
               </Link>
