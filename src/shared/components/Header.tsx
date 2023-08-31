@@ -8,7 +8,7 @@ import { CartService } from '../../services/CartService';
 
 export const Header = () => {
   const context = useContext(CartContext);
-  console.log(context.cartItems);
+  
   return (
     <header className="header bg-dark mt-0">
       <div className="container">
