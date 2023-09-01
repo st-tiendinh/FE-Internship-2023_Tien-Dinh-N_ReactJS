@@ -5,5 +5,5 @@ export interface CartItemModel extends Omit<ProductModel, 'status'> {
 }
 
 export interface CartModel {
-  cartItems: CartItemModel[];
+  cart: CartItemModel[];
 }

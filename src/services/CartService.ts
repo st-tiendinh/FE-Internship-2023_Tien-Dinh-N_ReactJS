@@ -1,5 +1,4 @@
 import { CartItemModel, CartModel } from '../app/core/models/cart';
-import { ProductModel, ProductStatus } from '../app/core/models/product';
 
 export class CartItemService implements CartItemModel {
   id: number;
@@ -29,61 +28,25 @@ export class CartItemService implements CartItemModel {
 }
 
 export class CartService implements CartModel {
-  cartItems: CartItemModel[];
+  cart: CartItemModel[];
 
-  constructor(cartItems: CartItemModel[]) {
-    this.cartItems = cartItems;
+  constructor(cart: CartItemModel[]) {
+    this.cart = cart;
   }
 
   calcCartAllQuantity = (): number => {
-    return this.cartItems.reduce((sum, item) => {
+    return this.cart.reduce((sum, item) => {
       return sum + item.quantity;
     }, 0);
   };
 
   calcProductAllTotalPrice = (): number => {
     return parseFloat(
-      this.cartItems
+      this.cart
         .reduce((sum, item) => {
           return sum + item.quantity * item.price * (1 - item.discount / 100);
         }, 0)
         .toFixed(2)
     );
-  };
-
-  handleClickChangeQuantity = (id: number, newQuantity: number) => {
-    const findProduct = this.cartItems.find((item) => item.id === id);
-
-    if (findProduct) {
-      if (newQuantity < 1) {
-        return this.handleDeleteProduct(findProduct.id);
-      } else {
-        return this.cartItems.map((item) => (findProduct.id === item.id ? { ...item, quantity: newQuantity } : item));
-      }
-    }
-  };
-
-  handleDeleteProduct = (id: number) => {
-    // eslint-disable-next-line no-restricted-globals
-    const isAcceptDelete = confirm('Do you want to delete this product?!!');
-    if (isAcceptDelete) {
-      return this.cartItems.filter((item) => item.id !== id);
-    } else {
-      return this.cartItems;
-    }
-  };
-
-  handleAddToCart = (id: number, productData: ProductModel) => {
-    if (productData.status !== ProductStatus.OUT_OF_STOCK) {
-      const existedProduct = this.cartItems.find((item) => id === item.id);
-
-      if (existedProduct) {
-        return this.cartItems.map((item) =>
-          existedProduct.id === item.id ? { ...item, quantity: item.quantity + 1 } : item
-        );
-      } else {
-        return [...this.cartItems, { ...productData, quantity: 1 }];
-      }
-    }
   };
 }

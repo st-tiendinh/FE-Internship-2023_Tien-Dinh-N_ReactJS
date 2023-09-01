@@ -1,29 +1,30 @@
-import { useContext } from 'react';
-import { CartItemService, CartService } from '../../../../../services/CartService';
-import { CartContext } from '../../../../core/contexts/CartContext';
+import { useDispatch } from 'react-redux';
+
+import { CartItemService } from '../../../../../services/CartService';
+import { changeCartItemQuantity, deleteCartItem } from '../../../../../redux/action';
 
 interface CartItemPropTypes {
-  id: number;
-  name: string;
-  imageUrl: string;
-  discount: number;
-  price: number;
-  quantity: number;
   cartItemEntity: CartItemService;
-  shoppingCart: CartService;
 }
 
-export const CartItem = ({
-  id,
-  name,
-  imageUrl,
-  discount,
-  price,
-  quantity,
-  cartItemEntity,
-  shoppingCart,
-}: CartItemPropTypes) => {
-  const context = useContext(CartContext);
+export const CartItem = ({ cartItemEntity }: CartItemPropTypes) => {
+  const { id, name, imageUrl, discount, price, quantity } = cartItemEntity;
+  const dispatch = useDispatch();
+
+  const handleDelete = (id: number) => {
+    if (window.confirm('Do you want to delete this product?!!')) {
+      dispatch(deleteCartItem(id));
+    }
+  };
+
+  const handleChangeQuantity = (id: number, newQuantity: number) => {
+    if (newQuantity < 1) {
+      handleDelete(id);
+    } else {
+      dispatch(changeCartItemQuantity(id, newQuantity));
+    }
+  };
+
   return (
     <li className="product-cart-item" key={id}>
       <div className="product-cart row">
@@ -42,10 +43,7 @@ export const CartItem = ({
         </div>
         <div className="product-cart-action col col-3">
           <div className="product-cart-quantity-wrapper">
-            <button
-              className="decrease btn btn-step-outline"
-              onClick={() => context.setCartItems(shoppingCart.handleClickChangeQuantity(id, quantity - 1))}
-            >
+            <button className="decrease btn btn-step-outline" onClick={() => handleChangeQuantity(id, quantity - 1)}>
               -
             </button>
             <input
@@ -54,18 +52,17 @@ export const CartItem = ({
               min="0"
               name="number"
               value={quantity}
-              onChange={() => {}}
+              onChange={() => {
+                handleChangeQuantity(id, quantity);
+              }}
             />
-            <button
-              className="increase btn btn-step-outline"
-              onClick={() => context.setCartItems(shoppingCart.handleClickChangeQuantity(id, quantity + 1))}
-            >
+            <button className="increase btn btn-step-outline" onClick={() => handleChangeQuantity(id, quantity + 1)}>
               +
             </button>
           </div>
           <span
             className="btn btn-delete-outline"
-            onClick={() => context.setCartItems(shoppingCart.handleDeleteProduct(id))}
+            onClick={() => handleDelete(id)}
           >
             Delete
           </span>

@@ -1,10 +1,10 @@
-import { useContext } from 'react';
-import { CartItemModel } from '../../app/core/models/cart';
-import { ProductModel } from '../../app/core/models/product';
-import { CartService } from '../../services/CartService';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { StateInterface } from '../../redux/reducer';
+import { setCart } from '../../redux/action';
+
 import { ProductService } from '../../services/ProductService';
-import { StorageKey, getFromLocalStorage } from '../utils/localStorage';
-import { CartContext } from '../../app/core/contexts/CartContext';
+import { ProductModel, ProductStatus } from '../../app/core/models/product';
 
 interface ProductItemPropTypes {
   myKey: number;
@@ -15,13 +15,22 @@ export const ProductItem = ({ myKey, product }: ProductItemPropTypes) => {
   const productEntity = new ProductService(product);
   const { id, name, discount, imageUrl, price, status } = productEntity;
 
-  const context = useContext(CartContext);
+  const cart = useSelector((state: StateInterface) => state.cart);
+  const dispatch = useDispatch();
 
-  const handleClickAddToCart = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleClickAddToCart = (event: React.MouseEvent<HTMLButtonElement>, productData: ProductModel) => {
     event.preventDefault();
-    context.setCartItems(
-      new CartService(getFromLocalStorage<CartItemModel[]>(StorageKey.Product, [])).handleAddToCart(id, productEntity)
-    );
+    if (productData.status !== ProductStatus.OUT_OF_STOCK) {
+      const existedProduct = cart.find((item) => id === item.id);
+
+      if (existedProduct) {
+        dispatch(
+          setCart(cart.map((item) => (existedProduct.id === item.id ? { ...item, quantity: item.quantity + 1 } : item)))
+        );
+      } else {
+        dispatch(setCart([...cart, { ...productData, quantity: 1 }]));
+      }
+    }
   };
 
   return (
@@ -32,7 +41,11 @@ export const ProductItem = ({ myKey, product }: ProductItemPropTypes) => {
           <div className="product-status">
             <span className="badge badge-outline-primary">{status ? 'Available' : 'Out of Stock'}</span>
           </div>
-          <button className="btn btn-primary" onClick={handleClickAddToCart} disabled={status ? false : true}>
+          <button
+            className="btn btn-primary"
+            onClick={(e) => handleClickAddToCart(e, product)}
+            disabled={status ? false : true}
+          >
             Add to cart
           </button>
           {discount ? <span className="badge badge-danger">{discount}%</span> : null}
