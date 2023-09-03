@@ -1,31 +1,36 @@
 import { useDispatch, useSelector } from 'react-redux';
 
-import { StateInterface } from '../../redux/reducer';
-import { setCart } from '../../redux/action';
+import { setCart } from '../../redux/actions/cartActions';
 
 import { ProductService } from '../../services/ProductService';
 import { ProductModel, ProductStatus } from '../../app/core/models/product';
+import { RootState } from '../../redux/reducers/rootReducer';
 
 interface ProductItemPropTypes {
-  myKey: number;
   product: ProductModel;
 }
 
-export const ProductItem = ({ myKey, product }: ProductItemPropTypes) => {
+export const ProductItem = ({ product }: ProductItemPropTypes) => {
   const productEntity = new ProductService(product);
   const { id, name, discount, imageUrl, price, status } = productEntity;
-
-  const cart = useSelector((state: StateInterface) => state.cart);
+  const cart = useSelector((state: RootState) => state.cartList.cartItems);
   const dispatch = useDispatch();
 
-  const handleClickAddToCart = (event: React.MouseEvent<HTMLButtonElement>, productData: ProductModel) => {
+  const handleClickAddToCart = (
+    event: React.MouseEvent<HTMLButtonElement>,
+    productData: ProductModel
+  ) => {
     event.preventDefault();
     if (productData.status !== ProductStatus.OUT_OF_STOCK) {
       const existedProduct = cart.find((item) => id === item.id);
 
       if (existedProduct) {
         dispatch(
-          setCart(cart.map((item) => (existedProduct.id === item.id ? { ...item, quantity: item.quantity + 1 } : item)))
+          setCart(
+            cart.map((item) =>
+              existedProduct.id === item.id ? { ...item, quantity: item.quantity + 1 } : item
+            )
+          )
         );
       } else {
         dispatch(setCart([...cart, { ...productData, quantity: 1 }]));
@@ -34,12 +39,14 @@ export const ProductItem = ({ myKey, product }: ProductItemPropTypes) => {
   };
 
   return (
-    <li key={myKey} className="product-item col col-3 col-md-6 col-sm-6">
+    <li key={product.id} className="product-item col col-3 col-md-6 col-sm-6">
       <div className="product">
         <a className="product-link" href="/#" onClick={(e) => e.preventDefault()}>
           <img src={imageUrl} alt={name} className="product-image" />
           <div className="product-status">
-            <span className="badge badge-outline-primary">{status ? 'Available' : 'Out of Stock'}</span>
+            <span className="badge badge-outline-primary">
+              {status ? 'Available' : 'Out of Stock'}
+            </span>
           </div>
           <button
             className="btn btn-primary"
@@ -52,7 +59,9 @@ export const ProductItem = ({ myKey, product }: ProductItemPropTypes) => {
           <div className="product-description">
             <h4 className="product-name">{name}</h4>
             <div className="product-prices">
-              <span className={discount ? 'sale-price active' : 'sale-price'}>{productEntity.calcDiscountPrice()}</span>
+              <span className={discount ? 'sale-price active' : 'sale-price'}>
+                {productEntity.calcDiscountPrice()}
+              </span>
               <span className="original-price">{discount ? '$' + price : ''}</span>
             </div>
           </div>

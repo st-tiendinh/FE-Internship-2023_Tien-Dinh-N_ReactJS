@@ -10,7 +10,6 @@ export const Product = ({ children }: ProductPropTypes) => {
     <section className="section section-product">
       <div className="container">
         {children}
-        {/* Product list */}
         <ProductList />
       </div>
     </section>

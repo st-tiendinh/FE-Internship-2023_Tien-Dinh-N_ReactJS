@@ -1,7 +1,7 @@
 import { useDispatch } from 'react-redux';
 
 import { CartItemService } from '../../../../../services/CartService';
-import { changeCartItemQuantity, deleteCartItem } from '../../../../../redux/action';
+import { changeCartItemQuantity, deleteCartItem } from '../../../../../redux/actions/cartActions';
 
 interface CartItemPropTypes {
   cartItemEntity: CartItemService;

@@ -7,14 +7,13 @@ import { CartList } from './containers/CartList/CartList';
 import cartEmptyImg from '../../../assets/images/cart-empty.png';
 import { StorageKey, saveToLocalStorage } from '../../../shared/utils/localStorage';
 import { CartService } from '../../../services/CartService';
-
-import { StateInterface } from '../../../redux/reducer';
+import { RootState } from '../../../redux/reducers/rootReducer';
 
 const Cart = () => {
-  const cartStore = useSelector((state: StateInterface) => state.cart);
-  const cartEntity = new CartService(cartStore);
+  const storedCart = useSelector((state: RootState) => state.cartList.cartItems);
+  const cartEntity = new CartService(storedCart);
 
-  useEffect(() => saveToLocalStorage(StorageKey.Product, cartStore), [cartStore]);
+  useEffect(() => saveToLocalStorage(StorageKey.Product, storedCart), [storedCart]);
 
   return (
     <div className="cart-page">

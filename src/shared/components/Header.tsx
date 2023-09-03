@@ -5,11 +5,10 @@ import logo from '../../assets/images/shop-logo.svg';
 import mobileLogo from '../../assets/images/mobile-shop-logo.svg';
 
 import { CartService } from '../../services/CartService';
-
-import { StateInterface } from '../../redux/reducer';
+import { RootState } from '../../redux/reducers/rootReducer';
 
 export const Header = () => {
-  const cart = useSelector((state: StateInterface) => state.cart);
+  const cart = useSelector((state: RootState) => state.cartList.cartItems);
 
   return (
     <header className="header bg-dark mt-0">

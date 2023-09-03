@@ -1,15 +1,25 @@
-import { useContext } from 'react';
-import { ProductModel } from '../../app/core/models/product';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+
 import { ProductItem } from './ProductItem';
-import { CartContext } from '../../app/core/contexts/CartContext';
+
+import { ProductModel } from '../../app/core/models/product';
+import { fetchProducts } from '../../redux/actions/productActions';
+import { ProductService } from '../../services/ProductService';
 
 export const ProductList = () => {
-  const context = useContext(CartContext);
+  const product = useSelector((state: any) => state.productList.productItems);
+  const dispatch = useDispatch<any>();
+  const productData = product.map((item: ProductModel) => new ProductService(item));
+
+  useEffect(() => {
+    dispatch(fetchProducts());
+  }, [dispatch]);
+
   return (
     <ul className="product-list row">
-      {/* Product Item */}
-      {context.productData.map((product: ProductModel, index: number) => {
-        return <ProductItem key={index} product={product} myKey={product.id} />;
+      {productData.map((product: ProductModel, index: number) => {
+        return <ProductItem key={index} product={product} />;
       })}
     </ul>
   );
