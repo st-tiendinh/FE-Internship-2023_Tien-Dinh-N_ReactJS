@@ -3,7 +3,7 @@ import { CartItemModel } from '../../app/core/models/cart';
 
 import { CHANGE_CART_ITEM_QUANTITY, DELETE_CART_ITEM, SET_CART } from '../constants/cartTypes';
 
-export interface StateInterface {
+export interface CartStateInterface {
   cartItems: CartItemModel[];
 }
 
@@ -12,7 +12,7 @@ const initialState = {
 };
 
 export const cartReducer = (state = initialState, action: any) => {
-  const objReducer: Record<string, () => StateInterface> = {
+  const objReducer: Record<string, () => CartStateInterface> = {
     [SET_CART]: () => ({
       ...state,
       cartItems: action.payload.cartItems,

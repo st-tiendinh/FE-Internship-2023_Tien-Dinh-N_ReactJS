@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ProductItem } from './ProductItem';
 
 import { ProductModel } from '../../app/core/models/product';
-import { fetchProducts } from '../../redux/actions/productActions';
+import { fetchProductApi } from '../../redux/actions/productActions';
 import { ProductService } from '../../services/ProductService';
 
 export const ProductList = () => {
@@ -13,7 +13,7 @@ export const ProductList = () => {
   const productData = product.map((item: ProductModel) => new ProductService(item));
 
   useEffect(() => {
-    dispatch(fetchProducts());
+    dispatch(fetchProductApi());
   }, [dispatch]);
 
   return (
