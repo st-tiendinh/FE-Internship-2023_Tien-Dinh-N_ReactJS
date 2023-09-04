@@ -3,22 +3,22 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { ProductItem } from './ProductItem';
 
-import { ProductModel } from '../../app/core/models/product';
-import { fetchProductApi } from '../../redux/actions/productActions';
+import { ProductProps } from '../../app/core/models/product';
+import { fetchProductDataFromApi } from '../../redux/actions/productActions';
 import { ProductService } from '../../services/ProductService';
 
 export const ProductList = () => {
   const product = useSelector((state: any) => state.productList.productItems);
   const dispatch = useDispatch<any>();
-  const productData = product.map((item: ProductModel) => new ProductService(item));
+  const productData = product.map((item: ProductProps) => new ProductService(item));
 
   useEffect(() => {
-    dispatch(fetchProductApi());
+    dispatch(fetchProductDataFromApi());
   }, [dispatch]);
 
   return (
     <ul className="product-list row">
-      {productData.map((product: ProductModel, index: number) => {
+      {productData.map((product: ProductProps, index: number) => {
         return <ProductItem key={index} product={product} />;
       })}
     </ul>

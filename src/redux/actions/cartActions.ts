@@ -1,7 +1,7 @@
-import { CartItemModel } from '../../app/core/models/cart';
+import { CartItemProps } from '../../app/core/models/cart';
 import { CHANGE_CART_ITEM_QUANTITY, DELETE_CART_ITEM, SET_CART } from '../constants/cartTypes';
 
-export const setCart = (cartItems: CartItemModel[]) => {
+export const setCart = (cartItems: CartItemProps[]) => {
   return {
     type: SET_CART,
     payload: { cartItems },

@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { CartItem } from '../CartItem/CartItem';
 
 import { CartItemService } from '../../../../../services/CartService';
-import { CartItemModel } from '../../../../core/models/cart';
+import { CartItemProps } from '../../../../core/models/cart';
 import { RootState } from '../../../../../redux/reducers/rootReducer';
 
 export const CartList = () => {
@@ -11,7 +11,7 @@ export const CartList = () => {
 
   return (
     <ul className="product-cart-list">
-      {cart.map((item: CartItemModel) => {
+      {cart.map((item: CartItemProps) => {
         const cartItemEntity = new CartItemService(item);
         return <CartItem key={item.id} cartItemEntity={cartItemEntity} />;
       })}

@@ -1,18 +1,18 @@
 import { StorageKey, getFromLocalStorage } from '../../shared/utils/localStorage';
-import { CartItemModel } from '../../app/core/models/cart';
+import { CartItemProps } from '../../app/core/models/cart';
 
 import { CHANGE_CART_ITEM_QUANTITY, DELETE_CART_ITEM, SET_CART } from '../constants/cartTypes';
 
-export interface CartStateInterface {
-  cartItems: CartItemModel[];
+export interface CartStateProps {
+  cartItems: CartItemProps[];
 }
 
 const initialState = {
-  cartItems: getFromLocalStorage<CartItemModel[]>(StorageKey.Product, []),
+  cartItems: getFromLocalStorage<CartItemProps[]>(StorageKey.Product, []),
 };
 
 export const cartReducer = (state = initialState, action: any) => {
-  const objReducer: Record<string, () => CartStateInterface> = {
+  const objReducer: Record<string, () => CartStateProps> = {
     [SET_CART]: () => ({
       ...state,
       cartItems: action.payload.cartItems,

@@ -1,19 +1,19 @@
-import { ProductModel } from '../../app/core/models/product';
-import { FETCH_PRODUCT_DATA } from '../constants/productTypes';
+import { ProductProps } from '../../app/core/models/product';
+import { SET_PRODUCT_DATA } from '../constants/productTypes';
 
-export const fetchProductData = (data: ProductModel[], error: string | null) => {
+export const setProductData = (data: ProductProps[], error: string | null) => {
   return {
-    type: FETCH_PRODUCT_DATA,
+    type: SET_PRODUCT_DATA,
     payload: { data, error },
   };
 };
 
-export const fetchProductApi = () => async (dispatch: any) => {
+export const fetchProductDataFromApi = () => async (dispatch: any) => {
   try {
     const response = await fetch('./data.json');
     const data = await response.json();
-    dispatch(fetchProductData(data, null));
+    dispatch(setProductData(data, null));
   } catch (error: any) {
-    dispatch(fetchProductData([], error.message));
+    dispatch(setProductData([], error.message));
   }
 };

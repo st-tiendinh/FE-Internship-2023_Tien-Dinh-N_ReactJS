@@ -1,6 +1,6 @@
-import { CartItemModel, CartModel } from '../app/core/models/cart';
+import { CartItemProps, CartProps } from '../app/core/models/cart';
 
-export class CartItemService implements CartItemModel {
+export class CartItemService implements CartItemProps {
   id: number;
   name: string;
   discount: number;
@@ -8,7 +8,7 @@ export class CartItemService implements CartItemModel {
   imageUrl: string;
   quantity: number;
 
-  constructor(props: CartItemModel) {
+  constructor(props: CartItemProps) {
     const { id, name, discount, price, imageUrl, quantity } = props;
     this.id = id || 0;
     this.name = name || '';
@@ -27,10 +27,10 @@ export class CartItemService implements CartItemModel {
   };
 }
 
-export class CartService implements CartModel {
-  cart: CartItemModel[];
+export class CartService implements CartProps {
+  cart: CartItemProps[];
 
-  constructor(cart: CartItemModel[]) {
+  constructor(cart: CartItemProps[]) {
     this.cart = cart;
   }
 

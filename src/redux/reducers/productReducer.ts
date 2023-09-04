@@ -1,8 +1,8 @@
-import { ProductModel } from '../../app/core/models/product';
-import { FETCH_PRODUCT_DATA } from '../constants/productTypes';
+import { ProductProps } from '../../app/core/models/product';
+import { SET_PRODUCT_DATA } from '../constants/productTypes';
 
-export interface ProductStateInterface {
-  productItems: ProductModel[];
+export interface ProductStateProps {
+  productItems: ProductProps[];
   error: string | null;
 }
 
@@ -12,8 +12,8 @@ const initialState = {
 };
 
 export const productReducer = (state = initialState, action: any) => {
-  const objReducer: Record<string, () => ProductStateInterface> = {
-    [FETCH_PRODUCT_DATA]: () => ({
+  const objReducer: Record<string, () => ProductStateProps> = {
+    [SET_PRODUCT_DATA]: () => ({
       ...state,
       productItems: action.payload.data,
       error: action.payload.error,

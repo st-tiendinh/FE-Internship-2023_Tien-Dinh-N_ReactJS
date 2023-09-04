@@ -3,11 +3,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setCart } from '../../redux/actions/cartActions';
 
 import { ProductService } from '../../services/ProductService';
-import { ProductModel, ProductStatus } from '../../app/core/models/product';
+import { ProductProps, ProductStatus } from '../../app/core/models/product';
 import { RootState } from '../../redux/reducers/rootReducer';
 
 interface ProductItemPropTypes {
-  product: ProductModel;
+  product: ProductProps;
 }
 
 export const ProductItem = ({ product }: ProductItemPropTypes) => {
@@ -18,7 +18,7 @@ export const ProductItem = ({ product }: ProductItemPropTypes) => {
 
   const handleClickAddToCart = (
     event: React.MouseEvent<HTMLButtonElement>,
-    productData: ProductModel
+    productData: ProductProps
   ) => {
     event.preventDefault();
     if (productData.status !== ProductStatus.OUT_OF_STOCK) {
