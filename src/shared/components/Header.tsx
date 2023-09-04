@@ -33,8 +33,8 @@ export const Header = () => {
     <header
       className={
         'header ' +
-        (location.pathname === '/cart' ? 'header-scroll bg-dark mt-0' : '') +
-        (scrolling ? 'header-scroll bg-light' : '')
+        (location.pathname === '/' && scrolling ? 'header-scroll bg-light' : '') +
+        (location.pathname === '/cart' ? 'bg-dark mt-0' : '')
       }
     >
       <div className="container">
@@ -44,12 +44,18 @@ export const Header = () => {
               <img
                 src={logo}
                 alt="E-Shop"
-                className={'logo-img ' + (scrolling ? 'd-none' : 'd-block')}
+                className={
+                  'logo-img ' +
+                  (location.pathname === '/cart' ? 'd-block' : scrolling ? 'd-none' : 'd-block')
+                }
               />
               <img
                 src={mobileLogo}
                 alt="E-Shop"
-                className={'mobile-logo-img ' + (scrolling ? 'd-block' : 'd-none')}
+                className={
+                  'mobile-logo-img ' +
+                  (location.pathname === '/cart' ? 'd-none' : scrolling ? 'd-block' : 'd-none')
+                }
               />
             </Link>
           </h1>
@@ -74,7 +80,12 @@ export const Header = () => {
             </ul>
           </nav>
 
-          <ul className={'header-action-list ' + (scrolling ? 'd-none' : 'd-flex')}>
+          <ul
+            className={
+              'header-action-list ' +
+              (location.pathname === '/cart' ? 'd-flex' : scrolling ? 'd-none' : 'd-flex')
+            }
+          >
             <li className="header-action-item">
               <a href="/#" className="header-action-link">
                 <i className="ic ic-magnifying-glass"></i>
@@ -95,7 +106,12 @@ export const Header = () => {
             </li>
           </ul>
 
-          <ul className={'header-mobile-action-list ' + (scrolling ? 'd-flex' : 'd-none')}>
+          <ul
+            className={
+              'header-mobile-action-list ' +
+              (location.pathname === '/cart' ? 'd-none' : scrolling ? 'd-flex' : 'd-none')
+            }
+          >
             <li className="header-mobile-action-item">
               <a href="/#" className="header-action-link">
                 <i className="ic ic-sm-magnifying-glass"></i>
