@@ -1,8 +1,10 @@
+import { useLocation } from 'react-router-dom';
 import logo from '../../assets/images/shop-logo.svg';
 
 export const Footer = () => {
+  const location = useLocation();
   return (
-    <footer className="footer">
+    <footer className={'footer ' + (location.pathname === '/cart' ? 'd-none' : '')}>
       <div className="main-footer">
         <div className="container">
           <div className="row">
@@ -14,8 +16,8 @@ export const Footer = () => {
               </div>
 
               <p className="main-footer-desc">
-                House My Brand designs clothing for the young, the old &everyone in between – but most importantly, for
-                the fashionable
+                House My Brand designs clothing for the young, the old &everyone in between – but
+                most importantly, for the fashionable
               </p>
 
               <ul className="social-list">

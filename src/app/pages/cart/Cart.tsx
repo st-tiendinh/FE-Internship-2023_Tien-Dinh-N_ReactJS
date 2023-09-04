@@ -21,20 +21,33 @@ const Cart = () => {
         <section className="section section-cart">
           {cartEntity.cart?.length ? (
             <div className="row">
-              <div className="col col-9">
-                <div className="section-cart-header row">
-                  <h4 className="section-cart-header-title col col-6">Product</h4>
-                  <h4 className="section-cart-header-title col col-3">Quantity</h4>
-                  <h4 className="section-cart-header-title col col-3">Price</h4>
+              <div className="col col-9 col-md-12">
+                <div className="section-cart-header">
+                  <div className="row">
+                    <div className="col col-6">
+                      <h4 className="section-cart-header-title">Product</h4>
+                    </div>
+
+                    <div className="col col-3">
+                      <h4 className="section-cart-header-title text-center">Quantity</h4>
+                    </div>
+                    
+                    <div className="col col-3">
+                      <h4 className="section-cart-header-title text-center">Price</h4>
+                    </div>
+                  </div>
                 </div>
                 <CartList />
               </div>
-              <div className="col col-3">
+
+              <div className="col col-3 col-md-12">
                 <div className="cart">
                   <div className="cart-checkout">
                     <div className="cart-checkout-info">
                       <h4 className="cart-checkout-total-title">Total</h4>
-                      <span className="cart-checkout-total-price">${cartEntity.calcProductAllTotalPrice()}</span>
+                      <span className="cart-checkout-total-price">
+                        ${cartEntity.calcProductAllTotalPrice()}
+                      </span>
                     </div>
                     <span className="btn btn-checkout-primary">Buy now</span>
                   </div>

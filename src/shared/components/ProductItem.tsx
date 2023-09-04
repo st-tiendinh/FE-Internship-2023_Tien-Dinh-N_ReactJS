@@ -59,8 +59,8 @@ export const ProductItem = ({ product }: ProductItemPropTypes) => {
           <div className="product-description">
             <h4 className="product-name">{name}</h4>
             <div className="product-prices">
-              <span className={discount ? 'sale-price active' : 'sale-price'}>
-                {productEntity.calcDiscountPrice()}
+              <span className={'sale-price ' + (discount ? 'active' : '')}>
+                ${productEntity.calcDiscountPrice()}
               </span>
               <span className="original-price">{discount ? '$' + price : ''}</span>
             </div>

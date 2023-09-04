@@ -30,5 +30,37 @@
     "price": 119.99,
     "imageUrl": "https://i.ibb.co/v3kj7jR/product-4.png",
     "status": 0
+  },
+  {
+    "id": 5,
+    "name": "T-Shirt Summer Vibes",
+    "discount": 0,
+    "price": 119.99,
+    "imageUrl": "https://i.ibb.co/v3kj7jR/product-4.png",
+    "status": 1
+  },
+  {
+    "id": 6,
+    "name": "T-Shirt Summer Vibes",
+    "discount": 30,
+    "price": 79.99,
+    "imageUrl": "https://i.ibb.co/s23DhjT/product-3.png",
+    "status": 1
+  },
+  {
+    "id": 7,
+    "name": "T-Shirt Summer Vibes",
+    "discount": 0,
+    "price": 119.99,
+    "imageUrl": "https://i.ibb.co/g65rfwC/product-2.png",
+    "status": 0
+  },
+  {
+    "id": 8,
+    "name": "T-Shirt Summer Vibes",
+    "discount": 30,
+    "price": 119.99,
+    "imageUrl": "https://i.ibb.co/NKnWsfm/product-1.png",
+    "status": 1
   }
 ]
