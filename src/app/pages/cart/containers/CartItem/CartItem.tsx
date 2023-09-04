@@ -1,27 +1,58 @@
+import React, { useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { CartItemService } from '../../../../../services/CartService';
 import { changeCartItemQuantity, deleteCartItem } from '../../../../../redux/actions/cartActions';
 
 interface CartItemPropTypes {
-  cartItemEntity: CartItemService;
+  id: number;
+  name: string;
+  price: number;
+  discount: number;
+  imageUrl: string;
+  quantity: number;
+  discountPrice: number;
+  productTotalPrice: number;
 }
 
-export const CartItem = ({ cartItemEntity }: CartItemPropTypes) => {
-  const { id, name, imageUrl, discount, price, quantity } = cartItemEntity;
+export const CartItem = ({
+  id,
+  name,
+  price,
+  discount,
+  imageUrl,
+  quantity,
+  discountPrice,
+  productTotalPrice,
+}: CartItemPropTypes) => {
+  const [inputQuantity, setInputQuantity] = useState(quantity);
+  const inputRef = useRef<HTMLInputElement>(null);
   const dispatch = useDispatch();
 
   const handleDelete = (id: number) => {
     if (window.confirm('Do you want to delete this product?!!')) {
       dispatch(deleteCartItem(id));
     }
+    setInputQuantity(quantity);
   };
 
   const handleChangeQuantity = (id: number, newQuantity: number) => {
+    setInputQuantity(newQuantity);
     if (newQuantity < 1) {
       handleDelete(id);
     } else {
       dispatch(changeCartItemQuantity(id, newQuantity));
+    }
+  };
+
+  const handleChangeInput = () => {
+    if (!Number.isNaN(+inputRef.current!.value)) {
+      setInputQuantity(+inputRef.current!.value);
+    }
+  };
+
+  const handleSubmitByEnter = (e: React.KeyboardEvent<HTMLInputElement>, id: number) => {
+    if (e.key === 'Enter') {
+      handleChangeQuantity(id, inputQuantity);
     }
   };
 
@@ -36,7 +67,7 @@ export const CartItem = ({ cartItemEntity }: CartItemPropTypes) => {
                 <h4 className="product-cart-name">{name}</h4>
                 <div className="product-cart-prices">
                   <span className={'sale-price ' + (discount ? 'active' : '')}>
-                    ${cartItemEntity.calcDiscountPrice()}
+                    ${discountPrice}
                   </span>
                   <span className="original-price">{discount ? '$' + price : ''}</span>
                 </div>
@@ -57,13 +88,14 @@ export const CartItem = ({ cartItemEntity }: CartItemPropTypes) => {
                     </button>
                     <input
                       className="product-cart-quantity-input"
-                      type="number"
+                      type="text"
+                      ref={inputRef}
                       min="0"
                       name="number"
-                      value={quantity}
-                      onChange={() => {
-                        handleChangeQuantity(id, quantity);
-                      }}
+                      value={inputQuantity}
+                      onChange={handleChangeInput}
+                      onKeyUp={(e) => handleSubmitByEnter(e, id)}
+                      onBlur={() => handleChangeQuantity(id, inputQuantity)}
                     />
                     <button
                       className="increase btn btn-step-outline"
@@ -80,9 +112,7 @@ export const CartItem = ({ cartItemEntity }: CartItemPropTypes) => {
 
               <div className="col col-6 col-sm-12">
                 <div className="product-cart-total">
-                  <p className="product-cart-total-price text-center">
-                    ${cartItemEntity.calcProductTotalPrice()}
-                  </p>
+                  <p className="product-cart-total-price text-center">${productTotalPrice}</p>
                 </div>
               </div>
             </div>

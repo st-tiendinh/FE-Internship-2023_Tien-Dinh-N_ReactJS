@@ -13,7 +13,20 @@ export const CartList = () => {
     <ul className="product-cart-list">
       {cart.map((item: CartItemProps) => {
         const cartItemEntity = new CartItemService(item);
-        return <CartItem key={item.id} cartItemEntity={cartItemEntity} />;
+        const { id, name, imageUrl, discount, price, quantity } = cartItemEntity;
+        return (
+          <CartItem
+            key={id}
+            id={id}
+            name={name}
+            price={price}
+            discount={discount}
+            imageUrl={imageUrl}
+            quantity={quantity}
+            discountPrice={cartItemEntity.calcDiscountPrice()}
+            productTotalPrice={cartItemEntity.calcProductTotalPrice()}
+          />
+        );
       })}
     </ul>
   );
