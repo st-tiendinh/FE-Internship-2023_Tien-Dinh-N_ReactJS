@@ -6,7 +6,7 @@ import logo from '../../assets/images/shop-logo.svg';
 import mobileLogo from '../../assets/images/mobile-shop-logo.svg';
 
 import { CartService } from '../../services/CartService';
-import { RootState } from '../../redux/reducers/rootReducer';
+import { RootState } from '../../redux/reducers/root';
 
 export const Header = () => {
   const [scrolling, setScrolling] = useState(false);

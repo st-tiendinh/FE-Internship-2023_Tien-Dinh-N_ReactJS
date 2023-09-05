@@ -1,5 +1,5 @@
 import { CartItemProps } from '../../app/core/models/cart';
-import { CHANGE_CART_ITEM_QUANTITY, DELETE_CART_ITEM, SET_CART } from '../constants/cartTypes';
+import { CHANGE_CART_ITEM_QUANTITY, DELETE_CART_ITEM, SET_CART } from '../types/cart';
 
 export const setCart = (cartItems: CartItemProps[]) => {
   return {

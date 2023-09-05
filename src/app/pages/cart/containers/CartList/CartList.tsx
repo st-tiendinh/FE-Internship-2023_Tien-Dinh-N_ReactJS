@@ -4,7 +4,7 @@ import { CartItem } from '../CartItem/CartItem';
 
 import { CartItemService } from '../../../../../services/CartService';
 import { CartItemProps } from '../../../../core/models/cart';
-import { RootState } from '../../../../../redux/reducers/rootReducer';
+import { RootState } from '../../../../../redux/reducers/root';
 
 export const CartList = () => {
   const cart = useSelector((state: RootState) => state.cartList.cartItems);

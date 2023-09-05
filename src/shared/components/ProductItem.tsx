@@ -1,19 +1,19 @@
 import { useDispatch, useSelector } from 'react-redux';
 
-import { setCart } from '../../redux/actions/cartActions';
+import { setCart } from '../../redux/actions/cart';
 
 import { ProductService } from '../../services/ProductService';
 import { ProductProps, ProductStatus } from '../../app/core/models/product';
-import { RootState } from '../../redux/reducers/rootReducer';
+import { RootState } from '../../redux/reducers/root';
 import { useEffect } from 'react';
 import { StorageKey, saveToLocalStorage } from '../utils/localStorage';
 
 interface ProductItemPropTypes {
-  product: ProductProps;
+  productItem: ProductProps;
 }
 
-export const ProductItem = ({ product }: ProductItemPropTypes) => {
-  const productEntity = new ProductService(product);
+export const ProductItem = ({ productItem }: ProductItemPropTypes) => {
+  const productEntity = new ProductService(productItem);
   const { id, name, discount, imageUrl, price, status } = productEntity;
   const cart = useSelector((state: RootState) => state.cartList.cartItems);
   const dispatch = useDispatch();
@@ -25,7 +25,6 @@ export const ProductItem = ({ product }: ProductItemPropTypes) => {
     event.preventDefault();
     if (productData.status !== ProductStatus.OUT_OF_STOCK) {
       const existedProduct = cart.find((item) => id === item.id);
-
       if (existedProduct) {
         dispatch(
           setCart(
@@ -41,11 +40,11 @@ export const ProductItem = ({ product }: ProductItemPropTypes) => {
   };
 
   useEffect(() => {
-    saveToLocalStorage(StorageKey.Product, cart)
-  }, [cart])
+    saveToLocalStorage(StorageKey.Product, cart);
+  }, [cart]);
 
   return (
-    <li key={product.id} className="product-item col col-3 col-md-6 col-sm-6">
+    <li key={id} className="product-item col col-3 col-md-6 col-sm-6">
       <div className="product">
         <a className="product-link" href="/#" onClick={(e) => e.preventDefault()}>
           <img src={imageUrl} alt={name} className="product-image" />
@@ -56,7 +55,7 @@ export const ProductItem = ({ product }: ProductItemPropTypes) => {
           </div>
           <button
             className="btn btn-primary"
-            onClick={(e) => handleClickAddToCart(e, product)}
+            onClick={(e) => handleClickAddToCart(e, productItem)}
             disabled={status ? false : true}
           >
             Add to cart

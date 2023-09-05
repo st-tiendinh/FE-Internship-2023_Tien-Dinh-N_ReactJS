@@ -7,7 +7,7 @@ import { CartList } from './containers/CartList/CartList';
 import cartEmptyImg from '../../../assets/images/cart-empty.png';
 import { StorageKey, saveToLocalStorage } from '../../../shared/utils/localStorage';
 import { CartService } from '../../../services/CartService';
-import { RootState } from '../../../redux/reducers/rootReducer';
+import { RootState } from '../../../redux/reducers/root';
 
 const Cart = () => {
   const storedCart = useSelector((state: RootState) => state.cartList.cartItems);

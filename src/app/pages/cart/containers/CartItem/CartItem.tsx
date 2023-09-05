@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { changeCartItemQuantity, deleteCartItem } from '../../../../../redux/actions/cartActions';
+import { changeCartItemQuantity, deleteCartItem } from '../../../../../redux/actions/cart';
 
 interface CartItemPropTypes {
   id: number;

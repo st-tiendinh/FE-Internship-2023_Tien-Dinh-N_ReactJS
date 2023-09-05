@@ -1,5 +1,5 @@
 import { ProductProps } from '../../app/core/models/product';
-import { SET_PRODUCT_DATA } from '../constants/productTypes';
+import { SET_PRODUCT_DATA } from '../types/product';
 
 export interface ProductStateProps {
   productItems: ProductProps[];
