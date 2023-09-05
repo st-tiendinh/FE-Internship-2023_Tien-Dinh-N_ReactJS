@@ -47,7 +47,7 @@ export const ProductItem = ({ productItem }: ProductItemPropTypes) => {
     <li key={id} className="product-item col col-3 col-md-6 col-sm-6">
       <div className="product">
         <a className="product-link" href="/#" onClick={(e) => e.preventDefault()}>
-          <img src={imageUrl} alt={name} className="product-image" />
+          <img src={imageUrl} alt={name} className="product-image" loading="lazy" />
           <div className="product-status">
             <span className="badge badge-outline-primary">
               {status ? 'Available' : 'Out of Stock'}
