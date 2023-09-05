@@ -1,16 +1,6 @@
-import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-
 import { Advertisement, Banner, Newsletter, Product, ServiceDetail } from './containers';
-import { fetchProductDataFromApi } from '../../../redux/actions/product';
 
 const Home = () => {
-  const dispatch = useDispatch<any>();
-
-  useEffect(() => {
-    dispatch(fetchProductDataFromApi());
-  }, [dispatch]);
-
   return (
     <div className="home-page">
       {/* <!-- Banner section --> */}
