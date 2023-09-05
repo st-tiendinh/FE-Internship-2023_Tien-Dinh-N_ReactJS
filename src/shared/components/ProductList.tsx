@@ -2,6 +2,7 @@ import { useSelector } from 'react-redux';
 
 import { ProductItem } from './ProductItem';
 import { Error } from './Error';
+
 import { ProductProps } from '../../app/core/models/product';
 
 interface ProductListPropTypes {
