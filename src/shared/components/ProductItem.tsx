@@ -5,6 +5,8 @@ import { setCart } from '../../redux/actions/cartActions';
 import { ProductService } from '../../services/ProductService';
 import { ProductProps, ProductStatus } from '../../app/core/models/product';
 import { RootState } from '../../redux/reducers/rootReducer';
+import { useEffect } from 'react';
+import { StorageKey, saveToLocalStorage } from '../utils/localStorage';
 
 interface ProductItemPropTypes {
   product: ProductProps;
@@ -37,6 +39,10 @@ export const ProductItem = ({ product }: ProductItemPropTypes) => {
       }
     }
   };
+
+  useEffect(() => {
+    saveToLocalStorage(StorageKey.Product, cart)
+  }, [cart])
 
   return (
     <li key={product.id} className="product-item col col-3 col-md-6 col-sm-6">
