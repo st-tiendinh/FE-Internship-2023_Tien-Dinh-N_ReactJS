@@ -1,5 +1,9 @@
-import productNotFound from '../../assets/images/product-not-found.jpg';
-
 export const Error = () => {
-  return <img src={productNotFound} style={{ width: '100%' }} alt="" />;
+  return (
+    <div className="error-wrapper">
+      <a href="/" className="btn btn-outline-primary">
+        Try to reload
+      </a>
+    </div>
+  );
 };
