@@ -17,20 +17,11 @@ export const ProductList = ({ productData }: ProductListPropTypes) => {
       {error ? (
         <Error />
       ) : loading ? (
-        <>
-          <li className="col col-3 col-md-6 col-sm-6">
+        Array.from({ length: 4 }, (_, index) => (
+          <li key={index} className="col col-3 col-md-6 col-sm-6">
             <div className="skeleton"></div>
           </li>
-          <li className="col col-3 col-md-6 col-sm-6">
-            <div className="skeleton"></div>
-          </li>
-          <li className="col col-3 col-md-6 col-sm-6">
-            <div className="skeleton"></div>
-          </li>
-          <li className="col col-3 col-md-6 col-sm-6">
-            <div className="skeleton"></div>
-          </li>
-        </>
+        ))
       ) : (
         productData.map((item: ProductProps) => <ProductItem key={item.id} productItem={item} />)
       )}
