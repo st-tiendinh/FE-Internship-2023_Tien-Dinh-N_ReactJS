@@ -1,4 +1,26 @@
+import ServiceItem from './components/ServiceItem';
+
 export const Banner = () => {
+  const serviceData = [
+    {
+      id: 1,
+      title: 'Free Shipping',
+      description: 'On purchases over $199',
+      icon: 'ic-free-shipping-1',
+    },
+    {
+      id: 2,
+      title: '99% Satisfied Customers',
+      description: "Our clients' opinions speak for themselves",
+      icon: 'ic-happy-face',
+    },
+    {
+      id: 3,
+      title: 'Originality Guaranteed',
+      description: '30 days warranty for each product from our store',
+      icon: 'ic-guarantee-1',
+    },
+  ];
   return (
     <section className="section section-banner">
       <div className="banner">
@@ -19,47 +41,14 @@ export const Banner = () => {
 
       {/* <!-- Services --> */}
       <ul className="service-list">
-        <li className="service-item">
-          <div className="service">
-            <div className="service-icon">
-              <span className="service-icon-bg">
-                <i className="ic ic-free-shipping-1"></i>
-              </span>
-            </div>
-            <div className="service-description">
-              <h4 className="service-title">Free Shipping</h4>
-              <p className="service-text">On purchases over $199</p>
-            </div>
-          </div>
-        </li>
-
-        <li className="service-item">
-          <div className="service">
-            <div className="service-icon">
-              <span className="service-icon-bg">
-                <i className="ic ic-happy-face"></i>
-              </span>
-            </div>
-            <div className="service-description">
-              <h4 className="service-title">99% Satisfied Customers</h4>
-              <p className="service-text">Our clients' opinions speak for themselves</p>
-            </div>
-          </div>
-        </li>
-
-        <li className="service-item">
-          <div className="service">
-            <div className="service-icon">
-              <span className="service-icon-bg">
-                <i className="ic ic-guarantee-1"></i>
-              </span>
-            </div>
-            <div className="service-description">
-              <h4 className="service-title">Originality Guaranteed</h4>
-              <p className="service-text">30 days warranty for each product from our store</p>
-            </div>
-          </div>
-        </li>
+        {serviceData.map((item) => (
+          <ServiceItem
+            key={item.id}
+            title={item.title}
+            description={item.description}
+            icon={item.icon}
+          />
+        ))}
       </ul>
     </section>
   );

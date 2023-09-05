@@ -140,6 +140,8 @@
         top: 120px;
 
         &-checkout {
+          display: flex;
+          flex-direction: column;
           padding: 24px;
           background: #fff;
           border: 1px solid #ccc;
@@ -161,6 +163,13 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 10px;
+            width: 100%;
+          }
+
+          .btn.btn-outline-primary {
+            width: 100%;
+            margin-bottom: 10px;
+            padding: 14px 0;
           }
         }
 
@@ -249,7 +258,7 @@
           padding: 0;
         }
       }
-      
+
       .cart {
         &-empty {
           &-img {

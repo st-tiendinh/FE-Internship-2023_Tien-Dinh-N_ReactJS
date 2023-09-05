@@ -31,7 +31,7 @@ const Cart = () => {
                     <div className="col col-3">
                       <h4 className="section-cart-header-title text-center">Quantity</h4>
                     </div>
-                    
+
                     <div className="col col-3">
                       <h4 className="section-cart-header-title text-center">Price</h4>
                     </div>
@@ -49,6 +49,9 @@ const Cart = () => {
                         ${cartEntity.calcProductAllTotalPrice()}
                       </span>
                     </div>
+                    <Link to="/" className="btn btn-outline-primary">
+                      Continue shopping
+                    </Link>
                     <span className="btn btn-checkout-primary">Buy now</span>
                   </div>
                 </div>
