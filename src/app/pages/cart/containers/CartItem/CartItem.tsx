@@ -3,6 +3,11 @@ import { useDispatch } from 'react-redux';
 
 import { changeCartItemQuantity, deleteCartItem } from '../../../../../redux/actions/cart';
 
+enum CartItemQuantityLimit {
+  MIN = 1,
+  MAX = 1000,
+}
+
 interface CartItemPropTypes {
   id: number;
   name: string;
@@ -37,15 +42,18 @@ export const CartItem = ({
 
   const handleChangeQuantity = (id: number, newQuantity: number) => {
     setInputQuantity(newQuantity);
-    if (newQuantity < 1) {
+    if (newQuantity < CartItemQuantityLimit.MIN) {
       handleDelete(id);
-    } else {
+    } else if (newQuantity < CartItemQuantityLimit.MAX) {
       dispatch(changeCartItemQuantity(id, newQuantity));
     }
   };
 
   const handleChangeInput = () => {
-    if (!Number.isNaN(+inputRef.current!.value)) {
+    if (
+      !Number.isNaN(+inputRef.current!.value) &&
+      +inputRef.current!.value < CartItemQuantityLimit.MAX
+    ) {
       setInputQuantity(+inputRef.current!.value);
     }
   };
@@ -90,7 +98,6 @@ export const CartItem = ({
                       className="product-cart-quantity-input"
                       type="text"
                       ref={inputRef}
-                      min="0"
                       name="number"
                       value={inputQuantity}
                       onChange={handleChangeInput}
