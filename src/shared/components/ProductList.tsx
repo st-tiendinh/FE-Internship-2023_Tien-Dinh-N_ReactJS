@@ -1,15 +1,16 @@
-import { useContext } from 'react';
-import { ProductModel } from '../../app/core/models/product';
 import { ProductItem } from './ProductItem';
-import { CartContext } from '../../app/core/contexts/CartContext';
 
-export const ProductList = () => {
-  const context = useContext(CartContext);
+import { ProductProps } from '../../app/core/models/product';
+
+interface ProductListPropTypes {
+  productData: ProductProps[];
+}
+
+export const ProductList = ({ productData }: ProductListPropTypes) => {
   return (
     <ul className="product-list row">
-      {/* Product Item */}
-      {context.productData.map((product: ProductModel, index: number) => {
-        return <ProductItem key={index} product={product} myKey={product.id} />;
+      {productData.map((item: ProductProps) => {
+        return <ProductItem key={item.id} productItem={item} />;
       })}
     </ul>
   );

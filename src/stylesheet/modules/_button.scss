@@ -95,7 +95,7 @@
   }
 }
 
-@media (max-width: 736px) {
+@include mobile {
   .btn {
     font-size: 10px;
     line-height: 15px;

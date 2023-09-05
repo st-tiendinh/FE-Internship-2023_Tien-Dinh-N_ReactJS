@@ -4,25 +4,22 @@ import { Header, Footer } from './shared/components';
 
 import './stylesheet/style.scss';
 import { appRoutes } from './app.route';
-import { CartProvider } from './app/core/contexts/CartContext';
 
 function App() {
   return (
     <BrowserRouter>
-      <CartProvider>
-        <div className="App">
-          <Header />
-          <main className="main">
-            <Routes>
-              {appRoutes.map(({ path, element }) => {
-                const Page = element;
-                return <Route key={Date.now()} path={path} element={<Page />} />;
-              })}
-            </Routes>
-          </main>
-          <Footer />
-        </div>
-      </CartProvider>
+      <div className="App">
+        <Header />
+        <main className="main">
+          <Routes>
+            {appRoutes.map(({ path, element }) => {
+              const Page = element;
+              return <Route key={Date.now()} path={path} element={<Page />} />;
+            })}
+          </Routes>
+        </main>
+        <Footer />
+      </div>
     </BrowserRouter>
   );
 }

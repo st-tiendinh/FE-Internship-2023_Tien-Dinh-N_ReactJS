@@ -1,6 +1,6 @@
-import { ProductModel, ProductStatus } from '../app/core/models/product';
+import { ProductProps, ProductStatus } from '../app/core/models/product';
 
-export class ProductService implements ProductModel {
+export class ProductService implements ProductProps {
   id: number;
   name: string;
   discount: number;
@@ -8,7 +8,7 @@ export class ProductService implements ProductModel {
   imageUrl: string;
   status: ProductStatus;
 
-  constructor(props: ProductModel) {
+  constructor(props: ProductProps) {
     const { id, name, discount, price, imageUrl, status } = props;
     this.id = id || 0;
     this.name = name || '';

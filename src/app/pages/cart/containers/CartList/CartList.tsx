@@ -1,21 +1,32 @@
-import { useContext } from 'react';
-import { CartItemService, CartService } from '../../../../../services/CartService';
-import { CartItemModel } from '../../../../core/models/cart';
+import { useSelector } from 'react-redux';
+
 import { CartItem } from '../CartItem/CartItem';
-import { CartContext } from '../../../../core/contexts/CartContext';
 
-interface CartListPropTypes {
-  shoppingCart: CartService;
-}
+import { CartItemService } from '../../../../../services/CartService';
+import { CartItemProps } from '../../../../core/models/cart';
+import { RootState } from '../../../../../redux/reducers/root';
 
-export const CartList = ({ shoppingCart }: CartListPropTypes) => {
-  const context = useContext(CartContext);
+export const CartList = () => {
+  const cart = useSelector((state: RootState) => state.cartList.cartItems);
 
   return (
     <ul className="product-cart-list">
-      {context.cartItems.map((item: CartItemModel) => {
+      {cart.map((item: CartItemProps) => {
         const cartItemEntity = new CartItemService(item);
-        return <CartItem key={item.id} {...item} cartItemEntity={cartItemEntity} shoppingCart={shoppingCart} />;
+        const { id, name, imageUrl, discount, price, quantity } = cartItemEntity;
+        return (
+          <CartItem
+            key={id}
+            id={id}
+            name={name}
+            price={price}
+            discount={discount}
+            imageUrl={imageUrl}
+            quantity={quantity}
+            discountPrice={cartItemEntity.calcDiscountPrice()}
+            productTotalPrice={cartItemEntity.calcProductTotalPrice()}
+          />
+        );
       })}
     </ul>
   );

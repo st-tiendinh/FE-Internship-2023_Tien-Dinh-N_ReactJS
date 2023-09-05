@@ -1,45 +1,72 @@
-import { useContext } from 'react';
-import { CartItemModel } from '../../app/core/models/cart';
-import { ProductModel } from '../../app/core/models/product';
-import { CartService } from '../../services/CartService';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { setCart } from '../../redux/actions/cart';
+
 import { ProductService } from '../../services/ProductService';
-import { StorageKey, getFromLocalStorage } from '../utils/localStorage';
-import { CartContext } from '../../app/core/contexts/CartContext';
+import { ProductProps, ProductStatus } from '../../app/core/models/product';
+import { RootState } from '../../redux/reducers/root';
+import { useEffect } from 'react';
+import { StorageKey, saveToLocalStorage } from '../utils/localStorage';
 
 interface ProductItemPropTypes {
-  myKey: number;
-  product: ProductModel;
+  productItem: ProductProps;
 }
 
-export const ProductItem = ({ myKey, product }: ProductItemPropTypes) => {
-  const productEntity = new ProductService(product);
+export const ProductItem = ({ productItem }: ProductItemPropTypes) => {
+  const productEntity = new ProductService(productItem);
   const { id, name, discount, imageUrl, price, status } = productEntity;
+  const cart = useSelector((state: RootState) => state.cartList.cartItems);
+  const dispatch = useDispatch();
 
-  const context = useContext(CartContext);
-
-  const handleClickAddToCart = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleClickAddToCart = (
+    event: React.MouseEvent<HTMLButtonElement>,
+    productData: ProductProps
+  ) => {
     event.preventDefault();
-    context.setCartItems(
-      new CartService(getFromLocalStorage<CartItemModel[]>(StorageKey.Product, [])).handleAddToCart(id, productEntity)
-    );
+    if (productData.status !== ProductStatus.OUT_OF_STOCK) {
+      const existedProduct = cart.find((item) => id === item.id);
+      if (existedProduct) {
+        dispatch(
+          setCart(
+            cart.map((item) =>
+              existedProduct.id === item.id ? { ...item, quantity: item.quantity + 1 } : item
+            )
+          )
+        );
+      } else {
+        dispatch(setCart([...cart, { ...productData, quantity: 1 }]));
+      }
+    }
   };
 
+  useEffect(() => {
+    saveToLocalStorage(StorageKey.Product, cart);
+  }, [cart]);
+
   return (
-    <li key={myKey} className="product-item col col-3 col-md-6 col-sm-6">
+    <li key={id} className="product-item col col-3 col-md-6 col-sm-6">
       <div className="product">
         <a className="product-link" href="/#" onClick={(e) => e.preventDefault()}>
           <img src={imageUrl} alt={name} className="product-image" />
           <div className="product-status">
-            <span className="badge badge-outline-primary">{status ? 'Available' : 'Out of Stock'}</span>
+            <span className="badge badge-outline-primary">
+              {status ? 'Available' : 'Out of Stock'}
+            </span>
           </div>
-          <button className="btn btn-primary" onClick={handleClickAddToCart} disabled={status ? false : true}>
+          <button
+            className="btn btn-primary"
+            onClick={(e) => handleClickAddToCart(e, productItem)}
+            disabled={status ? false : true}
+          >
             Add to cart
           </button>
           {discount ? <span className="badge badge-danger">{discount}%</span> : null}
           <div className="product-description">
             <h4 className="product-name">{name}</h4>
             <div className="product-prices">
-              <span className={discount ? 'sale-price active' : 'sale-price'}>{productEntity.calcDiscountPrice()}</span>
+              <span className={'sale-price ' + (discount ? 'active' : '')}>
+                ${productEntity.calcDiscountPrice()}
+              </span>
               <span className="original-price">{discount ? '$' + price : ''}</span>
             </div>
           </div>
