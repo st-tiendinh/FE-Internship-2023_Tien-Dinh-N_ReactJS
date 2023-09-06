@@ -7,9 +7,17 @@ import mobileLogo from '../../assets/images/mobile-shop-logo.svg';
 
 import { CartService } from '../../services/CartService';
 import { RootState } from '../../redux/reducers/root';
+import { Modal } from './Modal';
 
 export const Header = () => {
   const [scrolling, setScrolling] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+
+  const handleClickShowModal = (e: React.MouseEvent<HTMLElement>) => {
+    e.preventDefault();
+    setShowModal(true);
+  };
+
   const location = useLocation();
   const cart = useSelector((state: RootState) => state.cartList.cartItems);
   const cartQuantity = new CartService(cart).calcCartAllQuantity();
@@ -100,7 +108,7 @@ export const Header = () => {
               </Link>
             </li>
             <li className="header-action-item">
-              <a href="/#" className="header-action-link">
+              <a href="/#" className="header-action-link" onClick={handleClickShowModal}>
                 <i className="ic ic-user"></i>
               </a>
             </li>
@@ -126,11 +134,14 @@ export const Header = () => {
               </Link>
             </li>
             <li className="header-mobile-action-item">
-              <a href="/#" className="header-action-link">
+              <a href="/#" className="header-action-link" onClick={handleClickShowModal}>
                 <i className="ic ic-sm-user"></i>
               </a>
             </li>
           </ul>
+
+          {/* Modal */}
+          <Modal showModal={showModal} setShowModal={setShowModal} />
         </div>
       </div>
     </header>

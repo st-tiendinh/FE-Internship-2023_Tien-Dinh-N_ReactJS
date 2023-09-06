@@ -1,22 +1,26 @@
-import { useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { ProductImage } from './ProductImage';
 
-import { StorageKey, saveToLocalStorage } from '../utils/localStorage';
+import { StorageKey, getFromLocalStorage, saveToLocalStorage } from '../utils/localStorage';
 import { RootState } from '../../redux/reducers/root';
 import { setCart } from '../../redux/actions/cart';
 import { ProductService } from '../../services/ProductService';
 import { ProductProps, ProductStatus } from '../../app/core/models/product';
+import { ModalContext } from '../../app/context/ModalProvider';
 
 interface ProductItemPropTypes {
   productItem: ProductProps;
 }
 
 export const ProductItem = ({ productItem }: ProductItemPropTypes) => {
+  const { setShowModal } = useContext(ModalContext);
+  const cart = useSelector((state: RootState) => state.cartList.cartItems);
+
   const productEntity = new ProductService(productItem);
   const { id, name, discount, imageUrl, price, status } = productEntity;
-  const cart = useSelector((state: RootState) => state.cartList.cartItems);
+
   const dispatch = useDispatch();
 
   const handleClickAddToCart = (
@@ -24,19 +28,24 @@ export const ProductItem = ({ productItem }: ProductItemPropTypes) => {
     productData: ProductProps
   ) => {
     event.preventDefault();
-    if (productData.status !== ProductStatus.OUT_OF_STOCK) {
-      const existedProduct = cart.find((item) => id === item.id);
-      if (existedProduct) {
-        dispatch(
-          setCart(
-            cart.map((item) =>
-              existedProduct.id === item.id ? { ...item, quantity: item.quantity + 1 } : item
+    const loggedUser = getFromLocalStorage(StorageKey.User, []);
+    if (loggedUser.length) {
+      if (productData.status !== ProductStatus.OUT_OF_STOCK) {
+        const existedProduct = cart.find((item) => id === item.id);
+        if (existedProduct) {
+          dispatch(
+            setCart(
+              cart.map((item) =>
+                existedProduct.id === item.id ? { ...item, quantity: item.quantity + 1 } : item
+              )
             )
-          )
-        );
-      } else {
-        dispatch(setCart([...cart, { ...productData, quantity: 1 }]));
+          );
+        } else {
+          dispatch(setCart([...cart, { ...productData, quantity: 1 }]));
+        }
       }
+    } else {
+      setShowModal(true);
     }
   };
 
