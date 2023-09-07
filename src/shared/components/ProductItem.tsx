@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { ProductImage } from './ProductImage';
 
-import { StorageKey, getFromLocalStorage, saveToLocalStorage } from '../utils/localStorage';
+import { StorageKey, saveToLocalStorage } from '../utils/localStorage';
 import { RootState } from '../../redux/reducers/root';
 import { setCart } from '../../redux/actions/cart';
 import { ProductService } from '../../services/ProductService';
@@ -17,6 +17,7 @@ interface ProductItemPropTypes {
 export const ProductItem = ({ productItem }: ProductItemPropTypes) => {
   const { setShowModal } = useContext(ModalContext);
   const cart = useSelector((state: RootState) => state.cartList.cartItems);
+  const isLogged = useSelector((state: RootState) => state.user.isLogged);
 
   const productEntity = new ProductService(productItem);
   const { id, name, discount, imageUrl, price, status } = productEntity;
@@ -28,8 +29,7 @@ export const ProductItem = ({ productItem }: ProductItemPropTypes) => {
     productData: ProductProps
   ) => {
     event.preventDefault();
-    const loggedUser = getFromLocalStorage(StorageKey.User, []);
-    if (loggedUser.length) {
+    if (isLogged) {
       if (productData.status !== ProductStatus.OUT_OF_STOCK) {
         const existedProduct = cart.find((item) => id === item.id);
         if (existedProduct) {

@@ -1,26 +1,42 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
+import { Modal } from './Modal';
+import { Popper } from './Popper';
+
 import logo from '../../assets/images/shop-logo.svg';
 import mobileLogo from '../../assets/images/mobile-shop-logo.svg';
-
 import { CartService } from '../../services/CartService';
 import { RootState } from '../../redux/reducers/root';
-import { Modal } from './Modal';
+import { ModalContext } from '../../app/context/ModalProvider';
 
 export const Header = () => {
+  const isLogged = useSelector((state: RootState) => state.user.isLogged);
+  const cart = useSelector((state: RootState) => state.cartList.cartItems);
+
   const [scrolling, setScrolling] = useState(false);
-  const [showModal, setShowModal] = useState(false);
+  const [showPopper, setShowPopper] = useState(false);
+
+  const { setShowModal } = useContext(ModalContext);
+
+  const location = useLocation();
+  const cartQuantity = new CartService(cart).calcCartAllQuantity();
 
   const handleClickShowModal = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
-    setShowModal(true);
+    if (!isLogged) {
+      setShowModal(true);
+    } else {
+      setShowPopper(!showPopper);
+    }
   };
 
-  const location = useLocation();
-  const cart = useSelector((state: RootState) => state.cartList.cartItems);
-  const cartQuantity = new CartService(cart).calcCartAllQuantity();
+  const handleClickDirect = () => {
+    if (!isLogged) {
+      setShowModal(true);
+    }
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -36,6 +52,8 @@ export const Header = () => {
       window.removeEventListener('scroll', handleScroll);
     };
   }, []);
+
+  console.log('test', isLogged);
 
   return (
     <header
@@ -99,8 +117,8 @@ export const Header = () => {
                 <i className="ic ic-magnifying-glass"></i>
               </a>
             </li>
-            <li className="header-action-item">
-              <Link to="/cart" className="header-action-link">
+            <li className="header-action-item" onClick={handleClickDirect}>
+              <Link to={isLogged ? '/cart' : ''} className="header-action-link">
                 <span className={'header-action-quantity ' + (cartQuantity ? 'd-flex' : 'd-none')}>
                   {cartQuantity}
                 </span>
@@ -111,6 +129,7 @@ export const Header = () => {
               <a href="/#" className="header-action-link" onClick={handleClickShowModal}>
                 <i className="ic ic-user"></i>
               </a>
+              {showPopper && isLogged && <Popper />}
             </li>
           </ul>
 
@@ -125,8 +144,8 @@ export const Header = () => {
                 <i className="ic ic-sm-magnifying-glass"></i>
               </a>
             </li>
-            <li className="header-mobile-action-item">
-              <Link to="/cart" className="header-action-link">
+            <li className="header-mobile-action-item" onClick={handleClickDirect}>
+              <Link to={isLogged ? '/cart' : ''} className="header-action-link">
                 <span className={'header-action-quantity ' + (cartQuantity ? 'd-flex' : 'd-none')}>
                   {cartQuantity}
                 </span>
@@ -137,11 +156,12 @@ export const Header = () => {
               <a href="/#" className="header-action-link" onClick={handleClickShowModal}>
                 <i className="ic ic-sm-user"></i>
               </a>
+              {showPopper && isLogged && <Popper />}
             </li>
           </ul>
 
           {/* Modal */}
-          <Modal showModal={showModal} setShowModal={setShowModal} />
+          <Modal />
         </div>
       </div>
     </header>

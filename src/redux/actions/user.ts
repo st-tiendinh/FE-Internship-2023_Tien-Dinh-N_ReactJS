@@ -1,4 +1,9 @@
-import { StorageKey, saveToLocalStorage } from '../../shared/utils/localStorage';
+import { UserProps } from '../../app/core/models/user';
+import {
+  StorageKey,
+  removeFromLocalStorage,
+  saveToLocalStorage,
+} from '../../shared/utils/localStorage';
 import { LOGIN_FAIL, LOGIN_REQUEST, LOGIN_SUCCESS, LOGOUT } from '../types/user';
 
 export const loginRequest = () => {
@@ -27,12 +32,12 @@ export const login = (email: string, password: string) => async (dispatch: any) 
     try {
       const response = await fetch('./auth.json');
       const data = await response.json();
-      const existUser = await data.filter(
-        (item: any) => item.email === email && item.password === password
+      const existUser = await data.find(
+        (user: UserProps) => user.email === email && user.password === password
       );
-      if (existUser.length) {
-        dispatch(loginSuccess(data));
-        saveToLocalStorage<any>(StorageKey.User, existUser);
+      if (existUser) {
+        dispatch(loginSuccess(existUser));
+        saveToLocalStorage<UserProps>(StorageKey.User, existUser);
       } else {
         dispatch(loginFail('No existed user'));
       }

@@ -8,6 +8,7 @@ interface ModalPropTypes {
 
 export const ModalProvider = ({ children }: ModalPropTypes) => {
   const [showModal, setShowModal] = useState(false);
+
   return (
     <ModalContext.Provider value={{ showModal, setShowModal }}>{children}</ModalContext.Provider>
   );
