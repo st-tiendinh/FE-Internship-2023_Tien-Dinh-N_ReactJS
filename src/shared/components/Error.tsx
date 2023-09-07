@@ -1,9 +1,13 @@
 export const Error = () => {
+  const handleReload = () => {
+    window.location.reload();
+  };
+
   return (
     <div className="error-wrapper">
-      <a href="/" className="btn btn-outline-primary">
+      <button className="btn btn-outline-primary" onClick={handleReload}>
         Try to reload
-      </a>
+      </button>
     </div>
   );
 };
