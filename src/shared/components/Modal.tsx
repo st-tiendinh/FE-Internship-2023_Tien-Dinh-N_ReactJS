@@ -67,7 +67,7 @@ export const Modal = () => {
               placeholder="Enter your password..."
             />
             <span className="modal-toggle-show-btn" onClick={handleShowPassWord}>
-              Show
+              {isShowPassWord ? 'Hide' : 'Show'}
             </span>
           </div>
 
