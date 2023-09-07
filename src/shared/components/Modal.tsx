@@ -1,17 +1,17 @@
 import { useSelector } from 'react-redux';
-import { ReactNode, useContext, useEffect } from 'react';
+import { ReactElement, ReactNode, useContext, useEffect } from 'react';
 
 import { RootState } from '../../redux/reducers/root';
 import { ModalContext } from '../../app/context/ModalProvider';
-import { Spinner } from './Spinner';
 
 interface ModalPropTypes {
-  children: ReactNode;
   title: string;
+  children?: ReactNode;
+  button?: ReactElement;
+  content?: string;
 }
 
-export const Modal = ({ children, title }: ModalPropTypes) => {
-  const loading = useSelector((state: RootState) => state.user.isLoading);
+export const Modal = ({ children, title, button, content }: ModalPropTypes) => {
   const error = useSelector((state: RootState) => state.user.error);
 
   const { isShowModal, setIsShowModal } = useContext(ModalContext);
@@ -35,9 +35,8 @@ export const Modal = ({ children, title }: ModalPropTypes) => {
             &times;
           </span>
         </div>
-
-        <div className="modal-body">{children}</div>
-        <div className="modal-footer">{loading ? <Spinner /> : ''}</div>
+        <div className="modal-body">{children || content}</div>
+        <div className="modal-footer">{button}</div>
       </div>
     </div>
   );

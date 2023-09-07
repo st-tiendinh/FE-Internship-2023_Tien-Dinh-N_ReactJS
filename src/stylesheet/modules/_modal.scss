@@ -1,5 +1,6 @@
 .modal-wrapper {
   position: fixed;
+  z-index: 20;
   top: 0;
   bottom: 0;
   right: 0;
@@ -33,59 +34,6 @@
     &-title {
       font-size: 18px;
       color: map-get($color, title);
-    }
-
-    &-form {
-      display: flex;
-      flex-direction: column;
-      padding: 0 20px 20px;
-    }
-
-    &-email,
-    &-password {
-      display: flex;
-      flex-direction: column;
-      padding: 10px 0;
-    }
-
-    &-label {
-      font-size: 13px;
-      color: map-get($color, title);
-      padding: 4px 0;
-    }
-
-    &-input {
-      position: relative;
-      padding: 10px 10px;
-      border-radius: 5px;
-
-      &::placeholder {
-        font-size: 13px;
-        color: map-get($color, text);
-      }
-    }
-
-    &-toggle-show-btn {
-      font-size: 13px;
-      position: absolute;
-      right: 30px;
-      top: 63%;
-      cursor: pointer;
-    }
-
-    &-logout {
-      display: flex;
-      flex-direction: column;
-      padding: 20px;
-
-      &-title {
-        font-size: 18px;
-        margin-bottom: 18px;
-      }
-    }
-
-    .btn.btn-primary {
-      margin-top: 10px;
     }
   }
 }

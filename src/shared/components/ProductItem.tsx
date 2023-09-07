@@ -57,11 +57,11 @@ export const ProductItem = ({ productItem }: ProductItemPropTypes) => {
       <div className="product">
         <a className="product-link" href="/#" onClick={(e) => e.preventDefault()}>
           <ProductImage src={imageUrl} alt={name} />
-          <div className="product-status">
-            <span className="badge badge-outline-primary">
-              {status ? 'Available' : 'Out of Stock'}
-            </span>
-          </div>
+          {status === ProductStatus.OUT_OF_STOCK && (
+            <div className="product-status">
+              <span className="badge badge-outline-primary">Out of Stock</span>
+            </div>
+          )}
           <button
             className="btn btn-primary"
             onClick={(e) => handleClickAddToCart(e, productItem)}

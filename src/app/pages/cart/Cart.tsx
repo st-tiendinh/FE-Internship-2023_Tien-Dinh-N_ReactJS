@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
 import { CartList } from './containers/CartList/CartList';
+import { Modal } from '../../../shared/components';
 
 import cartEmptyImg from '../../../assets/images/cart-empty.png';
 import { StorageKey, saveToLocalStorage } from '../../../shared/utils/localStorage';
@@ -18,6 +19,17 @@ const Cart = () => {
   return (
     <div className="cart-page">
       <div className="container">
+        <Modal
+          title="Do you want to delete this product?!!"
+          button={
+            <>
+              <button className="btn btn-primary">Yes</button>
+              <button className="btn btn-outline-primary">Cancel</button>
+            </>
+          }
+        >
+          T-Shirt Summer Vibes
+        </Modal>
         <section className="section section-cart">
           {cartEntity.cart?.length ? (
             <div className="row">

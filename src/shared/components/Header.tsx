@@ -2,9 +2,7 @@ import { useSelector } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
 import { useContext, useEffect, useState } from 'react';
 
-import { Modal } from './Modal';
 import { Popper } from './Popper';
-import { LoginForm } from './LoginForm';
 
 import logo from '../../assets/images/shop-logo.svg';
 import mobileLogo from '../../assets/images/mobile-shop-logo.svg';
@@ -16,8 +14,8 @@ export const Header = () => {
   const [scrolling, setScrolling] = useState(false);
   const { setIsShowModal, isShowPopper, setIsShowPopper } = useContext(ModalContext);
 
-  const isLogged = useSelector((state: RootState) => state.user.isLogged);
   const cart = useSelector((state: RootState) => state.cartList.cartItems);
+  const isLogged = useSelector((state: RootState) => state.user.isLogged);
 
   const location = useLocation();
   const cartQuantity = new CartService(cart).calcCartAllQuantity();
@@ -90,11 +88,13 @@ export const Header = () => {
                   Men
                 </a>
               </li>
+
               <li className="nav-item">
                 <a className="nav-link" href="#woman">
                   Women
                 </a>
               </li>
+
               <li className="nav-item">
                 <a className="nav-link" href="#kids">
                   Kids
@@ -114,6 +114,7 @@ export const Header = () => {
                 <i className="ic ic-magnifying-glass"></i>
               </a>
             </li>
+
             <li className="header-action-item" onClick={handleClickDirect}>
               <Link to={isLogged ? '/cart' : ''} className="header-action-link">
                 <span className={'header-action-quantity ' + (cartQuantity ? 'd-flex' : 'd-none')}>
@@ -122,6 +123,7 @@ export const Header = () => {
                 <i className="ic ic-cart"></i>
               </Link>
             </li>
+
             <li className="header-action-item">
               <a href="/#" className="header-action-link" onClick={handleClickShowModal}>
                 <i className="ic ic-user"></i>
@@ -141,6 +143,7 @@ export const Header = () => {
                 <i className="ic ic-sm-magnifying-glass"></i>
               </a>
             </li>
+
             <li className="header-mobile-action-item" onClick={handleClickDirect}>
               <Link to={isLogged ? '/cart' : ''} className="header-action-link">
                 <span className={'header-action-quantity ' + (cartQuantity ? 'd-flex' : 'd-none')}>
@@ -149,6 +152,7 @@ export const Header = () => {
                 <i className="ic ic-sm-cart"></i>
               </Link>
             </li>
+
             <li className="header-mobile-action-item">
               <a href="/#" className="header-action-link" onClick={handleClickShowModal}>
                 <i className="ic ic-sm-user"></i>
@@ -156,11 +160,6 @@ export const Header = () => {
               {isShowPopper && <Popper />}
             </li>
           </ul>
-
-          {/* Modal */}
-          <Modal title="Login">
-            <LoginForm />
-          </Modal>
         </div>
       </div>
     </header>
