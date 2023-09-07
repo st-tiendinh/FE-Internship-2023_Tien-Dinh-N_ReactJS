@@ -1,14 +1,15 @@
-import { useContext, useEffect, useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { Link, useLocation } from 'react-router-dom';
+import { useContext, useEffect, useState } from 'react';
 
 import { Modal } from './Modal';
 import { Popper } from './Popper';
+import { LoginForm } from './LoginForm';
 
 import logo from '../../assets/images/shop-logo.svg';
 import mobileLogo from '../../assets/images/mobile-shop-logo.svg';
-import { CartService } from '../../services/CartService';
 import { RootState } from '../../redux/reducers/root';
+import { CartService } from '../../services/CartService';
 import { ModalContext } from '../../app/context/ModalProvider';
 
 export const Header = () => {
@@ -157,7 +158,9 @@ export const Header = () => {
           </ul>
 
           {/* Modal */}
-          <Modal />
+          <Modal title="Login">
+            <LoginForm />
+          </Modal>
         </div>
       </div>
     </header>
