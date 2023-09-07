@@ -1,26 +1,34 @@
-import { useDispatch, useSelector } from 'react-redux';
+import { useContext } from 'react';
+import { useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
 
-import { StorageKey } from '../utils/localStorage';
+import { StorageKey, getFromLocalStorage, removeFromLocalStorage } from '../utils/localStorage';
 import { logout } from '../../redux/actions/user';
-import { RootState } from '../../redux/reducers/root';
+import { ModalContext } from '../../app/context/ModalProvider';
+import { setCart } from '../../redux/actions/cart';
 
 export const Popper = () => {
-  const userStore = useSelector((state: RootState) => state.user.user);
+  const { setIsShowPopper } = useContext(ModalContext);
   const dispatch = useDispatch();
+  const userStore = getFromLocalStorage(StorageKey.User, { id: '', email: '', password: '' });
 
   const handleLogout = () => {
     dispatch(logout());
-    localStorage.removeItem(StorageKey.User);
+    removeFromLocalStorage(StorageKey.User);
+    dispatch(setCart([]));
+    setIsShowPopper(false);
   };
 
   return (
-    <div className={`popper-wrapper ${userStore ? 'd-block' : 'd-none'}`}>
+    <div className="popper-wrapper">
       <ul className="popper-list">
         <li className="popper-item">{userStore?.email}</li>
         <li className="popper-item">
-          <button className="btn btn-outline-primary" onClick={handleLogout}>
-            Logout
-          </button>
+          <Link to="/">
+            <button className="btn btn-outline-primary" onClick={handleLogout}>
+              Logout
+            </button>
+          </Link>
         </li>
       </ul>
     </div>

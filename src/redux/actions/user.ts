@@ -1,9 +1,5 @@
 import { UserProps } from '../../app/core/models/user';
-import {
-  StorageKey,
-  removeFromLocalStorage,
-  saveToLocalStorage,
-} from '../../shared/utils/localStorage';
+import { StorageKey, saveToLocalStorage } from '../../shared/utils/localStorage';
 import { LOGIN_FAIL, LOGIN_REQUEST, LOGIN_SUCCESS, LOGOUT } from '../types/user';
 
 export const loginRequest = () => {

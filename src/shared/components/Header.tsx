@@ -12,13 +12,11 @@ import { RootState } from '../../redux/reducers/root';
 import { ModalContext } from '../../app/context/ModalProvider';
 
 export const Header = () => {
+  const [scrolling, setScrolling] = useState(false);
+  const { setIsShowModal, isShowPopper, setIsShowPopper } = useContext(ModalContext);
+
   const isLogged = useSelector((state: RootState) => state.user.isLogged);
   const cart = useSelector((state: RootState) => state.cartList.cartItems);
-
-  const [scrolling, setScrolling] = useState(false);
-  const [showPopper, setShowPopper] = useState(false);
-
-  const { setShowModal } = useContext(ModalContext);
 
   const location = useLocation();
   const cartQuantity = new CartService(cart).calcCartAllQuantity();
@@ -26,15 +24,15 @@ export const Header = () => {
   const handleClickShowModal = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
     if (!isLogged) {
-      setShowModal(true);
+      setIsShowModal(true);
     } else {
-      setShowPopper(!showPopper);
+      setIsShowPopper(!isShowPopper);
     }
   };
 
   const handleClickDirect = () => {
     if (!isLogged) {
-      setShowModal(true);
+      setIsShowModal(true);
     }
   };
 
@@ -52,8 +50,6 @@ export const Header = () => {
       window.removeEventListener('scroll', handleScroll);
     };
   }, []);
-
-  console.log('test', isLogged);
 
   return (
     <header
@@ -129,7 +125,7 @@ export const Header = () => {
               <a href="/#" className="header-action-link" onClick={handleClickShowModal}>
                 <i className="ic ic-user"></i>
               </a>
-              {showPopper && isLogged && <Popper />}
+              {isShowPopper && <Popper />}
             </li>
           </ul>
 
@@ -156,7 +152,7 @@ export const Header = () => {
               <a href="/#" className="header-action-link" onClick={handleClickShowModal}>
                 <i className="ic ic-sm-user"></i>
               </a>
-              {showPopper && isLogged && <Popper />}
+              {isShowPopper && <Popper />}
             </li>
           </ul>
 

@@ -15,14 +15,13 @@ interface ProductItemPropTypes {
 }
 
 export const ProductItem = ({ productItem }: ProductItemPropTypes) => {
-  const { setShowModal } = useContext(ModalContext);
+  const { setIsShowModal } = useContext(ModalContext);
   const cart = useSelector((state: RootState) => state.cartList.cartItems);
   const isLogged = useSelector((state: RootState) => state.user.isLogged);
+  const dispatch = useDispatch();
 
   const productEntity = new ProductService(productItem);
   const { id, name, discount, imageUrl, price, status } = productEntity;
-
-  const dispatch = useDispatch();
 
   const handleClickAddToCart = (
     event: React.MouseEvent<HTMLButtonElement>,
@@ -45,7 +44,7 @@ export const ProductItem = ({ productItem }: ProductItemPropTypes) => {
         }
       }
     } else {
-      setShowModal(true);
+      setIsShowModal(true);
     }
   };
 

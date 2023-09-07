@@ -10,13 +10,13 @@ export const Modal = () => {
   const loading = useSelector((state: RootState) => state.user.isLoading);
   const error = useSelector((state: RootState) => state.user.error);
 
-  const { showModal, setShowModal } = useContext(ModalContext);
+  const { isShowModal, setIsShowModal } = useContext(ModalContext);
   const emailInputRef = useRef<HTMLInputElement>(null);
   const passwordInputRef = useRef<HTMLInputElement>(null);
   const dispatch = useDispatch<any>();
 
   const handleClose = () => {
-    setShowModal(false);
+    setIsShowModal(false);
   };
 
   const handleSubmit = (e: React.SyntheticEvent) => {
@@ -25,11 +25,11 @@ export const Modal = () => {
   };
 
   useEffect(() => {
-    setShowModal(!!error);
-  }, [error, setShowModal]);
+    setIsShowModal(!!error);
+  }, [error, setIsShowModal]);
 
   return (
-    <div className={`modal-wrapper ${showModal ? 'd-block' : 'd-none'}`}>
+    <div className={`modal-wrapper ${isShowModal ? 'd-block' : 'd-none'}`}>
       <div className="modal">
         <div className="modal-header">
           <h4 className="modal-title">Login</h4>

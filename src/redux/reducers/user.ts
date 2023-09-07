@@ -37,12 +37,10 @@ export const userReducer = (state = initialState, action: any) => {
       error: action.payload.error,
     }),
 
-    [LOGOUT]: () => {
-      return {
-        ...initialState,
-        user: null,
-      };
-    },
+    [LOGOUT]: () => ({
+      ...initialState,
+      user: null,
+    }),
   };
   return typeof objReducer[action.type] === 'function' ? objReducer[action.type]() : state;
 };
