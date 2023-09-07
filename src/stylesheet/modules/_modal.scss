@@ -55,6 +55,7 @@
     }
 
     &-input {
+      position: relative;
       padding: 10px 10px;
       border-radius: 5px;
 
@@ -62,6 +63,14 @@
         font-size: 13px;
         color: map-get($color, text);
       }
+    }
+
+    &-toggle-show-btn {
+      font-size: 13px;
+      position: absolute;
+      right: 30px;
+      top: 63%;
+      cursor: pointer;
     }
 
     &-logout {

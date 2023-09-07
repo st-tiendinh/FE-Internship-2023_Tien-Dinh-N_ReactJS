@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { RootState } from '../../redux/reducers/root';
@@ -7,6 +7,7 @@ import { Spinner } from './Spinner';
 import { login } from '../../redux/actions/user';
 
 export const Modal = () => {
+  const [isShowPassWord, setIsShowPassWord] = useState(false);
   const loading = useSelector((state: RootState) => state.user.isLoading);
   const error = useSelector((state: RootState) => state.user.error);
 
@@ -22,6 +23,10 @@ export const Modal = () => {
   const handleSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
     dispatch(login(emailInputRef.current!.value.trim(), passwordInputRef.current!.value.trim()));
+  };
+
+  const handleShowPassWord = () => {
+    setIsShowPassWord(!isShowPassWord);
   };
 
   useEffect(() => {
@@ -55,12 +60,15 @@ export const Modal = () => {
               Password
             </label>
             <input
-              type="text"
+              type={isShowPassWord ? 'text' : 'password'}
               ref={passwordInputRef}
               id="password"
               className="modal-input"
               placeholder="Enter your password..."
             />
+            <span className="modal-toggle-show-btn" onClick={handleShowPassWord}>
+              Show
+            </span>
           </div>
 
           <button className="btn btn-primary" type="submit">
