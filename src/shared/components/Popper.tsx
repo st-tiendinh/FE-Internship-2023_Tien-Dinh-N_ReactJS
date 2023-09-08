@@ -13,7 +13,7 @@ export const Popper = () => {
   const userStore = getFromLocalStorage(StorageKey.User, { id: '', email: '', password: '' });
 
   const handleLogout = () => {
-    dispatch(logout());
+    dispatch(logout('Logout success'));
     removeFromLocalStorage(StorageKey.User);
     dispatch(setCart([]));
     setIsShowPopper(false);
@@ -25,7 +25,7 @@ export const Popper = () => {
         <li className="popper-item">{userStore?.email}</li>
         <li className="popper-item">
           <Link to="/">
-            <button className="btn btn-outline-primary" onClick={handleLogout}>
+            <button className="btn btn-normal-outline-primary" onClick={handleLogout}>
               Logout
             </button>
           </Link>

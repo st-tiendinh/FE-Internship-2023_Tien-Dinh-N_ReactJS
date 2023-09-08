@@ -33,7 +33,7 @@ export const CartItem = ({
   const inputRef = useRef<HTMLInputElement>(null);
   const dispatch = useDispatch();
 
-  const handleDelete = (id: number) => {
+  const handleDelete = async (id: number) => {
     if (window.confirm('Do you want to delete this product?!!')) {
       dispatch(deleteCartItem(id));
     }

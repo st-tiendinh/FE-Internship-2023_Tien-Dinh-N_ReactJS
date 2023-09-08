@@ -63,7 +63,7 @@ export const ProductItem = ({ productItem }: ProductItemPropTypes) => {
             </div>
           )}
           <button
-            className="btn btn-primary"
+            className="btn btn-rounded-primary"
             onClick={(e) => handleClickAddToCart(e, productItem)}
             disabled={status ? false : true}
           >

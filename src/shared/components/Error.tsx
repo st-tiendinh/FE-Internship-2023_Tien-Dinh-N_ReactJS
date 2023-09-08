@@ -5,7 +5,7 @@ export const Error = () => {
 
   return (
     <div className="error-wrapper">
-      <button className="btn btn-outline-primary" onClick={handleReload}>
+      <button className="btn btn-normal-outline-primary" onClick={handleReload}>
         Try to reload
       </button>
     </div>

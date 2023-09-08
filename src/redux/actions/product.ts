@@ -36,5 +36,5 @@ export const fetchProductDataFromApi = () => async (dispatch: any) => {
     } catch (error: any) {
       dispatch(fetchProductFailure(error));
     }
-  }, 4000);
+  }, 2000);
 };

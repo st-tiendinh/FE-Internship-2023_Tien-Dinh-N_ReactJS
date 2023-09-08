@@ -1,15 +1,27 @@
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { Advertisement, Banner, Newsletter, Product, ServiceDetail } from './containers';
-import { LoginForm, Modal, Spinner } from '../../../shared/components';
+import { LoginForm, Modal, Spinner, Toast } from '../../../shared/components';
 
 import { RootState } from '../../../redux/reducers/root';
+import { setShowToast } from '../../../redux/actions/user';
 
 const Home = () => {
   const loading = useSelector((state: RootState) => state.user.isLoading);
 
+  const isShowMessage = useSelector((state: RootState) => state.user.isShowMessage);
+  const message = useSelector((state: RootState) => state.user.message);
+  const dispatch = useDispatch();
+
+  const handleCloseToast = () => {
+    dispatch(setShowToast(false));
+  };
+
   return (
     <div className="home-page">
+      {/* Toast */}
+      {isShowMessage && <Toast message={message} onClose={handleCloseToast} />}
+
       {/* Modal */}
       <Modal title="Login">
         <LoginForm />

@@ -60,7 +60,7 @@ export const LoginForm = () => {
             </span>
           </div>
 
-          <button className="btn btn-primary" type="submit">
+          <button className="btn btn-rounded-primary" type="submit">
             Login
           </button>
         </form>

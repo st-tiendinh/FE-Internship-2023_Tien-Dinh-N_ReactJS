@@ -10,7 +10,7 @@ export const Newsletter = () => {
             <div className="col col-6 col-md-12 col-sm-12">
               <form action="" className="newsletter-form">
                 <input type="email" className="newsletter-input" placeholder="Enter your email" />
-                <button className="btn btn-primary btn-sm-primary" type="submit">
+                <button className="btn btn-rounded-primary btn-sm-primary" type="submit">
                   SUBSCRIBE
                 </button>
               </form>

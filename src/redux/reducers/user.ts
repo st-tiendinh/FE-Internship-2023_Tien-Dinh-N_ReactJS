@@ -1,19 +1,23 @@
 import { UserProps } from '../../app/core/models/user';
 import { StorageKey, getFromLocalStorage } from '../../shared/utils/localStorage';
-import { LOGIN_FAIL, LOGIN_REQUEST, LOGIN_SUCCESS, LOGOUT } from '../types/user';
+import { LOGIN_FAIL, LOGIN_REQUEST, LOGIN_SUCCESS, LOGOUT, SET_SHOW_TOAST } from '../types/user';
 
 interface LoginState {
   user: UserProps;
   isLoading: boolean;
-  error: string | null;
   isLogged: boolean;
+  error: string | null;
+  message: string;
+  isShowMessage: boolean;
 }
 
 const initialState: LoginState = {
   user: getFromLocalStorage(StorageKey.User, { id: '', email: '', password: '' }),
   isLoading: false,
-  error: null,
   isLogged: !!getFromLocalStorage(StorageKey.User, null),
+  error: null,
+  message: '',
+  isShowMessage: false,
 };
 
 export const userReducer = (state = initialState, action: any) => {
@@ -29,6 +33,8 @@ export const userReducer = (state = initialState, action: any) => {
       isLoading: false,
       error: null,
       isLogged: true,
+      isShowMessage: true,
+      message: action.payload.message,
     }),
 
     [LOGIN_FAIL]: () => ({
@@ -40,6 +46,13 @@ export const userReducer = (state = initialState, action: any) => {
     [LOGOUT]: () => ({
       ...initialState,
       user: null,
+      isShowMessage: true,
+      message: action.payload.message,
+    }),
+
+    [SET_SHOW_TOAST]: () => ({
+      ...state,
+      isShowMessage: action.payload.show,
     }),
   };
   return typeof objReducer[action.type] === 'function' ? objReducer[action.type]() : state;

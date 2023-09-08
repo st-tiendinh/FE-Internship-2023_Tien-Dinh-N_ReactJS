@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, redirect } from 'react-router-dom';
 import { useContext, useEffect, useState } from 'react';
 
 import { Popper } from './Popper';
@@ -31,8 +31,10 @@ export const Header = () => {
 
   const handleClickDirect = () => {
     if (!isLogged) {
+      redirect('/');
       setIsShowModal(true);
     }
+    // navigate('/cart');
   };
 
   useEffect(() => {
@@ -115,8 +117,8 @@ export const Header = () => {
               </a>
             </li>
 
-            <li className="header-action-item" onClick={handleClickDirect}>
-              <Link to={isLogged ? '/cart' : ''} className="header-action-link">
+            <li className="header-action-item">
+              <Link to={'/cart'} className="header-action-link" onClick={handleClickDirect}>
                 <span className={'header-action-quantity ' + (cartQuantity ? 'd-flex' : 'd-none')}>
                   {cartQuantity}
                 </span>
@@ -144,8 +146,8 @@ export const Header = () => {
               </a>
             </li>
 
-            <li className="header-mobile-action-item" onClick={handleClickDirect}>
-              <Link to={isLogged ? '/cart' : ''} className="header-action-link">
+            <li className="header-mobile-action-item">
+              <Link to={'/cart'} className="header-action-link" onClick={handleClickDirect}>
                 <span className={'header-action-quantity ' + (cartQuantity ? 'd-flex' : 'd-none')}>
                   {cartQuantity}
                 </span>

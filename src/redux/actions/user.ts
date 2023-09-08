@@ -1,6 +1,6 @@
 import { UserProps } from '../../app/core/models/user';
 import { StorageKey, saveToLocalStorage } from '../../shared/utils/localStorage';
-import { LOGIN_FAIL, LOGIN_REQUEST, LOGIN_SUCCESS, LOGOUT } from '../types/user';
+import { LOGIN_FAIL, LOGIN_REQUEST, LOGIN_SUCCESS, LOGOUT, SET_SHOW_TOAST } from '../types/user';
 
 export const loginRequest = () => {
   return {
@@ -8,10 +8,10 @@ export const loginRequest = () => {
   };
 };
 
-export const loginSuccess = (data: any) => {
+export const loginSuccess = (data: any, message: string) => {
   return {
     type: LOGIN_SUCCESS,
-    payload: { data },
+    payload: { data, message },
   };
 };
 
@@ -19,6 +19,20 @@ export const loginFail = (error: string | null) => {
   return {
     type: LOGIN_FAIL,
     payload: { error },
+  };
+};
+
+export const logout = (message: string) => {
+  return {
+    type: LOGOUT,
+    payload: { message },
+  };
+};
+
+export const setShowToast = (show: boolean) => {
+  return {
+    type: SET_SHOW_TOAST,
+    payload: { show },
   };
 };
 
@@ -32,7 +46,7 @@ export const login = (email: string, password: string) => async (dispatch: any) 
         (user: UserProps) => user.email === email && user.password === password
       );
       if (existUser) {
-        dispatch(loginSuccess(existUser));
+        dispatch(loginSuccess(existUser, 'Login success'));
         saveToLocalStorage<UserProps>(StorageKey.User, existUser);
       } else {
         dispatch(loginFail('No existed user'));
@@ -40,11 +54,5 @@ export const login = (email: string, password: string) => async (dispatch: any) 
     } catch (error: any) {
       dispatch(loginFail(error));
     }
-  }, 4000);
-};
-
-export const logout = () => {
-  return {
-    type: LOGOUT,
-  };
+  }, 2000);
 };
