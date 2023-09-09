@@ -1,7 +1,8 @@
 import React, { useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { changeCartItemQuantity, deleteCartItem } from '../../../../../redux/actions/cart';
+import { changeCartItemQuantity, getCartItemId } from '../../../../../redux/actions/cart';
+import { setShowModal } from '../../../../../redux/actions/modal';
 
 enum CartItemQuantityLimit {
   MIN = 1,
@@ -34,9 +35,8 @@ export const CartItem = ({
   const dispatch = useDispatch();
 
   const handleDelete = async (id: number) => {
-    if (window.confirm('Do you want to delete this product?!!')) {
-      dispatch(deleteCartItem(id));
-    }
+    dispatch(setShowModal());
+    dispatch(getCartItemId(id));
     setInputQuantity(quantity);
   };
 

@@ -1,33 +1,41 @@
-import { useSelector } from 'react-redux';
-import { ReactElement, ReactNode, useContext, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { ReactElement, useEffect } from 'react';
 
 import { RootState } from '../../redux/reducers/root';
-import { ModalContext } from '../../app/context/ModalProvider';
+import { LoginForm } from './LoginForm';
+import { Confirm } from './Confirm';
+import { setHideModal, setShowModal } from '../../redux/actions/modal';
 
-interface ModalPropTypes {
-  title: string;
-  children?: ReactNode;
-  button?: ReactElement;
-  content?: string;
+export enum ModalType {
+  LOGIN,
+  CONFIRM,
+  CHECKOUT,
 }
 
-export const Modal = ({ children, title, button, content }: ModalPropTypes) => {
-  const error = useSelector((state: RootState) => state.user.error);
+interface ModalPropTypes {
+  type: ModalType;
+  title: string;
+  action?: any;
+  button?: ReactElement;
+}
 
-  const { isShowModal, setIsShowModal } = useContext(ModalContext);
+export const Modal = ({ title, button, type, action }: ModalPropTypes) => {
+  const error = useSelector((state: RootState) => state.user.error);
+  const isShow = useSelector((state: RootState) => state.modal.isShow);
+  const dispatch = useDispatch();
 
   const handleClose = () => {
-    setIsShowModal(false);
+    dispatch(setHideModal());
   };
 
   useEffect(() => {
-    setIsShowModal(!!error);
-  }, [error, setIsShowModal]);
+    !!error ? dispatch(setShowModal()) : dispatch(setHideModal());
+  }, [dispatch, error]);
 
   // Handle loggin xong se chuyen sang trang cart
 
   return (
-    <div className={`modal-wrapper ${isShowModal ? 'd-block' : 'd-none'}`}>
+    <div className={`modal-wrapper ${isShow ? 'd-block' : 'd-none'}`}>
       <div className="modal">
         <div className="modal-header">
           <h4 className="modal-title">{title}</h4>
@@ -35,7 +43,10 @@ export const Modal = ({ children, title, button, content }: ModalPropTypes) => {
             &times;
           </span>
         </div>
-        <div className="modal-body">{children || content}</div>
+        <div className="modal-body">
+          {(type === ModalType.LOGIN && <LoginForm />) ||
+            (type === ModalType.CONFIRM && <Confirm action={action} />)}
+        </div>
         <div className="modal-footer">{button}</div>
       </div>
     </div>

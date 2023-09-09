@@ -18,7 +18,7 @@ export const ProductList = ({ productData }: ProductListPropTypes) => {
       {error ? (
         <Error />
       ) : loading ? (
-        Array.from({ length: 4 }, (_, index) => (
+        Array.from({ length: 8 }, (_, index) => (
           <li key={index} className="col col-3 col-md-6 col-sm-6">
             <div className="skeleton mb-20"></div>
           </li>

@@ -4,19 +4,19 @@ import { LOGIN_FAIL, LOGIN_REQUEST, LOGIN_SUCCESS, LOGOUT, SET_SHOW_TOAST } from
 
 interface LoginState {
   user: UserProps;
-  isLoading: boolean;
-  isLogged: boolean;
   error: string | null;
   message: string;
+  isLogged: boolean;
+  isLoading: boolean;
   isShowMessage: boolean;
 }
 
 const initialState: LoginState = {
   user: getFromLocalStorage(StorageKey.User, { id: '', email: '', password: '' }),
-  isLoading: false,
-  isLogged: !!getFromLocalStorage(StorageKey.User, null),
   error: null,
   message: '',
+  isLogged: !!getFromLocalStorage(StorageKey.User, null),
+  isLoading: false,
   isShowMessage: false,
 };
 
@@ -46,6 +46,7 @@ export const userReducer = (state = initialState, action: any) => {
     [LOGOUT]: () => ({
       ...initialState,
       user: null,
+      isLogged: false,
       isShowMessage: true,
       message: action.payload.message,
     }),

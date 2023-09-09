@@ -1,5 +1,5 @@
-import { useSelector } from 'react-redux';
-import { Link, useLocation, redirect } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useLocation } from 'react-router-dom';
 import { useContext, useEffect, useState } from 'react';
 
 import { Popper } from './Popper';
@@ -9,21 +9,35 @@ import mobileLogo from '../../assets/images/mobile-shop-logo.svg';
 import { RootState } from '../../redux/reducers/root';
 import { CartService } from '../../services/CartService';
 import { ModalContext } from '../../app/context/ModalProvider';
+import { setShowModal } from '../../redux/actions/modal';
+import { logout } from '../../redux/actions/user';
+import { setCart } from '../../redux/actions/cart';
+import { StorageKey, getFromLocalStorage, removeFromLocalStorage } from '../utils/localStorage';
 
 export const Header = () => {
   const [scrolling, setScrolling] = useState(false);
-  const { setIsShowModal, isShowPopper, setIsShowPopper } = useContext(ModalContext);
+  const { isShowPopper, setIsShowPopper } = useContext(ModalContext);
 
   const cart = useSelector((state: RootState) => state.cartList.cartItems);
   const isLogged = useSelector((state: RootState) => state.user.isLogged);
+  const dispatch = useDispatch();
 
   const location = useLocation();
   const cartQuantity = new CartService(cart).calcCartAllQuantity();
 
+  const userStore = getFromLocalStorage(StorageKey.User, { id: '', email: '', password: '' });
+
+  const handleLogout = () => {
+    dispatch(logout('Logout success'));
+    removeFromLocalStorage(StorageKey.User);
+    dispatch(setCart([]));
+    setIsShowPopper(false);
+  };
+
   const handleClickShowModal = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
     if (!isLogged) {
-      setIsShowModal(true);
+      dispatch(setShowModal());
     } else {
       setIsShowPopper(!isShowPopper);
     }
@@ -31,10 +45,8 @@ export const Header = () => {
 
   const handleClickDirect = () => {
     if (!isLogged) {
-      redirect('/');
-      setIsShowModal(true);
+      dispatch(setShowModal());
     }
-    // navigate('/cart');
   };
 
   useEffect(() => {
@@ -130,7 +142,7 @@ export const Header = () => {
               <a href="/#" className="header-action-link" onClick={handleClickShowModal}>
                 <i className="ic ic-user"></i>
               </a>
-              {isShowPopper && <Popper />}
+              {isShowPopper && <Popper title={userStore?.email} action={handleLogout} />}
             </li>
           </ul>
 
@@ -159,7 +171,7 @@ export const Header = () => {
               <a href="/#" className="header-action-link" onClick={handleClickShowModal}>
                 <i className="ic ic-sm-user"></i>
               </a>
-              {isShowPopper && <Popper />}
+              {isShowPopper && <Popper title={userStore?.email} action={handleLogout} />}
             </li>
           </ul>
         </div>

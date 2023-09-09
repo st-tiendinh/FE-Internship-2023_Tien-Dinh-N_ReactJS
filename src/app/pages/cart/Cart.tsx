@@ -1,5 +1,5 @@
-import { Link, useLocation } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 
 import { CartList } from './containers/CartList/CartList';
@@ -9,33 +9,28 @@ import cartEmptyImg from '../../../assets/images/cart-empty.png';
 import { StorageKey, saveToLocalStorage } from '../../../shared/utils/localStorage';
 import { CartService } from '../../../services/CartService';
 import { RootState } from '../../../redux/reducers/root';
-// import { ModalContext } from '../../context/ModalProvider';
+import { Modal, ModalType } from '../../../shared/components/Modal';
+import { deleteCartItem } from '../../../redux/actions/cart';
 
 const Cart = () => {
   const storedCart = useSelector((state: RootState) => state.cartList.cartItems);
+  const cartItemCurrentId = useSelector((state: RootState) => state.cartList.cartItemCurrentId);
+
+  const dispatch = useDispatch();
+
   const cartEntity = new CartService(storedCart);
-  // const { handleConfirm, handleCancel } = useContext(ModalContext);
 
   useEffect(() => saveToLocalStorage(StorageKey.Product, storedCart), [storedCart]);
 
   return (
     <div className="cart-page">
       <div className="container">
-        {/* <Modal
+        <Modal
           title="Do you want to delete this product?!!"
-          button={
-            <>
-              <button className="btn btn-normal-primary" onClick={handleConfirm}>
-                Yes
-              </button>
-              <button className="btn btn-normal-outline-primary" onClick={handleCancel}>
-                Cancel
-              </button>
-            </>
-          }
-        >
-          T-Shirt Summer Vibes
-        </Modal> */}
+          type={ModalType.CONFIRM}
+          action={() => dispatch(deleteCartItem(cartItemCurrentId))}
+        />
+
         <section className="section section-cart">
           {cartEntity.cart?.length ? (
             <div className="row">
