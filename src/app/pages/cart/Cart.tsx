@@ -15,23 +15,26 @@ import { deleteCartItem } from '../../../redux/actions/cart';
 const Cart = () => {
   const storedCart = useSelector((state: RootState) => state.cartList.cartItems);
   const cartItemCurrentId = useSelector((state: RootState) => state.cartList.cartItemCurrentId);
-
   const dispatch = useDispatch();
-
   const cartEntity = new CartService(storedCart);
 
   useEffect(() => saveToLocalStorage(StorageKey.Product, storedCart), [storedCart]);
 
   return (
     <div className="cart-page">
-      <div className="container">
-        <Modal
-          title="Do you want to delete this product?!!"
-          type={ModalType.CONFIRM}
-          action={() => dispatch(deleteCartItem(cartItemCurrentId))}
-        />
+      <section className="section section-cart-banner">
+        <div className="container">
+          <h2 className="cart-banner-title">Shopping Cart</h2>
+        </div>
+      </section>
+      <Modal
+        title="Do you want to delete this product?!!"
+        type={ModalType.CONFIRM}
+        action={() => dispatch(deleteCartItem(cartItemCurrentId))}
+      />
 
-        <section className="section section-cart">
+      <section className="section section-cart">
+        <div className="container">
           {cartEntity.cart?.length ? (
             <div className="row">
               <div className="col col-9 col-md-12">
@@ -53,7 +56,7 @@ const Cart = () => {
                 <CartList />
               </div>
 
-              <div className="col col-3 col-md-12">
+              <div className="col col-3 col-md-12 sticky-bottom">
                 <div className="cart">
                   <div className="cart-checkout">
                     <div className="cart-checkout-info">
@@ -78,8 +81,8 @@ const Cart = () => {
               </Link>
             </div>
           )}
-        </section>
-      </div>
+        </div>
+      </section>
     </div>
   );
 };

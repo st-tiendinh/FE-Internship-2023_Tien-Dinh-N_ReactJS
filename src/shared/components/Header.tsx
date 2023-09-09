@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useContext, useEffect, useState } from 'react';
 
 import { Popper } from './Popper';
@@ -14,7 +14,7 @@ import { logout } from '../../redux/actions/user';
 import { setCart } from '../../redux/actions/cart';
 import { StorageKey, getFromLocalStorage, removeFromLocalStorage } from '../utils/localStorage';
 
-export const Header = ({ showLocation }: any) => {
+export const Header = () => {
   const [scrolling, setScrolling] = useState(false);
   const { isShowPopper, setIsShowPopper } = useContext(ModalContext);
 
@@ -25,8 +25,6 @@ export const Header = ({ showLocation }: any) => {
   const cartQuantity = new CartService(cart).calcCartAllQuantity();
 
   const userStore = getFromLocalStorage(StorageKey.User, { id: '', email: '', password: '' });
-  const location = useLocation();
-  const navigate = useNavigate();
 
   const handleLogout = () => {
     dispatch(logout('Logout success'));
@@ -44,11 +42,9 @@ export const Header = ({ showLocation }: any) => {
     }
   };
 
-  const handleClickDirect = (pathname: any) => {
+  const handleClickDirect = () => {
     if (!isLogged) {
       dispatch(setShowModal());
-    } else {
-      navigate(pathname);
     }
   };
 
@@ -68,13 +64,7 @@ export const Header = ({ showLocation }: any) => {
   }, []);
 
   return (
-    <header
-      className={
-        'header ' +
-        (location.pathname === '/' && scrolling ? 'header-scroll bg-light' : '') +
-        (location.pathname === '/cart' ? 'bg-dark mt-0' : '')
-      }
-    >
+    <header className={`header ${scrolling ? 'header-scroll bg-light' : ''}`}>
       <div className="container">
         <div className="header-inner">
           <h1 className="header-logo">
@@ -82,18 +72,12 @@ export const Header = ({ showLocation }: any) => {
               <img
                 src={logo}
                 alt="E-Shop"
-                className={
-                  'logo-img ' +
-                  (location.pathname === '/cart' ? 'd-block' : scrolling ? 'd-none' : 'd-block')
-                }
+                className={`logo-img ${scrolling ? 'd-none' : 'd-block'}`}
               />
               <img
                 src={mobileLogo}
                 alt="E-Shop"
-                className={
-                  'mobile-logo-img ' +
-                  (location.pathname === '/cart' ? 'd-none' : scrolling ? 'd-block' : 'd-none')
-                }
+                className={`mobile-logo-img ${scrolling ? 'd-block' : 'd-none'}`}
               />
             </Link>
           </h1>
@@ -120,12 +104,7 @@ export const Header = ({ showLocation }: any) => {
             </ul>
           </nav>
 
-          <ul
-            className={
-              'header-action-list ' +
-              (location.pathname === '/cart' ? 'd-flex' : scrolling ? 'd-none' : 'd-flex')
-            }
-          >
+          <ul className={`header-action-list ${scrolling ? 'd-none' : 'd-flex'}`}>
             <li className="header-action-item">
               <a href="/#" className="header-action-link">
                 <i className="ic ic-magnifying-glass"></i>
@@ -133,11 +112,7 @@ export const Header = ({ showLocation }: any) => {
             </li>
 
             <li className="header-action-item">
-              <Link
-                to={'/cart'}
-                className="header-action-link"
-                onClick={() => handleClickDirect('/cart')}
-              >
+              <Link to={'/cart'} className="header-action-link" onClick={handleClickDirect}>
                 <span className={'header-action-quantity ' + (cartQuantity ? 'd-flex' : 'd-none')}>
                   {cartQuantity}
                 </span>
@@ -153,12 +128,7 @@ export const Header = ({ showLocation }: any) => {
             </li>
           </ul>
 
-          <ul
-            className={
-              'header-mobile-action-list ' +
-              (location.pathname === '/cart' ? 'd-none' : scrolling ? 'd-flex' : 'd-none')
-            }
-          >
+          <ul className={`header-mobile-action-list ${scrolling ? 'd-flex' : 'd-none'}`}>
             <li className="header-mobile-action-item">
               <a href="/#" className="header-action-link">
                 <i className="ic ic-sm-magnifying-glass"></i>
@@ -166,11 +136,7 @@ export const Header = ({ showLocation }: any) => {
             </li>
 
             <li className="header-mobile-action-item">
-              <Link
-                to={'/cart'}
-                className="header-action-link"
-                onClick={() => handleClickDirect('/cart')}
-              >
+              <Link to={'/cart'} className="header-action-link" onClick={handleClickDirect}>
                 <span className={'header-action-quantity ' + (cartQuantity ? 'd-flex' : 'd-none')}>
                   {cartQuantity}
                 </span>

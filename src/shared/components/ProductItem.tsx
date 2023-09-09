@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { ProductImage } from './ProductImage';
@@ -8,7 +8,6 @@ import { RootState } from '../../redux/reducers/root';
 import { setCart } from '../../redux/actions/cart';
 import { ProductService } from '../../services/ProductService';
 import { ProductProps, ProductStatus } from '../../app/core/models/product';
-import { ModalContext } from '../../app/context/ModalProvider';
 import { setShowModal } from '../../redux/actions/modal';
 
 interface ProductItemPropTypes {
@@ -16,7 +15,6 @@ interface ProductItemPropTypes {
 }
 
 export const ProductItem = ({ productItem }: ProductItemPropTypes) => {
-  const { setIsShowModal } = useContext(ModalContext);
   const cart = useSelector((state: RootState) => state.cartList.cartItems);
   const isLogged = useSelector((state: RootState) => state.user.isLogged);
   const dispatch = useDispatch();
