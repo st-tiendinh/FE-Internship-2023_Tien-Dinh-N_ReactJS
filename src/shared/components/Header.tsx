@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useContext, useEffect, useState } from 'react';
 
 import { Popper } from './Popper';
@@ -14,7 +14,7 @@ import { logout } from '../../redux/actions/user';
 import { setCart } from '../../redux/actions/cart';
 import { StorageKey, getFromLocalStorage, removeFromLocalStorage } from '../utils/localStorage';
 
-export const Header = () => {
+export const Header = ({ showLocation }: any) => {
   const [scrolling, setScrolling] = useState(false);
   const { isShowPopper, setIsShowPopper } = useContext(ModalContext);
 
@@ -22,10 +22,11 @@ export const Header = () => {
   const isLogged = useSelector((state: RootState) => state.user.isLogged);
   const dispatch = useDispatch();
 
-  const location = useLocation();
   const cartQuantity = new CartService(cart).calcCartAllQuantity();
 
   const userStore = getFromLocalStorage(StorageKey.User, { id: '', email: '', password: '' });
+  const location = useLocation();
+  const navigate = useNavigate();
 
   const handleLogout = () => {
     dispatch(logout('Logout success'));
@@ -43,9 +44,11 @@ export const Header = () => {
     }
   };
 
-  const handleClickDirect = () => {
+  const handleClickDirect = (pathname: any) => {
     if (!isLogged) {
       dispatch(setShowModal());
+    } else {
+      navigate(pathname);
     }
   };
 
@@ -130,7 +133,11 @@ export const Header = () => {
             </li>
 
             <li className="header-action-item">
-              <Link to={'/cart'} className="header-action-link" onClick={handleClickDirect}>
+              <Link
+                to={'/cart'}
+                className="header-action-link"
+                onClick={() => handleClickDirect('/cart')}
+              >
                 <span className={'header-action-quantity ' + (cartQuantity ? 'd-flex' : 'd-none')}>
                   {cartQuantity}
                 </span>
@@ -159,7 +166,11 @@ export const Header = () => {
             </li>
 
             <li className="header-mobile-action-item">
-              <Link to={'/cart'} className="header-action-link" onClick={handleClickDirect}>
+              <Link
+                to={'/cart'}
+                className="header-action-link"
+                onClick={() => handleClickDirect('/cart')}
+              >
                 <span className={'header-action-quantity ' + (cartQuantity ? 'd-flex' : 'd-none')}>
                   {cartQuantity}
                 </span>

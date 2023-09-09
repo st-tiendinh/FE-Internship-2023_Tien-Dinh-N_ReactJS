@@ -9,6 +9,7 @@ import { setCart } from '../../redux/actions/cart';
 import { ProductService } from '../../services/ProductService';
 import { ProductProps, ProductStatus } from '../../app/core/models/product';
 import { ModalContext } from '../../app/context/ModalProvider';
+import { setShowModal } from '../../redux/actions/modal';
 
 interface ProductItemPropTypes {
   productItem: ProductProps;
@@ -44,7 +45,7 @@ export const ProductItem = ({ productItem }: ProductItemPropTypes) => {
         }
       }
     } else {
-      setIsShowModal(true);
+      dispatch(setShowModal());
     }
   };
 

@@ -6,15 +6,24 @@ import { Modal, Toast } from '../../../shared/components';
 import { RootState } from '../../../redux/reducers/root';
 import { setShowToast } from '../../../redux/actions/user';
 import { ModalType } from '../../../shared/components/Modal';
+import { useEffect } from 'react';
+import { setHideModal } from '../../../redux/actions/modal';
 
 const Home = () => {
   const isShowMessage = useSelector((state: RootState) => state.user.isShowMessage);
+  const isLoading = useSelector((state: RootState) => state.user.isLoading);
   const message = useSelector((state: RootState) => state.user.message);
   const dispatch = useDispatch();
 
   const handleCloseToast = () => {
     dispatch(setShowToast(false));
   };
+
+  useEffect(() => {
+    if (!isLoading) {
+      dispatch(setHideModal());
+    }
+  }, [dispatch, isLoading]);
 
   return (
     <div className="home-page">

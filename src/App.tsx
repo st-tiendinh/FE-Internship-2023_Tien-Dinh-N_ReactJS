@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { Routes, Route, BrowserRouter } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { Routes, Route, BrowserRouter, Navigate } from 'react-router-dom';
 
 import { Header, Footer } from './shared/components';
 
@@ -8,8 +8,11 @@ import './stylesheet/style.scss';
 import { appRoutes } from './app.route';
 import { fetchProductDataFromApi } from './redux/actions/product';
 import { ModalProvider } from './app/context/ModalProvider';
+import { RootState } from './redux/reducers/root';
+import Home from './app/pages/home/Home';
 
 function App() {
+  const isLogged = useSelector((state: RootState) => state.user.isLogged);
   const dispatch = useDispatch<any>();
 
   useEffect(() => {
@@ -25,7 +28,9 @@ function App() {
             <Routes>
               {appRoutes.map(({ path, element }) => {
                 const Page = element;
-                return <Route key={Date.now()} path={path} element={<Page />} />;
+                return (
+                  <Route key={Date.now()} path={path} element={!isLogged ? <Home /> : <Page />} />
+                );
               })}
             </Routes>
           </main>

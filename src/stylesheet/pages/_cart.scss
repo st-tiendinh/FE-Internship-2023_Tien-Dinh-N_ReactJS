@@ -1,4 +1,6 @@
 .cart-page {
+  min-height: 100vh;
+
   .section {
     &-cart {
       &-header {
@@ -193,11 +195,9 @@
     .section {
       &-cart {
         .cart {
-          height: 138px;
-          position: fixed;
+          position: sticky;
           left: 0;
           right: 0;
-          top: calc(100vh - 182px);
           background-color: white;
         }
       }
@@ -221,11 +221,6 @@
 
       .cart {
         &-checkout {
-          position: absolute;
-          left: 0;
-          right: 0;
-          bottom: 0;
-          top: 0;
           border-radius: unset;
           border: none;
           border-top: 1px solid #ccc;

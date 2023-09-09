@@ -74,8 +74,6 @@ export const useForm = () => {
       ...errors,
       [name]: error,
     });
-
-    console.log(errors);
   };
 
   const handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
