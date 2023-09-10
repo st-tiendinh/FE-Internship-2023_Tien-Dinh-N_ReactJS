@@ -1,28 +1,23 @@
-import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { RootState } from '../../redux/reducers/root';
+import { setShowToast } from '../../redux/actions/user';
 
 interface ToastPropTypes {
   message: string;
-  onClose: () => void;
 }
 
-export const Toast = ({ message, onClose }: ToastPropTypes) => {
-  const [showToast, setShowToast] = useState(true);
+export const Toast = ({ message }: ToastPropTypes) => {
+  const isShowMessage = useSelector((state: RootState) => state.user.isShowMessage);
+  const dispatch = useDispatch();
 
   const handleCloseToast = () => {
-    setShowToast(false);
+    dispatch(setShowToast(false));
   };
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setShowToast(false);
-      onClose();
-    }, 4000);
-
-    return () => clearTimeout(timer);
-  }, [onClose]);
-
   return (
-    <div className={`toast ${showToast ? 'd-flex' : 'd-none'}`}>
+    <div className={`toast${isShowMessage ? ' toast-show' : ''}`}>
+      <i className="ic ic-success"></i>
       <p className="toast-message">{message}</p>
       <span onClick={handleCloseToast} className="toast-close-btn">
         &times;

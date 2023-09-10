@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { useContext, useEffect, useState } from 'react';
 
-import { Popper } from './Popper';
+import { Popper, PopperType } from './Popper';
 
 import logo from '../../assets/images/shop-logo.svg';
 import mobileLogo from '../../assets/images/mobile-shop-logo.svg';
@@ -124,7 +124,9 @@ export const Header = () => {
               <a href="/#" className="header-action-link" onClick={handleClickShowModal}>
                 <i className="ic ic-user"></i>
               </a>
-              {isShowPopper && <Popper title={userStore?.email} action={handleLogout} />}
+              {isShowPopper && (
+                <Popper title={userStore?.email} type={PopperType.LOG_OUT} action={handleLogout} />
+              )}
             </li>
           </ul>
 
@@ -148,7 +150,9 @@ export const Header = () => {
               <a href="/#" className="header-action-link" onClick={handleClickShowModal}>
                 <i className="ic ic-sm-user"></i>
               </a>
-              {isShowPopper && <Popper title={userStore?.email} action={handleLogout} />}
+              {isShowPopper && (
+                <Popper title={userStore?.email} type={PopperType.LOG_OUT} action={handleLogout} />
+              )}
             </li>
           </ul>
         </div>

@@ -1,18 +1,14 @@
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 
 import { useForm } from '../hooks/useForm';
 import { Spinner } from './Spinner';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/reducers/root';
 
-export const LoginForm = () => {
+export const LoginModal = () => {
   const [isShowPassWord, setIsShowPassWord] = useState(false);
-  const isLoading = useSelector((state: RootState) => state.user.isLoading);
-
-  const emailInputRef = useRef<HTMLInputElement>(null);
-  const passwordInputRef = useRef<HTMLInputElement>(null);
-
   const { formData, errors, handleInputChange, handleSubmit, handleBlur, handleInput } = useForm();
+  const isLoading = useSelector((state: RootState) => state.user.isLoading);
 
   const handleShowPassWord = () => {
     setIsShowPassWord(!isShowPassWord);
@@ -28,7 +24,6 @@ export const LoginForm = () => {
             </label>
             <input
               type="text"
-              ref={emailInputRef}
               id="email"
               name="email"
               className="login-input"
@@ -46,7 +41,6 @@ export const LoginForm = () => {
             </label>
             <input
               type={isShowPassWord ? 'text' : 'password'}
-              ref={passwordInputRef}
               id="password"
               name="password"
               className="login-input"

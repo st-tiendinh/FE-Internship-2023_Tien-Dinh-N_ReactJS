@@ -1,34 +1,36 @@
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { Advertisement, Banner, Newsletter, Product, ServiceDetail } from './containers';
 import { Modal, Toast } from '../../../shared/components';
+import { Advertisement, Banner, Newsletter, Product, ServiceDetail } from './containers';
 
 import { RootState } from '../../../redux/reducers/root';
-import { setShowToast } from '../../../redux/actions/user';
-import { ModalType } from '../../../shared/components/Modal';
-import { useEffect } from 'react';
 import { setHideModal } from '../../../redux/actions/modal';
+import { ModalType } from '../../../shared/components/Modal';
+import { setShowToast } from '../../../redux/actions/user';
 
 const Home = () => {
   const isShowMessage = useSelector((state: RootState) => state.user.isShowMessage);
   const isLoading = useSelector((state: RootState) => state.user.isLoading);
+  const isLogged = useSelector((state: RootState) => state.user.isLogged);
+  const error = useSelector((state: RootState) => state.user.error);
   const message = useSelector((state: RootState) => state.user.message);
   const dispatch = useDispatch();
 
-  const handleCloseToast = () => {
-    dispatch(setShowToast(false));
-  };
-
   useEffect(() => {
-    if (!isLoading) {
+    if (!isLoading && isLogged && !error) {
       dispatch(setHideModal());
     }
-  }, [dispatch, isLoading]);
+  }, [dispatch, error, isLoading, isLogged]);
+
+  useEffect(() => {
+    dispatch(setShowToast(isShowMessage));
+  }, [dispatch, isLogged, isShowMessage]);
 
   return (
     <div className="home-page">
       {/* Toast */}
-      {isShowMessage && <Toast message={message} onClose={handleCloseToast} />}
+      <Toast message={message} />
 
       {/* Modal */}
       <Modal title="Login" type={ModalType.LOGIN} />

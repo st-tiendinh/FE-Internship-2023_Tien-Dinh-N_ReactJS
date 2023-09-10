@@ -1,10 +1,11 @@
+import { ReactElement } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { ReactElement, useEffect } from 'react';
+
+import { ConfirmModal } from './ConfirmModal';
+import { LoginModal } from './LoginModal';
 
 import { RootState } from '../../redux/reducers/root';
-import { LoginForm } from './LoginForm';
-import { Confirm } from './Confirm';
-import { setHideModal, setShowModal } from '../../redux/actions/modal';
+import { setHideModal } from '../../redux/actions/modal';
 
 export enum ModalType {
   LOGIN,
@@ -20,19 +21,12 @@ interface ModalPropTypes {
 }
 
 export const Modal = ({ title, button, type, action }: ModalPropTypes) => {
-  const error = useSelector((state: RootState) => state.user.error);
   const isShow = useSelector((state: RootState) => state.modal.isShow);
   const dispatch = useDispatch();
 
   const handleClose = () => {
     dispatch(setHideModal());
   };
-
-  useEffect(() => {
-    !!error ? dispatch(setShowModal()) : dispatch(setHideModal());
-  }, [dispatch, error]);
-
-  // Handle loggin xong se chuyen sang trang cart
 
   return (
     <div className={`modal-wrapper ${isShow ? 'd-block' : 'd-none'}`}>
@@ -44,8 +38,8 @@ export const Modal = ({ title, button, type, action }: ModalPropTypes) => {
           </span>
         </div>
         <div className="modal-body">
-          {(type === ModalType.LOGIN && <LoginForm />) ||
-            (type === ModalType.CONFIRM && <Confirm action={action} />)}
+          {(type === ModalType.LOGIN && <LoginModal />) ||
+            (type === ModalType.CONFIRM && <ConfirmModal action={action} />)}
         </div>
         <div className="modal-footer">{button}</div>
       </div>

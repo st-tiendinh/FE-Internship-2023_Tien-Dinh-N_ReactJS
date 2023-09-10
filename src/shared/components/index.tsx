@@ -1,7 +1,7 @@
 export { Header } from './Header';
 export { Modal } from './Modal';
-export { LoginForm } from './LoginForm';
-export { Confirm } from './Confirm';
+export { LoginModal } from './LoginModal';
+export { ConfirmModal } from './ConfirmModal';
 export { Spinner } from './Spinner';
 export { Popper } from './Popper';
 export { Toast } from './Toast';
