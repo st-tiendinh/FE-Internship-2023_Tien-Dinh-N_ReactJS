@@ -16,7 +16,7 @@ export const ProductImage = ({ src, alt }: any) => {
       {loaded ? (
         <img src={src} alt={alt} className="product-image" />
       ) : (
-        <div className="skeleton"></div>
+        <div className="skeleton mb-20"></div>
       )}
     </>
   );

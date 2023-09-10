@@ -1,4 +1,10 @@
 export { Header } from './Header';
+export { Modal } from './Modal';
+export { LoginModal } from './LoginModal';
+export { ConfirmModal } from './ConfirmModal';
+export { Spinner } from './Spinner';
+export { Popper } from './Popper';
+export { Toast } from './Toast';
 export { ProductList } from './ProductList';
 export { ProductItem } from './ProductItem';
 export { ProductImage } from './ProductImage';

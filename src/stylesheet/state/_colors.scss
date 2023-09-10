@@ -2,6 +2,10 @@
   color: map-get($color, primary);
 }
 
+.text-danger {
+  color: red;
+}
+
 .bg-dark {
   background-color: map-get($color, dark);
 }

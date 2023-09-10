@@ -16,7 +16,7 @@
       top: 24px;
     }
 
-    .btn.btn-primary {
+    .btn.btn-rounded-primary {
       position: absolute;
       top: 45%;
       left: 50%;
@@ -26,7 +26,7 @@
     }
 
     &:hover {
-      .btn.btn-primary {
+      .btn.btn-rounded-primary {
         display: inline-block;
       }
 
@@ -94,7 +94,7 @@
         left: 8px;
       }
 
-      .btn.btn-primary {
+      .btn.btn-rounded-primary {
         padding: 12px 14px;
       }
 

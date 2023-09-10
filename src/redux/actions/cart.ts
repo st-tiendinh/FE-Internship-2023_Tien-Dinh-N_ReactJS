@@ -1,5 +1,10 @@
 import { CartItemProps } from '../../app/core/models/cart';
-import { CHANGE_CART_ITEM_QUANTITY, DELETE_CART_ITEM, SET_CART } from '../types/cart';
+import {
+  CHANGE_CART_ITEM_QUANTITY,
+  DELETE_CART_ITEM,
+  GET_CART_ITEM_ID,
+  SET_CART,
+} from '../types/cart';
 
 export const setCart = (cartItems: CartItemProps[]) => {
   return {
@@ -19,5 +24,12 @@ export const changeCartItemQuantity = (id: number, newQuantity: number) => {
   return {
     type: CHANGE_CART_ITEM_QUANTITY,
     payload: { id, newQuantity },
+  };
+};
+
+export const getCartItemId = (id: number) => {
+  return {
+    type: GET_CART_ITEM_ID,
+    payload: { id },
   };
 };

@@ -1,7 +1,8 @@
 import React, { useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { changeCartItemQuantity, deleteCartItem } from '../../../../../redux/actions/cart';
+import { changeCartItemQuantity, getCartItemId } from '../../../../../../redux/actions/cart';
+import { setShowModal } from '../../../../../../redux/actions/modal';
 
 enum CartItemQuantityLimit {
   MIN = 1,
@@ -33,10 +34,9 @@ export const CartItem = ({
   const inputRef = useRef<HTMLInputElement>(null);
   const dispatch = useDispatch();
 
-  const handleDelete = (id: number) => {
-    if (window.confirm('Do you want to delete this product?!!')) {
-      dispatch(deleteCartItem(id));
-    }
+  const handleDelete = async (id: number) => {
+    dispatch(setShowModal());
+    dispatch(getCartItemId(id));
     setInputQuantity(quantity);
   };
 
@@ -51,10 +51,10 @@ export const CartItem = ({
 
   const handleChangeInput = () => {
     if (
-      !Number.isNaN(+inputRef.current!.value) &&
-      +inputRef.current!.value < CartItemQuantityLimit.MAX
+      !Number.isNaN(parseInt(inputRef.current!.value)) &&
+      parseInt(inputRef.current!.value) < CartItemQuantityLimit.MAX
     ) {
-      setInputQuantity(+inputRef.current!.value);
+      setInputQuantity(parseInt(inputRef.current!.value));
     }
   };
 

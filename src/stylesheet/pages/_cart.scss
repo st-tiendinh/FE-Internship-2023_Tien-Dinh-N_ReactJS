@@ -1,6 +1,29 @@
 .cart-page {
+  min-height: 100vh;
+  margin-top: -108px;
+
   .section {
+    &-cart-banner {
+      background: linear-gradient(#0f2027, #203a43, #2c5364);
+      height: 368px;
+
+      .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+      }
+
+      .cart-banner-title {
+        color: map-get($color, secondary);
+        font-size: 60px;
+        text-shadow: 3px 3px 5px rgba(128, 0, 0, 1);
+      }
+    }
+
     &-cart {
+      padding: 20px 0;
+
       &-header {
         position: sticky;
         top: 80px;
@@ -166,7 +189,7 @@
             width: 100%;
           }
 
-          .btn.btn-outline-primary {
+          .btn.btn-normal-outline-primary {
             width: 100%;
             margin-bottom: 10px;
             padding: 14px 0;
@@ -191,13 +214,14 @@
 @include tablet {
   .cart-page {
     .section {
+      &-cart-banner {
+        .cart-banner-title {
+          font-size: 40px;
+        }
+      }
+
       &-cart {
         .cart {
-          height: 138px;
-          position: fixed;
-          left: 0;
-          right: 0;
-          top: calc(100vh - 136px);
           background-color: white;
         }
       }
@@ -221,11 +245,6 @@
 
       .cart {
         &-checkout {
-          position: absolute;
-          left: 0;
-          right: 0;
-          bottom: 0;
-          top: 0;
           border-radius: unset;
           border: none;
           border-top: 1px solid #ccc;

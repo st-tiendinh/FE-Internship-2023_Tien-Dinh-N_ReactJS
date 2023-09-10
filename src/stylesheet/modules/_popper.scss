@@ -1,0 +1,28 @@
+.popper-wrapper {
+  position: absolute;
+  right: 0;
+  top: 42px;
+  padding: 10px 10px;
+  min-width: 130px;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 2px 2px 14px rgba(0, 0, 0, 0.2);
+
+  .popper-list {
+    .popper-item {
+      padding: 4px 4px;
+      background-color: #fff;
+      border-radius: 5px;
+    }
+
+    .popper-item:not(:last-child) {
+      margin-bottom: 10px;
+    }
+
+    .btn.btn-normal-outline-primary {
+      display: block;
+      padding: 4px;
+      width: 100%;
+    }
+  }
+}

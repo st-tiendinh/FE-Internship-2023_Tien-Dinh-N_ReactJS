@@ -1,0 +1,63 @@
+.login-wrapper {
+  .login {
+    &-form {
+      display: flex;
+      flex-direction: column;
+
+      &-group {
+        display: flex;
+        flex-direction: column;
+        position: relative;
+      }
+    }
+
+    &-label {
+      font-size: 13px;
+      color: map-get($color, title);
+      padding: 6px 0;
+    }
+
+    &-required-label {
+      font-size: 11px;
+    }
+
+    &-input {
+      padding: 10px 10px;
+      border-radius: 5px;
+
+      &::placeholder {
+        font-size: 13px;
+        color: map-get($color, text);
+      }
+    }
+
+    &-error-message {
+      height: 24px;
+      font-size: 11px;
+      padding: 4px 0;
+    }
+
+    &-toggle-show-btn {
+      font-size: 13px;
+      position: absolute;
+      right: 10px;
+      bottom: 32px;
+      cursor: pointer;
+    }
+
+    &-logout {
+      display: flex;
+      flex-direction: column;
+      padding: 20px;
+
+      &-title {
+        font-size: 18px;
+        margin-bottom: 18px;
+      }
+    }
+
+    .btn.btn-rounded-primary {
+      margin-top: 10px;
+    }
+  }
+}

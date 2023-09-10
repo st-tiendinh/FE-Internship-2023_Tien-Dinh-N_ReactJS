@@ -1,10 +1,8 @@
-import { useLocation } from 'react-router-dom';
 import logo from '../../assets/images/shop-logo.svg';
 
 export const Footer = () => {
-  const location = useLocation();
   return (
-    <footer className={'footer ' + (location.pathname === '/cart' ? 'd-none' : '')}>
+    <footer className="footer">
       <div className="main-footer">
         <div className="container">
           <div className="row">

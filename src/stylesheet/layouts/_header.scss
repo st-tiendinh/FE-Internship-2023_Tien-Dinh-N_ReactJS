@@ -5,12 +5,17 @@
   margin-top: 24px;
   width: 100%;
   z-index: 10;
-  transition: background-color 0.1s;
 
   &-inner {
     display: flex;
     justify-content: space-between;
     align-items: center;
+
+    .modal {
+      &-skeleton {
+        height: 100% !important;
+      }
+    }
   }
 
   &-logo {
