@@ -1,5 +1,5 @@
-import { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { useState } from 'react';
 import { login } from '../../redux/actions/user';
 
 type EmailType = string | boolean;

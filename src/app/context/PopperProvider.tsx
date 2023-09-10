@@ -1,22 +1,22 @@
 import { ReactElement, createContext, useState } from 'react';
 
-export const ModalContext = createContext<any>(false);
+export const PopperContext = createContext<any>(false);
 
-interface ModalPropTypes {
+interface PopperPropTypes {
   children: ReactElement;
 }
 
-export const ModalProvider = ({ children }: ModalPropTypes) => {
+export const PopperProvider = ({ children }: PopperPropTypes) => {
   const [isShowPopper, setIsShowPopper] = useState(false);
 
   return (
-    <ModalContext.Provider
+    <PopperContext.Provider
       value={{
         isShowPopper,
         setIsShowPopper,
       }}
     >
       {children}
-    </ModalContext.Provider>
+    </PopperContext.Provider>
   );
 };

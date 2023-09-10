@@ -1,14 +1,15 @@
-import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
 
 import { ProductImage } from './ProductImage';
 
 import { StorageKey, saveToLocalStorage } from '../utils/localStorage';
+import { ProductProps, ProductStatus } from '../../app/core/models/product';
+import { ProductService } from '../../services/ProductService';
+
+import { setShowModal } from '../../redux/actions/modal';
 import { RootState } from '../../redux/reducers/root';
 import { setCart } from '../../redux/actions/cart';
-import { ProductService } from '../../services/ProductService';
-import { ProductProps, ProductStatus } from '../../app/core/models/product';
-import { setShowModal } from '../../redux/actions/modal';
 
 interface ProductItemPropTypes {
   productItem: ProductProps;

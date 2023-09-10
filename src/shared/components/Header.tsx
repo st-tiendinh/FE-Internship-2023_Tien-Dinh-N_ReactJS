@@ -1,22 +1,24 @@
+import { useContext, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { useContext, useEffect, useState } from 'react';
 
 import { Popper, PopperType } from './Popper';
 
-import logo from '../../assets/images/shop-logo.svg';
 import mobileLogo from '../../assets/images/mobile-shop-logo.svg';
-import { RootState } from '../../redux/reducers/root';
-import { CartService } from '../../services/CartService';
-import { ModalContext } from '../../app/context/ModalProvider';
-import { setShowModal } from '../../redux/actions/modal';
-import { logout } from '../../redux/actions/user';
-import { setCart } from '../../redux/actions/cart';
+import logo from '../../assets/images/shop-logo.svg';
+
 import { StorageKey, getFromLocalStorage, removeFromLocalStorage } from '../utils/localStorage';
+import { PopperContext } from '../../app/context/PopperProvider';
+import { CartService } from '../../services/CartService';
+
+import { setShowModal } from '../../redux/actions/modal';
+import { RootState } from '../../redux/reducers/root';
+import { setCart } from '../../redux/actions/cart';
+import { logout } from '../../redux/actions/user';
 
 export const Header = () => {
   const [scrolling, setScrolling] = useState(false);
-  const { isShowPopper, setIsShowPopper } = useContext(ModalContext);
+  const { isShowPopper, setIsShowPopper } = useContext(PopperContext);
 
   const cart = useSelector((state: RootState) => state.cartList.cartItems);
   const isLogged = useSelector((state: RootState) => state.user.isLogged);

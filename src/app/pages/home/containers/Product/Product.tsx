@@ -1,8 +1,10 @@
-import { ReactElement } from 'react';
-import { ProductList } from '../../../../../shared/components';
 import { useSelector } from 'react-redux';
-import { ProductProps } from '../../../../core/models/product';
+import { ReactElement } from 'react';
+
+import { ProductList } from '../../../../../shared/components';
+
 import { ProductService } from '../../../../../services/ProductService';
+import { ProductProps } from '../../../../core/models/product';
 
 interface ProductPropTypes {
   children: ReactElement;

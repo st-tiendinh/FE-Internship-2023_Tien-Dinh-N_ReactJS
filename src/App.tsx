@@ -1,15 +1,16 @@
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { Routes, Route, BrowserRouter } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
 
 import { Header, Footer } from './shared/components';
-
-import './stylesheet/style.scss';
-import { appRoutes } from './app.route';
-import { fetchProductDataFromApi } from './redux/actions/product';
-import { ModalProvider } from './app/context/ModalProvider';
-import { RootState } from './redux/reducers/root';
 import Home from './app/pages/home/Home';
+
+import { PopperProvider } from './app/context/PopperProvider';
+import { appRoutes } from './app.route';
+import './stylesheet/style.scss';
+
+import { fetchProductDataFromApi } from './redux/actions/product';
+import { RootState } from './redux/reducers/root';
 
 function App() {
   const isLogged = useSelector((state: RootState) => state.user.isLogged);
@@ -21,7 +22,7 @@ function App() {
 
   return (
     <BrowserRouter>
-      <ModalProvider>
+      <PopperProvider>
         <div className="App">
           <Header />
           <main className="main">
@@ -36,7 +37,7 @@ function App() {
           </main>
           <Footer />
         </div>
-      </ModalProvider>
+      </PopperProvider>
     </BrowserRouter>
   );
 }

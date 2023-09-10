@@ -1,8 +1,10 @@
+import { useSelector } from 'react-redux';
 import { useState } from 'react';
 
-import { useForm } from '../hooks/useForm';
 import { Spinner } from './Spinner';
-import { useSelector } from 'react-redux';
+
+import { useForm } from '../hooks/useForm';
+
 import { RootState } from '../../redux/reducers/root';
 
 export const LoginModal = () => {
